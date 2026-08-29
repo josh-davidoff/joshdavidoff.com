@@ -6,19 +6,23 @@ Deployment inventory key: `joshdavidoff_site` in [deployments.yaml](/Users/josh/
 
 Canonical access and lockout recovery: [SSH_ACCESS_AND_RECOVERY.md](/Users/josh/codex/infrastructure/REDACTED-HOST/SSH_ACCESS_AND_RECOVERY.md). Direct root SSH is disabled; use the `josh` account and `sudo`, and do not loop failed connection attempts.
 
+## Git
+
+The site is a git repo (initial commit 2026-08-29) with a private GitHub remote: [github.com/josh-davidoff/jd-site](https://github.com/josh-davidoff/jd-site) (`origin`, HTTPS, auth via `gh`).
+
+`.gitignore` excludes `Directions.html`/`directions/` (personal notes), `uploads/` (scratch), and `flight tracker sky window/` (Sky Window is a separate project with its own `DEPLOY.md`; it is not tracked in this repo).
+
 ## Deployment
 
-**Git-based deployment is the intended path.** Deploy by pushing committed code to the remote and letting the deploy run from there. Do not hand-copy files to the droplet, and do not deploy uncommitted local changes.
+**Git-based deployment (droplet pulling from `origin`) is the umbrella workspace's preferred end-state** (see `/Users/josh/codex/AGENTS.md`), but this project deliberately still deploys via the SSH/rsync script below rather than a pull-based hook — a conscious choice for a small static site, not an oversight. Git currently buys local history, diff review before deploying, and rollback via `git revert`; it does not yet change how bits reach the droplet.
 
-> **Status: not yet wired up.** As of 2026-08-29 this repository is on `main` with **no git remote configured**, so the git path does not exist yet. Until it does, the SSH fallback below is the only working route. Once the remote and deploy hook are in place, delete this notice and the fallback section.
+Rules that apply regardless of how deploy is eventually wired:
 
-Rules that apply either way:
-
-- Only deploy code that is committed and pushed. Never deploy a dirty working tree.
+- Commit (and push to `origin`) before deploying. Never deploy a dirty working tree.
 - Treat a production deploy as requiring explicit per-run approval from Josh.
 - Verify the public endpoint after deploying, before reporting the task complete.
 
-### SSH fallback (until the git path exists)
+### Deploying (current route: SSH/rsync)
 
 ```bash
 # SSH as josh user (key auth via ~/.ssh/id_ed25519)
@@ -33,7 +37,7 @@ ssh josh@REDACTED-HOST
 
 Always use `scripts/deploy-site.sh` for full-site deployments instead of copying its rsync command. The script excludes the Sky Window source, protects deployed `/sky` files from `--delete`, and refuses to deploy if either the local source or remote installation is missing. Sky Window is deployed independently using `flight tracker sky window/DEPLOY.md`.
 
-Single-file `tee` pushes over SSH are discouraged. They bypass the script's safety checks and leave the deployed site diverging from the repository, which is exactly what the git-based path is meant to end.
+Single-file `tee` pushes over SSH are discouraged. They bypass the script's safety checks and leave the deployed site diverging from the repository.
 
 ## Nginx config
 
