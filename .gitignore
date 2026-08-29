@@ -1,0 +1,12 @@
+.DS_Store
+.thumbnail
+
+# Personal notes, not part of the deployed site
+Directions.html
+directions/
+
+# Scratch uploads
+uploads/
+
+# Sky Window is a separate project with its own repo/deploy (see its DEPLOY.md)
+flight tracker sky window/

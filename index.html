@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Josh Davidoff</title>
+<meta name="description" content="Josh Davidoff builds systems that help mission-driven teams operate with clarity and efficiency. Grantmaking operations, systems design, and practical AI." />
+<meta property="og:title" content="Josh Davidoff" />
+<meta property="og:description" content="Grantmaking operations, systems design, and practical AI for mission-driven teams." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://joshdavidoff.com/" />
+  <link rel="canonical" href="https://joshdavidoff.com/" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Josh Davidoff",
+  "jobTitle": "Grants Operations and Systems",
+  "worksFor": { "@type": "Organization", "name": "Hollyhock Foundation" },
+  "url": "https://joshdavidoff.com",
+  "email": "mailto:joshdavidoff@gmail.com",
+  "sameAs": [
+    "https://www.linkedin.com/in/joshdavidoff/",
+    "https://autofictions.bandcamp.com/"
+  ]
+}
+</script>
+  <meta property="og:image" content="https://joshdavidoff.com/assets/og-card.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://joshdavidoff.com/assets/og-card.png" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%232f5640'/%3E%3Ccircle cx='50' cy='50' r='21' fill='%23e3b23c'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: oklch(0.36 0.085 153);
+    --bg-deep: oklch(0.31 0.08 154);
+    --cream: oklch(0.96 0.025 96);
+    --muted: oklch(0.86 0.04 110);
+    --faint: oklch(0.74 0.05 120);
+    --mustard: oklch(0.84 0.15 87);
+    --tomato: oklch(0.68 0.17 38);
+    --rule: oklch(0.5 0.07 150);
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--cream);
+    font-family: "Newsreader", Georgia, serif;
+    font-size: 20px; line-height: 1.62;
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 56px 32px 120px; }
+  .mono { font-family: "Instrument Sans", system-ui, sans-serif; font-size: 12.5px; letter-spacing: 0.12em; text-transform: uppercase; }
+
+  a { color: var(--mustard); text-decoration: none; box-shadow: inset 0 -2px 0 var(--rule); transition: box-shadow .18s ease, color .18s ease; padding-bottom: 1px; }
+  a:hover { color: var(--cream); box-shadow: inset 0 -2px 0 var(--mustard); }
+  a:focus-visible { outline: 2px solid var(--mustard); outline-offset: 3px; border-radius: 2px; }
+
+  .name {
+    color: var(--mustard);
+    font-family: "Bricolage Grotesque", system-ui, sans-serif;
+    font-size: clamp(27px, 4.3vw, 39px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin: 0 0 16px;
+    padding-left: 26px;
+  }
+  .name .name-main { display: inline-flex; align-items: center; gap: 0; position: relative; }
+  .name .dot { color: var(--mustard); position: absolute; left: -26px; top: 50%; transform: translateY(-50%); font-family: Georgia, serif; font-size: 20px; line-height: 1; }
+  .name .dot::before { content: "✽"; }
+  .name .place { display: block; margin-top: 5px; color: var(--faint); font-size: 12px; letter-spacing: 0.06em; font-family: "Instrument Sans", system-ui, sans-serif; }
+  .lede {
+    font-family: "Bricolage Grotesque", system-ui, sans-serif;
+    font-size: clamp(27px, 4.3vw, 39px); line-height: 1.1; font-weight: 800;
+    letter-spacing: -0.02em; color: var(--cream); margin: 0; text-wrap: balance;
+  }
+  .lede .pop { color: var(--mustard); }
+  .subline { font-size: clamp(18px, 2.4vw, 20px); color: var(--muted); margin: 16px 0 0; max-width: 36ch; line-height: 1.42; }
+
+  .head-row { display: grid; grid-template-columns: 1fr 168px; gap: 36px; align-items: start; }
+  .portrait { width: 168px; aspect-ratio: 1/1; object-fit: cover; object-position: center 25%; border-radius: 10px; border: 2px solid var(--mustard); display: block; }
+  @media (max-width: 600px) { .head-row { grid-template-columns: 1fr; gap: 24px; } .portrait { width: 138px; } }
+
+  p { margin: 0 0 22px; max-width: 60ch; text-wrap: pretty; }
+  .intro { margin-top: 32px; }
+  .intro p { color: var(--muted); }
+  .intro strong { color: var(--mustard); font-weight: 600; }
+
+  section { margin-top: 56px; }
+  .label {
+    color: var(--mustard); font-weight: 600; margin: 0 0 22px;
+    display: flex; align-items: center; gap: 11px;
+    padding-bottom: 10px; border-bottom: 2px solid var(--rule);
+  }
+  .label .star { color: var(--mustard); display: inline-block; font-family: Georgia, serif; font-size: 0; line-height: 1; }
+  .label .star::before { content: "✽"; font-size: 15px; }
+
+  .entry { margin-bottom: 26px; }
+  .entry:last-child { margin-bottom: 0; }
+  .entry h3 { font-family: "Bricolage Grotesque", system-ui, sans-serif; font-size: 22px; font-weight: 700; margin: 0 0 4px; color: var(--cream); letter-spacing: -0.01em; }
+  .entry p { font-size: 18px; color: var(--faint); margin: 0; max-width: 58ch; }
+  .entry .yr { color: var(--tomato); font-weight: 600; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 14px; }
+  .meta-rule { border: none; border-top: 1px solid var(--rule); margin: 4px 0 6px; max-width: 100%; }
+
+  .currently { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px 24px; }
+  .currently .row { font-size: 17px; color: var(--faint); }
+  .currently .row .k { display: block; color: var(--mustard); margin-bottom: 5px; }
+
+  .extras { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 56px; align-items: stretch; }
+  .extras section { margin-top: 0; }
+  .extras .entry { margin-bottom: 13px; }
+  .extras .entry h3 { font-size: 16px; line-height: 1.25; }
+  .extras .entry p { font-size: 15px; line-height: 1.4; }
+  .beyond-card { background: color-mix(in oklch, var(--bg-deep) 76%, transparent); border: 1px solid var(--rule); border-radius: 12px; padding: 18px 18px 20px; }
+  .beyond-card > h3 { font-family: "Instrument Sans", system-ui, sans-serif; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mustard); margin: 0 0 14px; }
+  .beyond-card .currently { display: block; }
+  .beyond-card .currently .row { margin-bottom: 14px; }
+  .beyond-card .currently .row:last-child { margin-bottom: 0; }
+
+  @media (max-width: 720px) {
+    .extras { grid-template-columns: 1fr; gap: 34px; }
+    .currently { grid-template-columns: 1fr; gap: 14px; }
+  }
+
+  footer { margin-top: 66px; padding-top: 28px; border-top: 2px solid var(--rule); }
+  .links { display: flex; flex-wrap: wrap; gap: 10px 22px; font-size: 18px; }
+  .loc { margin-top: 24px; font-size: 14px; color: var(--mustard); font-weight: 600; }
+
+  .ph {
+    background: repeating-linear-gradient(45deg, var(--bg-deep) 0 12px, oklch(0.4 0.085 152) 12px 24px);
+    border: 2px solid var(--mustard); display: flex; align-items: center; justify-content: center;
+    color: var(--mustard); font-family: "Instrument Sans", system-ui, sans-serif; font-size: 12px; letter-spacing: 0.06em; font-weight: 600;
+  }
+
+  .proj-intro { color: var(--muted); font-size: 18px; margin: 0 0 20px; max-width: 60ch; }
+  .segmented { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; }
+  .segmented button {
+    appearance: none; border: 1px solid var(--rule); border-radius: 999px;
+    background: color-mix(in oklch, var(--bg-deep) 72%, transparent); color: var(--faint);
+    cursor: pointer; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 11px;
+    letter-spacing: 0.06em; padding: 9px 12px; text-transform: uppercase;
+    transition: border-color .18s ease, color .18s ease, background .18s ease;
+  }
+  .segmented button:hover, .segmented button.is-active { border-color: var(--mustard); color: var(--cream); background: color-mix(in oklch, var(--mustard) 14%, var(--bg-deep)); }
+  .project-grid, .experiment-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+  .proj-card {
+    border: 2px solid var(--rule); border-radius: 10px; padding: 20px 22px;
+    margin-bottom: 20px; transition: border-color .18s ease;
+  }
+  .project-grid .proj-card, .experiment-grid .proj-card { margin-bottom: 0; }
+  .proj-card:hover { border-color: var(--mustard); }
+  .proj-card[hidden] { display: none; }
+  .proj-num { color: var(--tomato); font-weight: 600; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 14px; display: block; margin-bottom: 4px; }
+  .category { color: var(--tomato); font-weight: 600; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 8px; }
+  .proj-card h3 { font-family: "Bricolage Grotesque", system-ui, sans-serif; font-size: 22px; font-weight: 700; margin: 0 0 6px; color: var(--cream); letter-spacing: -0.01em; }
+  .proj-card p { margin: 0 0 10px; font-size: 18px; color: var(--muted); }
+  .proj-card p:last-child { margin-bottom: 0; }
+  .proj-sys { display: flex; flex-wrap: wrap; gap: 6px; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 6px; letter-spacing: 0.04em; color: var(--faint); text-transform: none; }
+  .proj-sys .chip { border: 1px solid var(--rule); border-radius: 999px; padding: 4px 7px; }
+  .proj-sys .sep { color: var(--rule); margin: 0 2px; }
+  .proj-focus { font-style: italic; font-size: 17px; color: var(--muted); }
+  .proj-focus .sep { color: var(--rule); }
+  .proj-link { margin-top: 10px; }
+  .proj-link a { font-size: 17px; }
+  .category-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+  .category-row .category { border: 1px solid var(--rule); border-radius: 999px; display: inline-block; margin: 0; padding: 4px 7px; }
+  .speaking-card h3 { font-size: 24px; margin-bottom: 12px; }
+  .talk-meta { display: grid; gap: 7px; margin: 0 0 14px; }
+  .talk-meta .event { border-left: 2px solid var(--rule); color: var(--faint); font-size: 14px; line-height: 1.35; padding-left: 10px; }
+  .talk-meta .event-title { color: var(--muted); display: block; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .talk-list { display: grid; gap: 16px; }
+  .talk-card { border-left: 4px solid var(--mustard); background: color-mix(in oklch, var(--bg-deep) 62%, transparent); border-radius: 0 12px 12px 0; padding: 20px 22px; }
+  .talk-card h3 { margin-bottom: 8px; }
+  .talk-card .meta { color: var(--muted); font-size: 16px; line-height: 1.35; margin-bottom: 8px; }
+  .talk-card p:not(.meta) { font-size: 17px; line-height: 1.45; }
+  .exp-label {
+    display: flex; align-items: center; gap: 11px;
+    margin: 36px 0 20px; padding-top: 20px; border-top: 2px solid var(--rule);
+    color: var(--mustard);
+  }
+  .exp-label .exp-dot { color: var(--mustard); display: inline-block; font-family: Georgia, serif; font-size: 0; line-height: 1; }
+  .exp-label .exp-dot::before { content: "✽"; font-size: 15px; }
+  .exp-card {
+    border: 2px solid var(--rule); border-radius: 10px; padding: 18px 20px;
+    margin-bottom: 20px;
+  }
+  .exp-card h3 { font-family: "Bricolage Grotesque", system-ui, sans-serif; font-size: 18px; font-weight: 700; margin: 0 0 4px; color: var(--cream); letter-spacing: -0.01em; }
+  .exp-card p { margin: 0; font-size: 16px; line-height: 1.45; color: var(--muted); }
+  .exp-card .proj-sys { margin-top: 8px; }
+  h2 { font-size: inherit; font-weight: inherit; margin: 0; }
+
+  /* ── Sticky nav ────────────────────────────────────────── */
+  .site-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: color-mix(in oklch, var(--bg) 82%, transparent); border-bottom: 1px solid color-mix(in oklch, var(--rule) 72%, transparent);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  }
+  .site-nav-inner {
+    max-width: 680px; margin: 0 auto; padding: 0 32px;
+    height: 50px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .site-nav-name { opacity: 0; transition: opacity .25s ease; pointer-events: none; }
+  .site-nav-name.visible { opacity: 1; pointer-events: auto; }
+  .site-nav-name, .site-nav-name.visible {
+    font-family: "Bricolage Grotesque", system-ui, sans-serif;
+    font-weight: 700; font-size: 15px; letter-spacing: -0.01em;
+    color: var(--cream); display: inline-flex; align-items: center; gap: 8px;
+    box-shadow: none; padding-bottom: 0;
+  }
+  .site-nav-name:hover, .site-nav-name.visible:hover { color: var(--mustard); box-shadow: none; }
+  .site-nav-name .nav-dot {
+    color: var(--mustard); display: inline-block; flex-shrink: 0;
+    font-family: Georgia, serif; font-size: 12px; line-height: 1;
+  }
+  .site-nav-name .nav-dot::before { content: "✽"; }
+  .site-nav-links { display: flex; gap: 22px; align-items: center; }
+  .site-nav-links a {
+    font-family: "Newsreader", Georgia, serif;
+    font-size: 16px; color: var(--faint);
+    box-shadow: none; padding-bottom: 0;
+  }
+  .site-nav-links .linkedin-icon {
+    border: 1px solid var(--rule); border-radius: 4px;
+    color: var(--faint); display: inline-grid; place-items: center;
+    font-family: "Instrument Sans", system-ui, sans-serif; font-size: 11px; font-weight: 600;
+    height: 22px; letter-spacing: 0; line-height: 1; width: 22px;
+  }
+  .site-nav-links .linkedin-icon:hover { border-color: var(--mustard); color: var(--mustard); }
+  .site-nav-links a:hover { color: var(--mustard); box-shadow: none; }
+  @media (max-width: 480px) {
+    .site-nav-inner { padding: 0 20px; }
+    .site-nav-name { display: none; }
+    .site-nav-links { gap: 10px; width: 100%; justify-content: space-between; }
+    .site-nav-links a { font-size: 14px; }
+  }
+
+  @media (max-width: 680px) {
+    .project-grid, .experiment-grid, .extras { grid-template-columns: 1fr; }
+    .segmented button { flex: 1 1 100%; text-align: left; }
+  }
+
+  /* ── Currently panel ─────────────────────────────────────── */
+  .currently-panel { background: var(--bg-deep); border-radius: 14px; padding: 28px 30px 32px; }
+
+  /* ── Core competencies grid ──────────────────────────── */
+  .comp-grid { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+  .comp-item { flex: 1 1 230px; min-width: min(100%, 230px); max-width: calc(50% - 6px); }
+  .comp-item summary {
+    list-style: none; border: 1px solid var(--rule); border-radius: 999px; color: var(--cream);
+    cursor: pointer; font-family: "Bricolage Grotesque", system-ui, sans-serif; font-size: 17px; font-weight: 700;
+    letter-spacing: -0.01em; line-height: 1.15; padding: 12px 16px; transition: border-color .18s ease, background .18s ease;
+  }
+  .comp-item summary::-webkit-details-marker { display: none; }
+  .comp-item summary::after { content: "+"; color: var(--mustard); float: right; font-family: "Instrument Sans", system-ui, sans-serif; margin-left: 10px; }
+  .comp-item[open] summary { border-color: var(--mustard); background: color-mix(in oklch, var(--mustard) 10%, var(--bg-deep)); border-radius: 14px 14px 0 0; }
+  .comp-item[open] summary::after { content: "-"; }
+  .comp-item p { border: 1px solid var(--rule); border-top: 0; border-radius: 0 0 14px 14px; color: var(--faint); font-size: 15.5px; line-height: 1.45; margin: 0; max-width: none; padding: 12px 16px 14px; }
+
+  /* ── View transitions (cross-page morph) ───────────────── */
+  @view-transition { navigation: auto; }
+
+  /* ── Selection & focus polish ──────────────────────────── */
+  ::selection { background: var(--mustard); color: var(--bg-deep); }
+  html { scroll-padding-top: 66px; }
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+  section[id] { scroll-margin-top: 66px; }
+
+  /* lining/tabular figures where numerals matter */
+  .mono, .yr, .proj-num, .currently .row { font-variant-numeric: tabular-nums; }
+  .lede, .name { font-feature-settings: "kern" 1, "liga" 1, "calt" 1; }
+
+  /* ── Animated link underline (draws in from the left) ──── */
+  a {
+    box-shadow: none;
+    padding-bottom: 2px;
+    background-image: linear-gradient(var(--mustard), var(--mustard)), linear-gradient(var(--rule), var(--rule));
+    background-repeat: no-repeat;
+    background-position: 0 100%, 0 100%;
+    background-size: 0% 2px, 100% 2px;
+    transition: background-size .28s cubic-bezier(.2,.6,.2,1), color .18s ease;
+  }
+  a:hover { color: var(--cream); box-shadow: none; background-size: 100% 2px, 100% 2px; }
+  .site-nav-name, .site-nav-links a { background-image: none; padding-bottom: 0; }
+
+  /* arrow nudge on case / CTA links */
+  .arr { display: inline-block; transition: transform .2s cubic-bezier(.2,.6,.2,1); }
+  a:hover .arr { transform: translateX(4px); }
+
+  /* active section in sticky nav */
+  .site-nav-links a.active { color: var(--mustard); }
+
+  /* ── Entrance + scroll reveal ──────────────────────────── */
+  @media (prefers-reduced-motion: no-preference) {
+    [data-reveal] {
+      opacity: 0; transform: translateY(12px);
+      transition: opacity .62s cubic-bezier(.2,.6,.2,1), transform .62s cubic-bezier(.2,.6,.2,1);
+    }
+    [data-reveal].in { opacity: 1; transform: none; }
+  }
+
+  /* ── Film grain (very subtle texture) ──────────────────── */
+  body::after {
+    content: ""; position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+    opacity: 0.04; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+  }
+</style>
+</head>
+<body>
+  <nav class="site-nav" aria-label="Site navigation">
+    <div class="site-nav-inner">
+      <a class="site-nav-name" href="#"><span class="nav-dot" aria-hidden="true"></span>Josh Davidoff</a>
+      <div class="site-nav-links">
+        <a href="#projects">Work</a>
+        <a href="#projects" data-nav-filter="speaking">Talks</a>
+        <a href="#projects" data-nav-filter="experiment">Experiments</a>
+        <a href="/assets/Josh%20Davidoff_resume_2026-8.pdf">Resume</a>
+        <a href="mailto:joshdavidoff@gmail.com">Email</a>
+        <a class="linkedin-icon" href="https://www.linkedin.com/in/joshdavidoff/" aria-label="LinkedIn">in</a>
+      </div>
+    </div>
+  </nav>
+  <div class="wrap" data-screen-label="Home">
+    <header>
+      <p class="name" data-reveal><span class="name-main"><span class="dot" aria-hidden="true"></span>Josh Davidoff</span><span class="place">Brooklyn, NY</span></p>
+      <div class="head-row" data-reveal>
+        <div>
+          <h1 class="lede">I connect platforms and people to enable a <span class="pop">focus on mission.</span></h1>
+        </div>
+        <img class="portrait" src="assets/josh.jpg" alt="Josh Davidoff" />
+      </div>
+    </header>
+
+    <div class="intro" data-reveal>
+      <p>Working at the intersection of grants management, process analysis &amp; automation, and responsible, safe AI adoption, I help grantmaking teams translate strategy into approachable workflows and clean tech stacks. At the Hollyhock Foundation, I manage grant operations, build reporting and automation infrastructure across our tech stack, and translate complex organizational needs into systems for my team to use every day.</p>
+    </div>
+
+    <section data-reveal>
+      <h2 class="label mono"><span class="star" aria-hidden="true">✳</span>Core competencies</h2>
+      <div class="comp-grid">
+        <details class="comp-item">
+          <summary>Process analysis</summary>
+          <p>I map how work moves through organizations and redesign processes so that teams can operate with clarity and efficiency.</p>
+        </details>
+        <details class="comp-item">
+          <summary>Systems &amp; automation</summary>
+          <p>I build API-driven automations and integrations that knit a tech stack together and reduce time spent on data entry.</p>
+        </details>
+        <details class="comp-item">
+          <summary>Agentic workflow design</summary>
+          <p>I design practical AI-assisted analytical workflows with human checkpoints and clear guardrails to keep users in the driver's seat.</p>
+        </details>
+        <details class="comp-item">
+          <summary>Business intelligence</summary>
+          <p>I organize messy operational data into decision-centered dashboards that show live progress on key priorities.</p>
+        </details>
+        <details class="comp-item">
+          <summary>Change management</summary>
+          <p>I support teams to adopt new systems with punchy documentation, up-front communication, engaging trainings, and plentiful opportunities for feedback.</p>
+        </details>
+      </div>
+    </section>
+
+    <section id="projects" data-reveal>
+      <h2 class="label mono"><span class="star" aria-hidden="true">✳</span>Projects, by type</h2>
+
+      <div class="segmented" role="group" aria-label="Filter projects">
+        <button type="button" class="is-active" data-filter="all" aria-pressed="true">All work <span data-count="all">9</span></button>
+        <button type="button" data-filter="system" aria-pressed="false">System integration <span data-count="system">3</span></button>
+        <button type="button" data-filter="ai" aria-pressed="false">AI enablement <span data-count="ai">2</span></button>
+        <button type="button" data-filter="speaking" aria-pressed="false">Public Speaking <span data-count="speaking">2</span></button>
+        <button type="button" data-filter="experiment" aria-pressed="false">Experiments <span data-count="experiment">2</span></button>
+      </div>
+
+      <div class="project-grid">
+        <article class="proj-card" data-type="system">
+          <span class="category">System integration</span>
+          <h3>Payment sync and reporting</h3>
+          <p>High-control workflows connecting Fluxx GMS payment records to team-facing trackers and Power BI dashboards.</p>
+          <p class="proj-sys"><span class="chip">Fluxx</span><span class="chip">Monday.com</span><span class="chip">Bill.com</span><span class="chip">Power BI</span></p>
+          <p class="proj-link"><a href="/projects/payment-sync-financial-visibility">View case <span class="arr" aria-hidden="true">→</span></a></p>
+        </article>
+
+        <article class="proj-card" data-type="system">
+          <span class="category">System integration</span>
+          <h3>Monday.com as operational layer</h3>
+          <p>A surgical shadow system that surfaces critical tasks in Monday without displacing Fluxx as the authoritative grants system.</p>
+          <p class="proj-sys"><span class="chip">Fluxx</span><span class="chip">Monday.com</span><span class="chip">Power Automate</span></p>
+          <p class="proj-link"><a href="/projects/fluxx-monday-operational-layer">View case <span class="arr" aria-hidden="true">→</span></a></p>
+        </article>
+
+        <article class="proj-card" data-type="system">
+          <span class="category">System integration</span>
+          <h3>Meeting prep infrastructure</h3>
+          <p>A structured workflow for board planning, meeting readiness, discussion guide staging, publish dates, and board packet preparation.</p>
+          <p class="proj-sys"><span class="chip">Monday.com</span><span class="chip">SharePoint</span><span class="chip">Power Automate</span></p>
+          <p class="proj-link"><a href="/projects/board-prep-meeting-workflow">View case <span class="arr" aria-hidden="true">→</span></a></p>
+        </article>
+
+        <article class="proj-card" data-type="ai">
+          <span class="category">AI enablement</span>
+          <h3>AI due-diligence judgment architecture</h3>
+          <p>A human-in-the-loop skill package for conducting AI-assisted financial due diligence on nonprofit organizations designed to avoid cognitive offloading.</p>
+          <p class="proj-sys"><span class="chip">Claude Code / Codex</span><span class="chip">Skill.MD packets</span><span class="chip">Python</span></p>
+          <p class="proj-link"><a href="/bsh">View case <span class="arr" aria-hidden="true">→</span></a></p>
+        </article>
+
+        <article class="proj-card" data-type="ai">
+          <span class="category">AI enablement</span>
+          <h3>Journalism research dashboard</h3>
+          <p>A local enrichment pipeline and review dashboard that helped a program team turn a flat creator spreadsheet into a browsable, evidence-aware research tool.</p>
+          <p class="proj-sys"><span class="chip">Claude Code / Codex</span><span class="chip">Python</span><span class="chip">HTML/CSS/JavaScript</span></p>
+          <p class="proj-link"><a href="/projects/journalism-atlas-dashboard">View case <span class="arr" aria-hidden="true">→</span></a></p>
+        </article>
+
+        <article class="proj-card speaking-card" data-type="speaking ai">
+          <div class="category-row">
+            <span class="category">Public Speaking</span>
+            <span class="category">AI enablement</span>
+          </div>
+          <h3>The Bot Stops Here</h3>
+          <div class="talk-meta">
+            <div class="event"><span class="event-title">Technology Association of Grantmakers</span>Chicago · Nov&nbsp;12, 2026 <em>(upcoming)</em></div>
+            <div class="event"><span class="event-title">Foundations for Research and Innovation in Data and AI</span>Rockefeller Fdn · NYC · Jun&nbsp;2, 2026</div>
+          </div>
+          <p>Cognitive checkpoints are a practical design approach to keep teams engaged during AI-assisted analytical tasks.</p>
+          <p class="proj-sys"><span class="chip">Skill.MD packets</span><span class="chip">Python</span><span class="chip">Responsible AI</span></p>
+          <p class="proj-link"><a href="/bsh">View deck <span class="arr" aria-hidden="true">→</span></a></p>
+        </article>
+
+        <article class="proj-card speaking-card" data-type="speaking system">
+          <div class="category-row">
+            <span class="category">Public Speaking</span>
+            <span class="category">System integration</span>
+          </div>
+          <h3>Small Team, Big Impact</h3>
+          <div class="talk-meta">
+            <div class="event"><span class="event-title">Technology Association of Grantmakers</span>Atlanta · Nov&nbsp;10, 2025</div>
+          </div>
+          <p>A primer on no-code/low-code automation middleware platforms for common philanthropy tech stacks.</p>
+          <p class="proj-sys"><span class="chip">Fluxx</span><span class="chip">Power Automate</span></p>
+        </article>
+
+        <article class="proj-card" data-type="experiment">
+          <span class="category">Experiment</span>
+          <h3>Sky Window</h3>
+          <p>A live, ambient map of the aircraft crossing a customizable strip of sky above any location.</p>
+          <p class="proj-sys"><span class="chip">OpenSky</span><span class="chip">OpenStreetMap</span><span class="chip">Python</span></p>
+          <p class="proj-link"><a href="/sky">Open Sky Window <span class="arr" aria-hidden="true">→</span></a></p>
+        </article>
+
+        <article class="proj-card" data-type="experiment">
+          <span class="category">Experiment</span>
+          <h3>Arduino bedside dashboard</h3>
+          <p>A server-driven bedside dashboard that combines Mets scores, weather, subway arrivals, calendar context, clock modes, and smart-light controls.</p>
+          <p class="proj-sys"><span class="chip">ESP32</span><span class="chip">APIs</span><span class="chip">BLE</span></p>
+          <p class="proj-link"><a href="/projects/home-dashboard-system">View case <span class="arr" aria-hidden="true">→</span></a></p>
+        </article>
+
+        <article class="proj-card" data-type="experiment">
+          <span class="category">Experiment</span>
+          <h3>Vinyl cataloging tool</h3>
+          <p>An AI-powered cataloging tool that reads record labels from phone photos, grades physical condition, cross-references Discogs for pricing and release data, and appends everything to a Google Sheet.</p>
+          <p class="proj-sys"><span class="chip">AI vision model</span><span class="chip">Discogs</span><span class="chip">Google Sheets</span></p>
+        </article>
+
+        <article class="proj-card" data-type="experiment">
+          <span class="category">Experiment</span>
+          <h3>Snail: Slow Dating by Mail</h3>
+          <p>A live service prototype that tests slower, more intentional dating through one-match-at-a-time matchmaking and handwritten letters.</p>
+          <p class="proj-sys"><span class="chip">Airtable</span><span class="chip">flyers</span><span class="chip">USPS</span></p>
+          <p class="proj-link"><a href="https://snaildating.com">snaildating.com <span class="arr" aria-hidden="true">→</span></a></p>
+        </article>
+      </div>
+    </section>
+
+    <section id="beyond-work" data-reveal>
+      <h2 class="label mono"><span class="star" aria-hidden="true">✳</span>Beyond the work</h2>
+      <div class="extras">
+      <div class="beyond-card">
+        <h3>Music</h3>
+        <div class="entry">
+          <h3><a href="https://autofictions.bandcamp.com/">autofictions</a></h3>
+        </div>
+        <div class="entry">
+          <h3><a href="https://www.instagram.com/brooklynchoirproject/">Brooklyn Choir Project</a></h3>
+          <p>Producer, 2024–2025</p>
+        </div>
+        <div class="entry">
+          <h3><a href="https://youtu.be/W5Zj8Amikl4">film scoring reel</a></h3>
+        </div>
+        <div class="entry">
+          <h3><a href="https://theboywonderhimself.bandcamp.com/">theboywonderhimself</a></h3>
+        </div>
+      </div>
+
+      <div class="beyond-card">
+        <h3>Volunteer</h3>
+        <div class="entry">
+          <h3>Chair, Immigrant Solidarity Committee</h3>
+          <p class="meta">First Unitarian Brooklyn</p>
+        </div>
+
+        <div class="entry">
+          <h3>Immigrant Advocate</h3>
+          <p class="meta">The Ark Pro Se Asylum Clinic</p>
+        </div>
+        <div class="entry">
+          <h3>Eagle Scout</h3>
+          <p class="meta">Troop 3, Evanston</p>
+        </div>
+      </div>
+
+      <div class="beyond-card">
+        <h3>Currently:</h3>
+        <div class="currently">
+          <div class="row"><span class="k mono">Reading</span><span><em>On the Calculation of Volume</em> —&nbsp;Solvej Balle</span></div>
+          <div class="row"><span class="k mono">Listening</span><span>Something Worth Waiting For — Friko</span></div>
+          <div class="row"><span class="k mono">Playing</span><span>Rec softball · pickleball · Sufjan Stevens covers</span></div>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <footer data-reveal>
+      <div class="links">
+        <a href="mailto:joshdavidoff@gmail.com">Email</a>
+        <a href="/assets/Josh%20Davidoff_resume_2026-8.pdf">Resume</a>
+      </div>
+    </footer>
+  </div>
+<script>
+  var SHOW_BEYOND_WORK = true;
+
+  (function(){
+    var beyond = document.getElementById('beyond-work');
+    if (beyond && !SHOW_BEYOND_WORK) beyond.hidden = true;
+  })();
+
+  (function(){
+    var buttons = [].slice.call(document.querySelectorAll('[data-filter]'));
+    var cards = [].slice.call(document.querySelectorAll('.project-grid .proj-card'));
+    var navFilters = [].slice.call(document.querySelectorAll('[data-nav-filter]'));
+    if (!buttons.length || !cards.length) return;
+
+    function count(type) {
+      return type === 'all' ? cards.length : cards.filter(function(card){ return card.dataset.type.split(/\s+/).indexOf(type) !== -1; }).length;
+    }
+
+    function applyFilter(type) {
+      buttons.forEach(function(b){
+        var active = b.dataset.filter === type;
+        b.classList.toggle('is-active', active);
+        b.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+      cards.forEach(function(card){
+        card.hidden = type !== 'all' && card.dataset.type.split(/\s+/).indexOf(type) === -1;
+      });
+    }
+
+    buttons.forEach(function(button){
+      var type = button.dataset.filter;
+      var countEl = button.querySelector('[data-count]');
+      if (countEl) countEl.textContent = count(type);
+      button.addEventListener('click', function(){ applyFilter(type); });
+    });
+
+    navFilters.forEach(function(link){
+      link.addEventListener('click', function(){
+        applyFilter(link.dataset.navFilter);
+      });
+    });
+  })();
+
+  // Entrance + scroll reveal, and sticky-nav scrollspy
+  (function(){
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var els = [].slice.call(document.querySelectorAll('[data-reveal]'));
+
+    if (els.length) {
+      if (reduce || !('IntersectionObserver' in window)) {
+        els.forEach(function(el){ el.classList.add('in'); });
+      } else {
+        var vh = window.innerHeight, initial = [], rest = [];
+        els.forEach(function(el){
+          (el.getBoundingClientRect().top < vh - 40 ? initial : rest).push(el);
+        });
+        initial.forEach(function(el, i){ el.style.transitionDelay = (i * 70) + 'ms'; });
+        requestAnimationFrame(function(){
+          initial.forEach(function(el){ el.classList.add('in'); });
+        });
+        setTimeout(function(){ initial.forEach(function(el){ el.style.transitionDelay = ''; }); }, 1000);
+        var io = new IntersectionObserver(function(entries){
+          entries.forEach(function(e){
+            if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+        rest.forEach(function(el){ io.observe(el); });
+      }
+    }
+
+    if ('IntersectionObserver' in window) {
+      var map = {};
+      [].slice.call(document.querySelectorAll('.site-nav-links a[href^="#"]:not([data-nav-filter])')).forEach(function(a){
+        var id = a.getAttribute('href').slice(1);
+        if (id) map[id] = a;
+      });
+      var sections = Object.keys(map).map(function(id){ return document.getElementById(id); }).filter(Boolean);
+      if (sections.length){
+        var current = null;
+        var spy = new IntersectionObserver(function(entries){
+          entries.forEach(function(e){ if (e.isIntersecting) current = e.target.id; });
+          Object.keys(map).forEach(function(id){ map[id].classList.toggle('active', id === current); });
+        }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+        sections.forEach(function(s){ spy.observe(s); });
+      }
+
+      // Show nav name once hero name scrolls out of view
+      var heroName = document.querySelector('.name');
+      var navName = document.querySelector('.site-nav-name');
+      if (heroName && navName) {
+        var heroObs = new IntersectionObserver(function(entries){
+          navName.classList.toggle('visible', !entries[0].isIntersecting);
+        }, { threshold: 0, rootMargin: '-50px 0px 0px 0px' });
+        heroObs.observe(heroName);
+      }
+    }
+  })();
+</script>
+</body>
+</html>

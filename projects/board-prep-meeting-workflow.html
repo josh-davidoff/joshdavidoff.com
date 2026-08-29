@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Board prep and meeting workflow infrastructure — Josh Davidoff</title>
+<meta name="description" content="A structured workflow for board planning, meeting readiness, discussion guide staging, publish dates, and board packet preparation." />
+<meta property="og:title" content="Board prep and meeting workflow infrastructure" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://joshdavidoff.com/projects/board-prep-meeting-workflow" />
+  <meta property="og:image" content="https://joshdavidoff.com/assets/og-card.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://joshdavidoff.com/assets/og-card.png" />
+<link rel="canonical" href="https://joshdavidoff.com/projects/board-prep-meeting-workflow" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%232f5640'/%3E%3Ccircle cx='50' cy='50' r='21' fill='%23e3b23c'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: oklch(0.36 0.085 153);
+    --bg-deep: oklch(0.31 0.08 154);
+    --cream: oklch(0.96 0.025 96);
+    --muted: oklch(0.86 0.04 110);
+    --faint: oklch(0.74 0.05 120);
+    --mustard: oklch(0.84 0.15 87);
+    --tomato: oklch(0.68 0.17 38);
+    --rule: oklch(0.5 0.07 150);
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--cream);
+    font-family: "Newsreader", Georgia, serif;
+    font-size: 20px; line-height: 1.62;
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 44px 32px 100px; }
+  .mono { font-family: "Instrument Sans", system-ui, sans-serif; font-size: 12.5px; letter-spacing: 0.12em; text-transform: uppercase; }
+
+  a { color: var(--mustard); text-decoration: none; box-shadow: inset 0 -2px 0 var(--rule); transition: box-shadow .18s ease, color .18s ease; padding-bottom: 1px; }
+  a:hover { color: var(--cream); box-shadow: inset 0 -2px 0 var(--mustard); }
+  a:focus-visible { outline: 2px solid var(--mustard); outline-offset: 3px; border-radius: 2px; }
+
+  .back { display: inline-flex; align-items: center; gap: 8px; color: var(--faint); text-decoration: none; margin-bottom: 46px; transition: color .18s ease; }
+  .back:hover { color: var(--mustard); }
+
+  .kicker { color: var(--mustard); font-weight: 600; margin: 0 0 16px; display: flex; align-items: center; gap: 10px; }
+  .kicker .dot { color: var(--mustard); display: inline-block; font-family: Georgia, serif; font-size: 15px; line-height: 1; }
+  .kicker .dot::before { content: "✽"; }
+  .title {
+    font-family: "Bricolage Grotesque", system-ui, sans-serif;
+    font-size: clamp(36px, 6.5vw, 55px); line-height: 1.0; font-weight: 800;
+    letter-spacing: -0.025em; color: var(--cream); margin: 0 0 14px; text-wrap: balance;
+  }
+  .subtitle {
+    font-family: "Bricolage Grotesque", system-ui, sans-serif;
+    font-size: clamp(18px, 2.8vw, 22px); font-weight: 600; color: var(--mustard);
+    margin: 0 0 40px; letter-spacing: -0.01em; line-height: 1.3;
+  }
+
+  p { margin: 0 0 22px; max-width: 60ch; text-wrap: pretty; }
+
+  section { margin-top: 36px; }
+  .label {
+    color: var(--mustard); font-weight: 600; margin: 0 0 14px;
+    display: flex; align-items: center; gap: 11px;
+    padding-bottom: 8px; border-bottom: 2px solid var(--rule);
+  }
+  .label .star { color: var(--mustard); display: inline-block; font-family: Georgia, serif; font-size: 0; line-height: 1; }
+  .label .star::before { content: "✽"; font-size: 15px; }
+  .body { color: var(--muted); }
+  .body strong { color: var(--cream); font-weight: 600; }
+
+  .diagram-box {
+    background: var(--bg-deep); border: 2px solid var(--mustard);
+    border-radius: 10px; padding: 24px; margin: 0 0 22px;
+  }
+
+  .note { font-size: 15px; color: var(--faint); font-style: italic; margin-top: 48px; }
+
+  footer { margin-top: 56px; padding-top: 28px; border-top: 2px solid var(--rule); }
+  .links { display: flex; flex-wrap: wrap; gap: 10px 22px; font-size: 18px; }
+  h2 { font-size: inherit; font-weight: inherit; margin: 0; }
+
+  .more-cases { margin-top: 52px; }
+  .case-links { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+  .case-link-row { display: flex; align-items: baseline; gap: 12px; }
+  .case-link-row .cn { font-family: "Instrument Sans", system-ui, sans-serif; font-size: 13px; color: var(--tomato); font-weight: 600; flex-shrink: 0; }
+  .case-link-row a { font-size: 18px; }
+
+  /* ── Cross-page polish (view transitions, selection, grain) ── */
+  @view-transition { navigation: auto; }
+  ::selection { background: var(--mustard); color: var(--bg-deep); }
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+  .mono { font-variant-numeric: tabular-nums; }
+  .arr { display: inline-block; transition: transform .2s cubic-bezier(.2,.6,.2,1); }
+  a:hover .arr { transform: translateX(4px); }
+  a:hover .arr-back { transform: translateX(-4px); }
+  body::after {
+    content: ""; position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+    opacity: 0.04; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size: 180px 180px;
+  }
+  a {
+    box-shadow: none; padding-bottom: 2px;
+    background-image: linear-gradient(var(--mustard), var(--mustard)), linear-gradient(var(--rule), var(--rule));
+    background-repeat: no-repeat; background-position: 0 100%, 0 100%;
+    background-size: 0% 2px, 100% 2px;
+    transition: background-size .28s cubic-bezier(.2,.6,.2,1), color .18s ease;
+  }
+  a:hover { color: var(--cream); box-shadow: none; background-size: 100% 2px, 100% 2px; }
+  .back { background-image: none; padding-bottom: 0; }
+  .site-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: color-mix(in oklch, var(--bg) 82%, transparent); border-bottom: 1px solid color-mix(in oklch, var(--rule) 72%, transparent);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  }
+  .site-nav-inner { max-width: 680px; margin: 0 auto; padding: 0 32px; height: 50px; display: flex; align-items: center; justify-content: space-between; }
+  .site-nav-name { color: var(--cream); display: inline-flex; align-items: center; gap: 8px; font-family: "Bricolage Grotesque", system-ui, sans-serif; font-size: 15px; font-weight: 700; letter-spacing: -0.01em; }
+  .site-nav-name:hover { color: var(--mustard); }
+  .site-nav-name .nav-dot { color: var(--mustard); font-family: Georgia, serif; font-size: 12px; line-height: 1; }
+  .site-nav-name .nav-dot::before { content: "✽"; }
+  .site-nav-links { display: flex; gap: 22px; align-items: center; }
+  .site-nav-links a { color: var(--faint); font-family: "Newsreader", Georgia, serif; font-size: 16px; }
+  .site-nav-links a:hover { color: var(--mustard); }
+  .site-nav-links .linkedin-icon { border: 1px solid var(--rule); border-radius: 4px; display: inline-grid; place-items: center; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 11px; font-weight: 600; height: 22px; letter-spacing: 0; line-height: 1; width: 22px; }
+  .site-nav-links .linkedin-icon:hover { border-color: var(--mustard); }
+  .site-nav-name, .site-nav-links a { background-image: none; padding-bottom: 0; }
+  @media (max-width: 480px) {
+    .site-nav-inner { padding: 0 20px; }
+    .site-nav-name { display: none; }
+    .site-nav-links { gap: 10px; width: 100%; justify-content: space-between; }
+    .site-nav-links a { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+  <nav class="site-nav" aria-label="Site navigation">
+    <div class="site-nav-inner">
+      <a class="site-nav-name" href="/"><span class="nav-dot" aria-hidden="true"></span>Josh Davidoff</a>
+      <div class="site-nav-links">
+        <a href="/#projects">Work</a>
+        <a href="/assets/Josh%20Davidoff_resume_2026-8.pdf">Resume</a>
+        <a href="mailto:joshdavidoff@gmail.com">Email</a>
+        <a class="linkedin-icon" href="https://www.linkedin.com/in/joshdavidoff/" aria-label="LinkedIn">in</a>
+      </div>
+    </div>
+  </nav>
+  <div class="wrap" data-screen-label="Board Prep Workflow">
+    <a class="back mono" href="/">← joshdavidoff.com</a>
+
+    <header>
+      <p class="kicker mono"><span class="dot" aria-hidden="true"></span>Case Study</p>
+      <h1 class="title">Board prep and meeting workflow infrastructure</h1>
+      <p class="subtitle">An automated project management workflow for a high volume of meetings requiring extensive preparatory materials.</p>
+    </header>
+
+    <section>
+      <h2 class="label mono"><span class="star" aria-hidden="true"></span>The Problem</h2>
+      <p class="body">Meeting prep depends on many moving pieces: meeting dates, discussion guides, publish schedules, and timing of grant payments and reports. Without a shared workflow, staff were pulling their hair out trying to manage deadlines and expectations.</p>
+    </section>
+
+    <section>
+      <h2 class="label mono"><span class="star" aria-hidden="true"></span>What I Built</h2>
+      <p class="body">A staged Monday workflow with automated support for repeatable steps: discussion guide folder creation, template population, reminder generation, and publish-date calculation. Manual gates control when a meeting is actually ready and whether changed dates have invalidated existing materials.</p>
+    </section>
+
+    <section>
+      <h2 class="label mono"><span class="star" aria-hidden="true"></span>Workflow States</h2>
+      <div class="diagram-box">
+        <svg viewBox="0 0 540 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Workflow states: Pre-pipeline to Pipeline to Scheduling (manual gate) to Prep in process (automated scaffolding) to Prep complete (manual export)." style="width:100%;max-width:540px;height:auto;display:block;margin:0 auto;">
+          <defs>
+            <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M0,0 L10,5 L0,10 Z" fill="#869a6a"/>
+            </marker>
+          </defs>
+          <rect x="5" y="20" width="88" height="30" rx="6" fill="none" stroke="#e3b23c" stroke-width="1.5"/>
+          <text x="49" y="40" text-anchor="middle" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="9" font-weight="600">Pre-pipeline</text>
+          <line x1="93" y1="35" x2="108" y2="35" stroke="#869a6a" stroke-width="1.5" marker-end="url(#arr)"/>
+          <rect x="110" y="20" width="68" height="30" rx="6" fill="none" stroke="#e3b23c" stroke-width="1.5"/>
+          <text x="144" y="40" text-anchor="middle" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="9" font-weight="600">Pipeline</text>
+          <line x1="178" y1="35" x2="193" y2="35" stroke="#869a6a" stroke-width="1.5" marker-end="url(#arr)"/>
+          <rect x="195" y="15" width="80" height="40" rx="6" fill="none" stroke="#c1643a" stroke-width="1.5"/>
+          <text x="235" y="30" text-anchor="middle" fill="#c1643a" font-family="Instrument Sans, sans-serif" font-size="9" font-weight="600">Scheduling</text>
+          <text x="235" y="46" text-anchor="middle" fill="#c1643a" font-family="Instrument Sans, sans-serif" font-size="8">manual gate</text>
+          <line x1="275" y1="35" x2="290" y2="35" stroke="#869a6a" stroke-width="1.5" marker-end="url(#arr)"/>
+          <rect x="292" y="15" width="108" height="40" rx="6" fill="none" stroke="#e3b23c" stroke-width="1.5"/>
+          <text x="346" y="30" text-anchor="middle" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="9" font-weight="600">Prep in process</text>
+          <text x="346" y="46" text-anchor="middle" fill="#c1643a" font-family="Instrument Sans, sans-serif" font-size="8">auto scaffolding</text>
+          <line x1="400" y1="35" x2="415" y2="35" stroke="#869a6a" stroke-width="1.5" marker-end="url(#arr)"/>
+          <rect x="417" y="15" width="100" height="40" rx="6" fill="none" stroke="#e3b23c" stroke-width="1.5" stroke-dasharray="4,2"/>
+          <text x="467" y="30" text-anchor="middle" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="9" font-weight="600">Prep complete</text>
+          <text x="467" y="46" text-anchor="middle" fill="#c1643a" font-family="Instrument Sans, sans-serif" font-size="8">manual export</text>
+          <text x="235" y="75" text-anchor="middle" fill="#869a6a" font-family="Instrument Sans, sans-serif" font-size="8">discussion guides, reminders, publish dates</text>
+        </svg>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="label mono"><span class="star" aria-hidden="true"></span>What Made It Hard</h2>
+      <p class="body">Meeting readiness is judgment-based. Automation can create folders and calculate dates, but it cannot decide whether a conversation is ready, whether dates are final, or whether a packet is safe to use.</p>
+    </section>
+
+    <p style="margin-top:52px;font-size:17px;"><a href="/#projects"><span class="arr arr-back" aria-hidden="true">←</span> All projects</a></p>
+  </div>
+</body>
+</html>

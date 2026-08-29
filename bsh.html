@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Bot Stops Here | Josh Davidoff</title>
+<meta name="description" content="Request access to the Skill.md repo from “The Bot Stops Here,” a talk on practical AI workflows for small foundation teams." />
+<meta property="og:title" content="The Bot Stops Here" />
+<meta property="og:description" content="Practical AI workflows for small foundation teams. Request access to the repo." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://joshdavidoff.com/bsh" />
+  <meta property="og:image" content="https://joshdavidoff.com/assets/og-card.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://joshdavidoff.com/assets/og-card.png" />
+<link rel="canonical" href="https://joshdavidoff.com/bsh" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%232f5640'/%3E%3Ccircle cx='50' cy='50' r='21' fill='%23e3b23c'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: oklch(0.36 0.085 153);
+    --bg-deep: oklch(0.31 0.08 154);
+    --cream: oklch(0.96 0.025 96);
+    --muted: oklch(0.86 0.04 110);
+    --faint: oklch(0.74 0.05 120);
+    --mustard: oklch(0.84 0.15 87);
+    --tomato: oklch(0.68 0.17 38);
+    --rule: oklch(0.5 0.07 150);
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--cream);
+    font-family: "Newsreader", Georgia, serif;
+    font-size: 20px; line-height: 1.62;
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 44px 32px 120px; }
+  .mono { font-family: "Instrument Sans", system-ui, sans-serif; font-size: 12.5px; letter-spacing: 0.12em; text-transform: uppercase; }
+
+  a.link { color: var(--mustard); text-decoration: none; box-shadow: inset 0 -2px 0 var(--rule); transition: box-shadow .18s ease, color .18s ease; padding-bottom: 1px; }
+  a.link:hover { color: var(--cream); box-shadow: inset 0 -2px 0 var(--mustard); }
+  a:focus-visible { outline: 2px solid var(--mustard); outline-offset: 3px; border-radius: 2px; }
+
+  .site-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: color-mix(in oklch, var(--bg) 82%, transparent); border-bottom: 1px solid color-mix(in oklch, var(--rule) 72%, transparent);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  }
+  .site-nav-inner { max-width: 680px; margin: 0 auto; padding: 0 32px; height: 50px; display: flex; align-items: center; justify-content: space-between; }
+  .site-nav-name { color: var(--cream); display: inline-flex; align-items: center; gap: 8px; font-family: "Bricolage Grotesque", system-ui, sans-serif; font-size: 15px; font-weight: 700; letter-spacing: -0.01em; text-decoration: none; }
+  .site-nav-name:hover { color: var(--mustard); }
+  .site-nav-name .nav-dot { color: var(--mustard); font-family: Georgia, serif; font-size: 12px; line-height: 1; }
+  .site-nav-name .nav-dot::before { content: "✽"; }
+  .site-nav-links { display: flex; gap: 22px; align-items: center; }
+  .site-nav-links a { color: var(--faint); font-family: "Newsreader", Georgia, serif; font-size: 16px; text-decoration: none; }
+  .site-nav-links a:hover { color: var(--mustard); }
+  .site-nav-links .linkedin-icon { border: 1px solid var(--rule); border-radius: 4px; display: inline-grid; place-items: center; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 11px; font-weight: 600; height: 22px; letter-spacing: 0; line-height: 1; width: 22px; }
+  .site-nav-links .linkedin-icon:hover { border-color: var(--mustard); }
+  @media (max-width: 480px) {
+    .site-nav-inner { padding: 0 20px; }
+    .site-nav-name { display: none; }
+    .site-nav-links { gap: 10px; width: 100%; justify-content: space-between; }
+    .site-nav-links a { font-size: 14px; }
+  }
+
+  .back { display: inline-flex; align-items: center; gap: 8px; color: var(--faint); text-decoration: none; margin-bottom: 46px; transition: color .18s ease; }
+  .back:hover { color: var(--mustard); }
+
+  .kicker { color: var(--mustard); font-weight: 600; margin: 0 0 16px; display: flex; align-items: center; gap: 10px; }
+  .kicker .dot { color: var(--mustard); display: inline-block; font-family: Georgia, serif; font-size: 15px; line-height: 1; }
+  .kicker .dot::before { content: "✽"; }
+  .title {
+    font-family: "Bricolage Grotesque", system-ui, sans-serif;
+    font-size: clamp(40px, 7.5vw, 66px); line-height: 0.98; font-weight: 800;
+    letter-spacing: -0.025em; color: var(--cream); margin: 0 0 14px; text-wrap: balance;
+  }
+  .subtitle {
+    font-family: "Bricolage Grotesque", system-ui, sans-serif;
+    font-size: clamp(20px, 3.2vw, 25px); font-weight: 600; color: var(--mustard);
+    margin: 0; letter-spacing: -0.01em;
+  }
+
+  p { margin: 0 0 22px; max-width: 60ch; text-wrap: pretty; }
+  .context { margin-top: 40px; margin-bottom: 0; }
+  .context p { color: var(--muted); }
+  .context strong { color: var(--cream); font-weight: 600; }
+
+  section { margin-top: 52px; }
+  .label {
+    color: var(--mustard); font-weight: 600; margin: 0 0 20px;
+    display: flex; align-items: center; gap: 11px;
+    padding-bottom: 10px; border-bottom: 2px solid var(--rule);
+  }
+  .label .star { color: var(--mustard); display: inline-block; font-family: Georgia, serif; font-size: 0; line-height: 1; }
+  .label .star::before { content: "✽"; font-size: 15px; }
+  .body { color: var(--muted); }
+  .body strong { color: var(--cream); font-weight: 600; }
+
+  .feat { display: grid; gap: 16px; margin: 0; padding: 0; list-style: none; }
+  .feat li { display: grid; grid-template-columns: 22px 1fr; gap: 12px; color: var(--muted); font-size: 18px; align-items: baseline; max-width: 58ch; }
+  .feat li .mk { color: var(--tomato); font-family: "Instrument Sans", system-ui, sans-serif; font-weight: 600; }
+  .feat li strong { color: var(--cream); font-weight: 600; }
+
+  .cta {
+    margin-top: 54px; background: var(--mustard); color: var(--bg-deep);
+    border-radius: 20px; padding: 34px 32px 36px;
+  }
+  .cta h2 { font-family: "Bricolage Grotesque", sans-serif; font-size: 26px; font-weight: 800; margin: 0 0 8px; letter-spacing: -0.015em; color: var(--bg-deep); }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--bg-deep); color: var(--mustard);
+    font-family: "Bricolage Grotesque", sans-serif; font-weight: 700; font-size: 18px;
+    padding: 15px 26px; border-radius: 999px; text-decoration: none;
+    transition: transform .15s ease, background .18s ease;
+  }
+  .btn:hover { transform: translateY(-2px); background: oklch(0.27 0.07 154); }
+  .btn .arr { font-size: 17px; }
+
+  .explore { margin-top: 40px; padding: 24px 26px; border: 2px solid var(--rule); border-radius: 16px; }
+  .explore p { margin: 0; color: var(--muted); font-size: 18px; max-width: none; }
+  .explore strong { color: var(--cream); font-weight: 600; }
+
+  .deck { margin-top: 52px; margin-bottom: 52px; }
+  .deck-inner { max-width: 960px; margin: 0 auto; padding: 0 32px; }
+  .deck .label { max-width: 680px; margin-left: auto; margin-right: auto; }
+  .slide-viewer { margin: 0 auto; }
+  .slide-viewer img { width: 100%; aspect-ratio: 16/9; object-fit: contain; border-radius: 10px; border: 2px solid var(--rule); display: block; background: oklch(0.22 0.05 153); }
+  .slide-controls { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
+  .slide-btn { background: none; border: 2px solid var(--rule); color: var(--cream); font-family: "Bricolage Grotesque", sans-serif; font-weight: 700; font-size: 15px; padding: 8px 18px; border-radius: 8px; cursor: pointer; transition: border-color .18s ease, color .18s ease; }
+  .slide-btn:hover { border-color: var(--mustard); color: var(--mustard); }
+  .slide-btn:disabled { opacity: .3; cursor: default; }
+  .slide-btn:disabled:hover { border-color: var(--rule); color: var(--cream); }
+  .slide-counter { color: var(--faint); font-family: "Instrument Sans", system-ui, sans-serif; font-size: 11px; letter-spacing: 0.08em; }
+
+  footer { margin-top: 64px; padding-top: 28px; border-top: 2px solid var(--rule); }
+  .links { display: flex; flex-wrap: wrap; gap: 10px 22px; font-size: 18px; }
+  .loc { margin-top: 24px; font-size: 14px; color: var(--mustard); font-weight: 600; }
+  h2 { font-size: inherit; font-weight: inherit; margin: 0; }
+
+  /* ── Cross-page polish (view transitions, selection, grain) ── */
+  @view-transition { navigation: auto; }
+  ::selection { background: var(--mustard); color: var(--bg-deep); }
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+  .mono { font-variant-numeric: tabular-nums; }
+  .arr { display: inline-block; transition: transform .2s cubic-bezier(.2,.6,.2,1); }
+  a:hover .arr { transform: translateX(4px); }
+  body::after {
+    content: ""; position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+    opacity: 0.04; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size: 180px 180px;
+  }
+  a.link {
+    box-shadow: none; padding-bottom: 2px;
+    background-image: linear-gradient(var(--mustard), var(--mustard)), linear-gradient(var(--rule), var(--rule));
+    background-repeat: no-repeat; background-position: 0 100%, 0 100%;
+    background-size: 0% 2px, 100% 2px;
+    transition: background-size .28s cubic-bezier(.2,.6,.2,1), color .18s ease;
+  }
+  a.link:hover { color: var(--cream); box-shadow: none; background-size: 100% 2px, 100% 2px; }
+</style>
+</head>
+<body>
+  <nav class="site-nav" aria-label="Site navigation">
+    <div class="site-nav-inner">
+      <a class="site-nav-name" href="/"><span class="nav-dot" aria-hidden="true"></span>Josh Davidoff</a>
+      <div class="site-nav-links">
+        <a href="/#projects">Work</a>
+        <a href="/assets/Josh%20Davidoff_resume_2026-8.pdf">Resume</a>
+        <a href="mailto:joshdavidoff@gmail.com">Email</a>
+        <a class="linkedin-icon" href="https://www.linkedin.com/in/joshdavidoff/" aria-label="LinkedIn">in</a>
+      </div>
+    </div>
+  </nav>
+  <div class="wrap" data-screen-label="Bot Stops Here" style="padding-bottom:0;">
+    <a class="back mono" href="/">← joshdavidoff.com</a>
+
+    <header>
+      <p class="kicker mono"><span class="dot" aria-hidden="true"></span>Talk Companion</p>
+      <h1 class="title">The Bot Stops Here</h1>
+      <p class="subtitle">Practical AI workflows for small foundation teams</p>
+    </header>
+
+    <div class="context">
+      <p>I gave a talk on human judgment architecture and cognitive checkpoints in AI-assisted analytical workflows for the Foundations for Research and Innovation in Data and AI (FRIDAI) group hosted by the Rockefeller Foundation on June 2, 2026.</p>
+    </div>
+
+  </div>
+
+  <section class="deck">
+    <div class="deck-inner">
+      <h2 class="label mono"><span class="star" aria-hidden="true">✳</span>Deck</h2>
+      <div class="slide-viewer">
+        <img id="slide-img" src="assets/bsh-deck/slide-01.jpg" alt="Slide 1" />
+        <div class="slide-controls">
+          <button class="slide-btn" id="prev-btn" onclick="changeSlide(-1)">Previous</button>
+          <span class="slide-counter" id="slide-counter" aria-live="polite" aria-atomic="true">1 / 10</span>
+          <button class="slide-btn" id="next-btn" onclick="changeSlide(1)">Next</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap" style="padding-top:0;">
+      <p style="margin:0 0 44px;"><a href="assets/2026-6-2 Davidoff_The Bot Stops Here_FRIDAI.pdf" class="btn" download>Download slides <span class="arr">↓</span></a></p>
+
+        <section>
+      <h2 class="label mono"><span class="star" aria-hidden="true">✳</span>The argument</h2>
+      <p class="body">Off-the-shelf agentic AI tools are now capable of meaningful financial and qualitative grantmaking due diligence, from extracting and reconciling data to surfacing risks, summarizing evidence, and drafting follow-up questions. As agents take on deeper analytical work, foundations need ways to preserve human judgment, skepticism, and skill development. My concept of <strong>cognitive checkpoints</strong> is a practical design approach for Skill.MDs and other workflow innovations that keep foundation staff actively engaged during AI-assisted due diligence.</p>
+      <p class="body">Cognitive checkpoints are deliberate pause points in an AI workflow where a human must read, evaluate, and confirm before anything continues. They keep teams in the driver’s seat instead of just watching AI drive, and they make the AI’s work legible enough to actually trust.</p>
+    </section>
+
+<section>
+      <h2 class="label mono"><span class="star" aria-hidden="true">✳</span>Code repo</h2>
+      <p class="body">It's a <strong>work in progress</strong>. An AI-assisted workflow for reviewing nonprofit financial packets and drafting a due diligence summary, gated so the agent stops for human review at each step instead of turning extraction into judgment.</p>
+      <ul class="feat">
+        <li><span class="mk">→</span><span>Built around the Hollyhock Foundation's grantee review process, with assumptions you'd want to adapt before reusing it.</span></li>
+        <li><span class="mk">→</span><span>Not a finished product, and no substitute for your own security, privacy, or legal review.</span></li>
+        <li><span class="mk">→</span><span>The skill is enhanced with Python snippets and is only effective inside a desktop harness like Claude Code or Codex; a lighter-weight, browser-only version of the skill lives in a separate repo.</span></li>
+      </ul>
+    </section>
+
+    <div class="cta" style="text-align:center;">
+      <a class="btn" href="https://forms.gle/WfMbyFXsrwTvty4e9" target="_blank" rel="noopener">Request access to the repo <span class="arr">→</span></a>
+    </div>
+
+    <div class="explore">
+      <p><strong>Hi, I'm Josh!</strong> I help nonprofit teams translate strategy into approachable workflows and clean tech stacks. <a class="link" href="/">See what I do <span class="arr" aria-hidden="true">→</span></a></p>
+    </div>
+
+    <footer>
+      <div class="links">
+        <a class="link" href="/">Main site</a>
+        <a class="link" href="/assets/Josh%20Davidoff_resume_2026-8.pdf">Resume</a>
+        <a class="link" href="mailto:joshdavidoff@gmail.com">Email</a>
+      </div>
+      <p class="loc mono">Brooklyn, NY</p>
+    </footer>
+  </div>
+<script>
+    const slides=[
+      'assets/bsh-deck/slide-01.jpg','assets/bsh-deck/slide-02.jpg','assets/bsh-deck/slide-03.jpg',
+      'assets/bsh-deck/slide-04.jpg','assets/bsh-deck/slide-05.jpg','assets/bsh-deck/slide-06.jpg',
+      'assets/bsh-deck/slide-07.jpg','assets/bsh-deck/slide-08.jpg','assets/bsh-deck/slide-09.jpg',
+      'assets/bsh-deck/slide-10.jpg'
+    ];
+    let current=0;
+    function changeSlide(d){
+      current=Math.max(0,Math.min(slides.length-1,current+d));
+      document.getElementById('slide-img').src=slides[current];
+      document.getElementById('slide-img').alt='Slide '+(current+1);
+      document.getElementById('slide-counter').textContent=(current+1)+' / '+slides.length;
+      document.getElementById('prev-btn').disabled=current===0;
+      document.getElementById('next-btn').disabled=current===slides.length-1;
+    }
+    document.addEventListener('keydown',function(e){
+      if(e.key==='ArrowRight')changeSlide(1);
+      else if(e.key==='ArrowLeft')changeSlide(-1);
+    });
+    changeSlide(0);
+  </script>
+  </body>
+</html>
