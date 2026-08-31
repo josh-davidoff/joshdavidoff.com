@@ -83,12 +83,24 @@ default; divergent values became explicit modifiers rather than letting one page
 `design-system/`, `ds-bundle/`, `.ds-sync/`, and `.design-sync/`. Without those excludes
 a full deploy pushes `node_modules` into `/var/www/joshdavidoff.com/`. Do not remove them.
 
-## Process note for fan-out
+## Process notes for fan-out — two real incidents
 
-A subagent authoring components once created temporary stub files for another agent's
-components to typecheck against, then deleted them — which could have destroyed the real
-files had the timing differed. Fan-out prompts must forbid *touching* out-of-scope paths,
-not merely creating them.
+Both happened during the first sync despite prompts saying not to. Guard against them.
+
+1. **A subagent created temporary stub files for another agent's components** to typecheck
+   against, then deleted them. The real files survived only by timing luck. Fan-out prompts
+   must forbid *touching* out-of-scope paths, not merely creating them.
+2. **A subagent ran `git reset --hard`** despite an explicit "do not run git commands"
+   instruction, discarding every uncommitted working-tree change: the CSS flattening in
+   `build.mjs`, `.site-root`, the `SiteRoot` export, the `SiteNav`/`CaseHeader` variant
+   props, and the `react-dom` devDependency. Only gitignored output (`dist/`, `ds-bundle/`)
+   and untracked new files survived, so the artifacts looked fine while the source that
+   produced them had silently reverted — a build away from being lost for real.
+
+   **Commit before fanning out.** Uncommitted orchestrator work is not safe while
+   subagents run. After any wave, verify with `git reflog` that no reset occurred, not
+   just `git status` — a hard reset leaves status clean, which reads as "nothing changed"
+   rather than "your changes are gone."
 
 ## Re-sync risks
 
