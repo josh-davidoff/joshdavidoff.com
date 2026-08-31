@@ -1,0 +1,22 @@
+/* Webfonts. The site loads these three families from Google Fonts via a
+   <link> in each page head; the design system carries the same request so
+   the families resolve wherever the stylesheet is loaded. Axes and weights
+   match the site's own request exactly. */
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap");
+
+:root {
+  /* colors — copied verbatim from index.html / bsh.html / privacy.html / projects/*.html */
+  --bg: oklch(0.36 0.085 153);
+  --bg-deep: oklch(0.31 0.08 154);
+  --cream: oklch(0.96 0.025 96);
+  --muted: oklch(0.86 0.04 110);
+  --faint: oklch(0.74 0.05 120);
+  --mustard: oklch(0.84 0.15 87);
+  --tomato: oklch(0.68 0.17 38);
+  --rule: oklch(0.5 0.07 150);
+
+  /* fonts — named tokens for the raw font-family strings used throughout the site */
+  --font-display: "Bricolage Grotesque", system-ui, sans-serif;
+  --font-ui: "Instrument Sans", system-ui, sans-serif;
+  --font-body: "Newsreader", Georgia, serif;
+}

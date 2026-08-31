@@ -1,0 +1,518 @@
+@import "./base.css";
+
+/* ============================================================
+   CONFLICT RULE — how this file resolves cross-page differences
+   ============================================================
+   Several selectors below carry different values on index.html than on
+   bsh.html / the projects/*.html pages. Per extraction rules: the
+   index.html value is kept as the unmodified default selector, and each
+   conflicting page group gets a `--case` (projects/*.html) and/or `--bsh`
+   (bsh.html) modifier class carrying its override, with a comment naming
+   exactly which source files used which value. See the running list at the
+   bottom of this header for every conflict found:
+
+     1. .wrap padding            → default (index/privacy) vs .wrap--bsh vs .wrap--case
+     2. section { margin-top }   → default (index) vs .section--bsh vs .section--case
+     3. .label / .label .star    → default (index) vs .label--bsh vs .label--case
+     4. .title / .subtitle       → no index.html value exists (index has no .title/.subtitle
+                                    element); base kept as the projects/*.html value (5 of 6
+                                    pages that define it) with .title--bsh / .subtitle--bsh
+                                    carrying bsh.html's override. Judgment call, documented
+                                    inline at the rule.
+     5. .site-nav-name behavior  → default (index, opacity-toggled, non-link) vs
+                                    .site-nav--case (bsh + projects/*.html, plain always-visible
+                                    anchor). Documented inline at the rule.
+     6. h2 (bare element)        → default reset (index/bsh/projects/*.html, 7 files) vs
+                                    .h2--privacy (privacy.html's real styled heading)
+     7. footer (bare element)    → default (index) vs .footer--bsh vs .footer--case
+                                    (orphaned on 4 projects/*.html pages) vs .footer--privacy
+   ============================================================ */
+
+/* ── .wrap (page container) ───────────────────────────────
+   index.html / privacy.html: padding 56px 32px 120px (default, below).
+   bsh.html: padding 44px 32px 120px            → .wrap--bsh
+   board-prep / fluxx-monday / home-dashboard /
+   journalism-atlas / payment-sync:
+     padding 44px 32px 100px                    → .wrap--case */
+.wrap { max-width: 680px; margin: 0 auto; padding: 56px 32px 120px; }
+.wrap--bsh { padding: 44px 32px 120px; }
+.wrap--case { padding: 44px 32px 100px; }
+
+/* ── section spacing ───────────────────────────────────────
+   index.html: margin-top 56px (default, below).
+   bsh.html: margin-top 52px                    → .section--bsh
+   board-prep / fluxx-monday / home-dashboard /
+   journalism-atlas / payment-sync: margin-top 36px → .section--case
+   (Source uses the bare `section` element selector; kept as a class here
+   since this file only extracts selectors, not markup.) */
+section { margin-top: 56px; }
+.section--bsh { margin-top: 52px; }
+.section--case { margin-top: 36px; }
+
+/* ── Sticky nav ─────────────────────────────────────────────
+   .site-nav / .site-nav-inner / .nav-dot / .linkedin-icon are byte-identical
+   across index.html, bsh.html, and every projects/*.html page — no conflict.
+   .site-nav-name differs: on index.html it is a non-link element that fades
+   in via a `.visible` class toggled by scroll-position JS. On bsh.html and
+   every projects/*.html page it is instead a plain `<a>` that is always
+   visible with a simple :hover. Default below matches index.html; the
+   `--case` variant (identical on bsh.html and all projects/*.html pages)
+   follows it. */
+.site-nav {
+  position: sticky; top: 0; z-index: 100;
+  background: color-mix(in oklch, var(--bg) 82%, transparent); border-bottom: 1px solid color-mix(in oklch, var(--rule) 72%, transparent);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+}
+.site-nav-inner {
+  max-width: 680px; margin: 0 auto; padding: 0 32px;
+  height: 50px; display: flex; align-items: center; justify-content: space-between;
+}
+/* default: index.html (fades in on scroll) */
+.site-nav-name { opacity: 0; transition: opacity .25s ease; pointer-events: none; }
+.site-nav-name.visible { opacity: 1; pointer-events: auto; }
+.site-nav-name, .site-nav-name.visible {
+  font-family: var(--font-display);
+  font-weight: 700; font-size: 15px; letter-spacing: -0.01em;
+  color: var(--cream); display: inline-flex; align-items: center; gap: 8px;
+  box-shadow: none; padding-bottom: 0;
+}
+.site-nav-name:hover, .site-nav-name.visible:hover { color: var(--mustard); box-shadow: none; }
+/* variant: bsh.html + all projects/*.html (always-visible anchor) */
+.site-nav-name--case {
+  color: var(--cream); display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-display); font-size: 15px; font-weight: 700; letter-spacing: -0.01em;
+}
+.site-nav-name--case:hover { color: var(--mustard); }
+
+.site-nav-name .nav-dot,
+.site-nav-name--case .nav-dot {
+  color: var(--mustard); display: inline-block; flex-shrink: 0;
+  font-family: Georgia, serif; font-size: 12px; line-height: 1;
+}
+.nav-dot::before { content: "✽"; }
+
+.site-nav-links { display: flex; gap: 22px; align-items: center; }
+.site-nav-links a {
+  font-family: var(--font-body);
+  font-size: 16px; color: var(--faint);
+  box-shadow: none; padding-bottom: 0;
+}
+.site-nav-links a:hover { color: var(--mustard); box-shadow: none; }
+.site-nav-links .linkedin-icon {
+  border: 1px solid var(--rule); border-radius: 4px;
+  color: var(--faint); display: inline-grid; place-items: center;
+  font-family: var(--font-ui); font-size: 11px; font-weight: 600;
+  height: 22px; letter-spacing: 0; line-height: 1; width: 22px;
+}
+.site-nav-links .linkedin-icon:hover { border-color: var(--mustard); color: var(--mustard); }
+.site-nav-name, .site-nav-links a { background-image: none; padding-bottom: 0; }
+/* index.html-only: active in-page nav link, and scroll offset tied to the 50px sticky nav */
+.site-nav-links a.active { color: var(--mustard); }
+html { scroll-padding-top: 66px; }
+section[id] { scroll-margin-top: 66px; }
+@media (max-width: 480px) {
+  .site-nav-inner { padding: 0 20px; }
+  .site-nav-name, .site-nav-name--case { display: none; }
+  .site-nav-links { gap: 10px; width: 100%; justify-content: space-between; }
+  .site-nav-links a { font-size: 14px; }
+}
+
+/* ── .name / .name-main / .dot / .place (index.html hero, no conflict) ── */
+.name {
+  color: var(--mustard);
+  font-family: var(--font-display);
+  font-size: clamp(27px, 4.3vw, 39px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0 0 16px;
+  padding-left: 26px;
+}
+.name .name-main { display: inline-flex; align-items: center; gap: 0; position: relative; }
+.name .dot { color: var(--mustard); position: absolute; left: -26px; top: 50%; transform: translateY(-50%); font-family: Georgia, serif; font-size: 20px; line-height: 1; }
+.name .dot::before { content: "✽"; }
+.name .place { display: block; margin-top: 5px; color: var(--faint); font-size: 12px; letter-spacing: 0.06em; font-family: var(--font-ui); }
+
+/* ── .lede / .pop (index.html, no conflict) ── */
+.lede {
+  font-family: var(--font-display);
+  font-size: clamp(27px, 4.3vw, 39px); line-height: 1.1; font-weight: 800;
+  letter-spacing: -0.02em; color: var(--cream); margin: 0; text-wrap: balance;
+}
+.lede .pop { color: var(--mustard); }
+
+/* ── .subline (index.html, no conflict) ── */
+.subline { font-size: clamp(18px, 2.4vw, 20px); color: var(--muted); margin: 16px 0 0; max-width: 36ch; line-height: 1.42; }
+
+/* ── .head-row / .portrait (index.html, no conflict) ── */
+.head-row { display: grid; grid-template-columns: 1fr 168px; gap: 36px; align-items: start; }
+.portrait { width: 168px; aspect-ratio: 1/1; object-fit: cover; object-position: center 25%; border-radius: 10px; border: 2px solid var(--mustard); display: block; }
+@media (max-width: 600px) { .head-row { grid-template-columns: 1fr; gap: 24px; } .portrait { width: 138px; } }
+
+/* ── .intro (index.html) / .context (bsh.html) ─────────────
+   Both are the same pattern (an intro paragraph block right under the
+   hero) but under different class names and slightly different rules —
+   kept separate rather than merged, since they are not literally the same
+   selector. */
+.intro { margin-top: 32px; }
+.intro p { color: var(--muted); }
+.intro strong { color: var(--mustard); font-weight: 600; }
+
+.context { margin-top: 40px; margin-bottom: 0; }
+.context p { color: var(--muted); }
+.context strong { color: var(--cream); font-weight: 600; }
+
+/* ── .back (bsh.html + all projects/*.html, no conflict) ── */
+.back { display: inline-flex; align-items: center; gap: 8px; color: var(--faint); text-decoration: none; margin-bottom: 46px; transition: color .18s ease; }
+.back:hover { color: var(--mustard); }
+/* projects/*.html only: cancels the base-link underline/background on .back */
+.back { background-image: none; padding-bottom: 0; }
+
+/* ── .kicker (bsh.html + all projects/*.html, no conflict) ── */
+.kicker { color: var(--mustard); font-weight: 600; margin: 0 0 16px; display: flex; align-items: center; gap: 10px; }
+.kicker .dot { color: var(--mustard); display: inline-block; font-family: Georgia, serif; font-size: 15px; line-height: 1; }
+.kicker .dot::before { content: "✽"; }
+
+/* ── .title / .subtitle ────────────────────────────────────
+   index.html has no .title/.subtitle at all, so there is no index.html
+   value to default to. Default below is the projects/*.html value (used
+   identically by board-prep, fluxx-monday, home-dashboard, journalism-atlas,
+   and payment-sync); bsh.html's different value is the `--bsh` variant.
+   Judgment call: picked the value used by 5 of 6 pages that define this
+   selector as the base, per the spirit of "most common wins" since the
+   documented default (index.html) doesn't apply here. */
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 6.5vw, 55px); line-height: 1.0; font-weight: 800;
+  letter-spacing: -0.025em; color: var(--cream); margin: 0 0 14px; text-wrap: balance;
+}
+.subtitle {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2.8vw, 22px); font-weight: 600; color: var(--mustard);
+  margin: 0 0 40px; letter-spacing: -0.01em; line-height: 1.3;
+}
+.title--bsh {
+  font-size: clamp(40px, 7.5vw, 66px); line-height: 0.98; margin: 0 0 14px;
+}
+.subtitle--bsh {
+  font-size: clamp(20px, 3.2vw, 25px); margin: 0;
+}
+
+/* ── .body (bsh.html + all projects/*.html, no conflict) ── */
+.body { color: var(--muted); }
+.body strong { color: var(--cream); font-weight: 600; }
+
+/* ── .label / .star ─────────────────────────────────────────
+   index.html: margin 0 0 22px, padding-bottom 10px (default, below).
+   bsh.html: margin 0 0 20px, padding-bottom 10px       → .label--bsh
+   board-prep / fluxx-monday / home-dashboard /
+   journalism-atlas / payment-sync:
+     margin 0 0 14px, padding-bottom 8px                → .label--case */
+.label {
+  color: var(--mustard); font-weight: 600; margin: 0 0 22px;
+  display: flex; align-items: center; gap: 11px;
+  padding-bottom: 10px; border-bottom: 2px solid var(--rule);
+}
+.label .star { color: var(--mustard); display: inline-block; font-family: Georgia, serif; font-size: 0; line-height: 1; }
+.label .star::before { content: "✽"; font-size: 15px; }
+.label--bsh { margin: 0 0 20px; padding-bottom: 10px; }
+.label--case { margin: 0 0 14px; padding-bottom: 8px; }
+
+/* ── .entry / .meta-rule (index.html only, no conflict)
+   NOTE: `.entry .yr` and the combined tabular-nums rule that references it
+   are defined but the `.yr` class is never applied to any element in
+   index.html's current markup — orphaned rule, kept as-is (extraction, not
+   cleanup). */
+.entry { margin-bottom: 26px; }
+.entry:last-child { margin-bottom: 0; }
+.entry h3 { font-family: var(--font-display); font-size: 22px; font-weight: 700; margin: 0 0 4px; color: var(--cream); letter-spacing: -0.01em; }
+.entry p { font-size: 18px; color: var(--faint); margin: 0; max-width: 58ch; }
+.entry .yr { color: var(--tomato); font-weight: 600; font-family: var(--font-ui); font-size: 14px; }
+.meta-rule { border: none; border-top: 1px solid var(--rule); margin: 4px 0 6px; max-width: 100%; }
+
+/* ── .currently / .row / .k / .currently-panel (index.html only)
+   NOTE: `.currently-panel` is defined but no element in index.html's
+   current markup carries that class — orphaned rule, kept as-is. */
+.currently { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px 24px; }
+.currently .row { font-size: 17px; color: var(--faint); }
+.currently .row .k { display: block; color: var(--mustard); margin-bottom: 5px; }
+.currently-panel { background: var(--bg-deep); border-radius: 14px; padding: 28px 30px 32px; }
+@media (max-width: 720px) {
+  .currently { grid-template-columns: 1fr; gap: 14px; }
+}
+
+/* ── .extras / .beyond-card (index.html only, no conflict) ── */
+.extras { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 56px; align-items: stretch; }
+.extras section { margin-top: 0; }
+.extras .entry { margin-bottom: 13px; }
+.extras .entry h3 { font-size: 16px; line-height: 1.25; }
+.extras .entry p { font-size: 15px; line-height: 1.4; }
+.beyond-card { background: color-mix(in oklch, var(--bg-deep) 76%, transparent); border: 1px solid var(--rule); border-radius: 12px; padding: 18px 18px 20px; }
+.beyond-card > h3 { font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mustard); margin: 0 0 14px; }
+.beyond-card .currently { display: block; }
+.beyond-card .currently .row { margin-bottom: 14px; }
+.beyond-card .currently .row:last-child { margin-bottom: 0; }
+@media (max-width: 720px) {
+  .extras { grid-template-columns: 1fr; gap: 34px; }
+}
+@media (max-width: 680px) {
+  .extras { grid-template-columns: 1fr; }
+}
+
+/* ── .comp-grid / .comp-item (index.html "core competencies", no conflict) ── */
+.comp-grid { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.comp-item { flex: 1 1 230px; min-width: min(100%, 230px); max-width: calc(50% - 6px); }
+.comp-item summary {
+  list-style: none; border: 1px solid var(--rule); border-radius: 999px; color: var(--cream);
+  cursor: pointer; font-family: var(--font-display); font-size: 17px; font-weight: 700;
+  letter-spacing: -0.01em; line-height: 1.15; padding: 12px 16px; transition: border-color .18s ease, background .18s ease;
+}
+.comp-item summary::-webkit-details-marker { display: none; }
+.comp-item summary::after { content: "+"; color: var(--mustard); float: right; font-family: var(--font-ui); margin-left: 10px; }
+.comp-item[open] summary { border-color: var(--mustard); background: color-mix(in oklch, var(--mustard) 10%, var(--bg-deep)); border-radius: 14px 14px 0 0; }
+.comp-item[open] summary::after { content: "-"; }
+.comp-item p { border: 1px solid var(--rule); border-top: 0; border-radius: 0 0 14px 14px; color: var(--faint); font-size: 15.5px; line-height: 1.45; margin: 0; max-width: none; padding: 12px 16px 14px; }
+
+/* ── .segmented (index.html project filter, no conflict) ── */
+.segmented { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; }
+.segmented button {
+  appearance: none; border: 1px solid var(--rule); border-radius: 999px;
+  background: color-mix(in oklch, var(--bg-deep) 72%, transparent); color: var(--faint);
+  cursor: pointer; font-family: var(--font-ui); font-size: 11px;
+  letter-spacing: 0.06em; padding: 9px 12px; text-transform: uppercase;
+  transition: border-color .18s ease, color .18s ease, background .18s ease;
+}
+.segmented button:hover, .segmented button.is-active { border-color: var(--mustard); color: var(--cream); background: color-mix(in oklch, var(--mustard) 14%, var(--bg-deep)); }
+@media (max-width: 680px) {
+  .segmented button { flex: 1 1 100%; text-align: left; }
+}
+
+/* ── .project-grid / .experiment-grid / .proj-card family (index.html only)
+   NOTE: `.experiment-grid` and `.proj-num` are defined but never applied in
+   index.html's current markup (experiments render inside `.project-grid`
+   using the shared `.category` label "Experiment" instead) — orphaned
+   rules, kept as-is. Same for `.proj-focus` / its `.sep` — no element uses
+   that class either. */
+.proj-intro { color: var(--muted); font-size: 18px; margin: 0 0 20px; max-width: 60ch; }
+.project-grid, .experiment-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.proj-card {
+  border: 2px solid var(--rule); border-radius: 10px; padding: 20px 22px;
+  margin-bottom: 20px; transition: border-color .18s ease;
+}
+.project-grid .proj-card, .experiment-grid .proj-card { margin-bottom: 0; }
+.proj-card:hover { border-color: var(--mustard); }
+.proj-card[hidden] { display: none; }
+.proj-num { color: var(--tomato); font-weight: 600; font-family: var(--font-ui); font-size: 14px; display: block; margin-bottom: 4px; }
+.category { color: var(--tomato); font-weight: 600; font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 8px; }
+.proj-card h3 { font-family: var(--font-display); font-size: 22px; font-weight: 700; margin: 0 0 6px; color: var(--cream); letter-spacing: -0.01em; }
+.proj-card p { margin: 0 0 10px; font-size: 18px; color: var(--muted); }
+.proj-card p:last-child { margin-bottom: 0; }
+.proj-sys { display: flex; flex-wrap: wrap; gap: 6px; font-family: var(--font-ui); font-size: 6px; letter-spacing: 0.04em; color: var(--faint); text-transform: none; }
+.proj-sys .chip { border: 1px solid var(--rule); border-radius: 999px; padding: 4px 7px; }
+.proj-sys .sep { color: var(--rule); margin: 0 2px; }
+.proj-focus { font-style: italic; font-size: 17px; color: var(--muted); }
+.proj-focus .sep { color: var(--rule); }
+.proj-link { margin-top: 10px; }
+.proj-link a { font-size: 17px; }
+.category-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.category-row .category { border: 1px solid var(--rule); border-radius: 999px; display: inline-block; margin: 0; padding: 4px 7px; }
+@media (max-width: 680px) {
+  .project-grid, .experiment-grid { grid-template-columns: 1fr; }
+}
+
+/* ── .speaking-card / .talk-meta / .talk-list / .talk-card (index.html only)
+   NOTE: `.talk-list` and `.talk-card` are defined but never applied — the
+   only speaking-related markup in index.html's current version uses
+   `.proj-card.speaking-card` + `.talk-meta`/`.event`. Orphaned rules, kept
+   as-is. */
+.speaking-card h3 { font-size: 24px; margin-bottom: 12px; }
+.talk-meta { display: grid; gap: 7px; margin: 0 0 14px; }
+.talk-meta .event { border-left: 2px solid var(--rule); color: var(--faint); font-size: 14px; line-height: 1.35; padding-left: 10px; }
+.talk-meta .event-title { color: var(--muted); display: block; font-family: var(--font-ui); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; }
+.talk-list { display: grid; gap: 16px; }
+.talk-card { border-left: 4px solid var(--mustard); background: color-mix(in oklch, var(--bg-deep) 62%, transparent); border-radius: 0 12px 12px 0; padding: 20px 22px; }
+.talk-card h3 { margin-bottom: 8px; }
+.talk-card .meta { color: var(--muted); font-size: 16px; line-height: 1.35; margin-bottom: 8px; }
+.talk-card p:not(.meta) { font-size: 17px; line-height: 1.45; }
+
+/* ── .exp-label / .exp-dot / .exp-card (index.html "experiments", only)
+   NOTE: none of these three classes are applied anywhere in index.html's
+   current markup (experiments render as ordinary `.proj-card`s inside
+   `.project-grid`). Orphaned rules, kept as-is. */
+.exp-label {
+  display: flex; align-items: center; gap: 11px;
+  margin: 36px 0 20px; padding-top: 20px; border-top: 2px solid var(--rule);
+  color: var(--mustard);
+}
+.exp-label .exp-dot { color: var(--mustard); display: inline-block; font-family: Georgia, serif; font-size: 0; line-height: 1; }
+.exp-label .exp-dot::before { content: "✽"; font-size: 15px; }
+.exp-card {
+  border: 2px solid var(--rule); border-radius: 10px; padding: 18px 20px;
+  margin-bottom: 20px;
+}
+.exp-card h3 { font-family: var(--font-display); font-size: 18px; font-weight: 700; margin: 0 0 4px; color: var(--cream); letter-spacing: -0.01em; }
+.exp-card p { margin: 0; font-size: 16px; line-height: 1.45; color: var(--muted); }
+.exp-card .proj-sys { margin-top: 8px; }
+
+/* ── .diagram-box (board-prep, fluxx-monday, home-dashboard, payment-sync — no conflict) ── */
+.diagram-box {
+  background: var(--bg-deep); border: 2px solid var(--mustard);
+  border-radius: 10px; padding: 24px; margin: 0 0 22px;
+}
+
+/* ── .inset / .ilabel (home-dashboard-system.html only) ── */
+.inset {
+  background: var(--bg-deep); border: 2px solid var(--rule);
+  border-radius: 10px; padding: 20px 22px; margin: 30px 0 22px;
+}
+.inset .ilabel {
+  color: var(--mustard); font-weight: 600; margin: 0 0 12px;
+  display: flex; align-items: center; gap: 11px;
+  padding-bottom: 8px; border-bottom: 2px solid var(--rule);
+}
+.inset .ilabel .dot { color: var(--mustard); display: inline-block; font-family: Georgia, serif; font-size: 0; line-height: 1; }
+.inset .ilabel .dot::before { content: "✽"; font-size: 15px; }
+.inset ul { margin: 0; padding: 0; list-style: none; }
+.inset li { color: var(--muted); font-size: 17px; margin-bottom: 8px; padding-left: 18px; position: relative; }
+.inset li:last-child { margin-bottom: 0; }
+.inset li::before { content: "→"; position: absolute; left: 0; color: var(--tomato); font-family: var(--font-ui); font-weight: 600; }
+
+/* ── .ref-table (+ .src / .mirror / .note) — fluxx-monday-operational-layer.html only ── */
+.ref-table { width: 100%; border-collapse: collapse; font-size: 16px; font-variant-numeric: tabular-nums; }
+.ref-table thead th {
+  font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.10em; text-transform: uppercase;
+  color: var(--mustard); font-weight: 600; text-align: left; padding: 0 14px 10px;
+  border-bottom: 2px solid var(--rule);
+}
+.ref-table tbody td { padding: 10px 14px; color: var(--muted); vertical-align: top; border-bottom: 1px solid var(--rule); }
+.ref-table tbody tr:last-child td { border-bottom: none; }
+.ref-table .src { color: var(--cream); font-weight: 600; }
+.ref-table .mirror { color: var(--muted); }
+.ref-table .note { font-size: 14px; color: var(--faint); font-style: normal; margin-top: 2px; }
+
+/* ── .note (board-prep, fluxx-monday, home-dashboard, payment-sync — no conflict)
+   NOTE: `.ref-table .note` above overrides these two declarations
+   (font-style, margin-top) when `.note` is nested inside `.ref-table`,
+   exactly as in the source fluxx-monday-operational-layer.html stylesheet. */
+.note { font-size: 15px; color: var(--faint); font-style: italic; margin-top: 48px; }
+
+/* ── .more-cases / .case-links / .case-link-row / .cn
+   (board-prep, fluxx-monday, home-dashboard, journalism-atlas, payment-sync — no conflict) ── */
+.more-cases { margin-top: 52px; }
+.case-links { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+.case-link-row { display: flex; align-items: baseline; gap: 12px; }
+.case-link-row .cn { font-family: var(--font-ui); font-size: 13px; color: var(--tomato); font-weight: 600; flex-shrink: 0; }
+.case-link-row a { font-size: 18px; }
+
+/* ── footer / .links / .loc ─────────────────────────────────
+   Genuinely used only on index.html and bsh.html.
+   index.html: footer margin-top 66px; no `.loc` element exists in current
+     markup (orphaned rule, kept as-is).
+   bsh.html: footer margin-top 64px; `.loc` is used ("Brooklyn, NY").
+   board-prep / fluxx-monday / home-dashboard / payment-sync also each
+     define a `footer { margin-top: 56px; ... }` rule, but none of those
+     pages contain a `<footer>` element in their current markup — orphaned
+     rules on all four, kept as `.footer--case` here rather than discarded.
+   journalism-atlas-dashboard.html defines no footer/.links rule at all. */
+footer { margin-top: 66px; padding-top: 28px; border-top: 2px solid var(--rule); }
+.footer--bsh { margin-top: 64px; }
+.footer--case { margin-top: 56px; }
+.links { display: flex; flex-wrap: wrap; gap: 10px 22px; font-size: 18px; }
+.loc { margin-top: 24px; font-size: 14px; color: var(--mustard); font-weight: 600; }
+
+/* ── .ph (index.html only)
+   NOTE: defined but never applied anywhere in index.html's current
+   markup — orphaned rule, kept as-is. */
+.ph {
+  background: repeating-linear-gradient(45deg, var(--bg-deep) 0 12px, oklch(0.4 0.085 152) 12px 24px);
+  border: 2px solid var(--mustard); display: flex; align-items: center; justify-content: center;
+  color: var(--mustard); font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.06em; font-weight: 600;
+}
+
+/* ── Deck / slide viewer (bsh.html + journalism-atlas-dashboard.html, no conflict) ── */
+.deck { margin-top: 52px; margin-bottom: 52px; }
+.deck-inner { max-width: 960px; margin: 0 auto; padding: 0 32px; }
+.deck .label { max-width: 680px; margin-left: auto; margin-right: auto; }
+.slide-viewer { margin: 0 auto; }
+.slide-viewer img { width: 100%; aspect-ratio: 16/9; object-fit: contain; border-radius: 10px; border: 2px solid var(--rule); display: block; background: oklch(0.22 0.05 153); }
+.slide-controls { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
+.slide-btn { background: none; border: 2px solid var(--rule); color: var(--cream); font-family: "Bricolage Grotesque", sans-serif; font-weight: 700; font-size: 15px; padding: 8px 18px; border-radius: 8px; cursor: pointer; transition: border-color .18s ease, color .18s ease; }
+.slide-btn:hover { border-color: var(--mustard); color: var(--mustard); }
+.slide-btn:disabled { opacity: .3; cursor: default; }
+.slide-btn:disabled:hover { border-color: var(--rule); color: var(--cream); }
+.slide-counter { color: var(--faint); font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.08em; }
+
+/* ── .feat (bsh.html only) ── */
+.feat { display: grid; gap: 16px; margin: 0; padding: 0; list-style: none; }
+.feat li { display: grid; grid-template-columns: 22px 1fr; gap: 12px; color: var(--muted); font-size: 18px; align-items: baseline; max-width: 58ch; }
+.feat li .mk { color: var(--tomato); font-family: var(--font-ui); font-weight: 600; }
+.feat li strong { color: var(--cream); font-weight: 600; }
+
+/* ── .cta / .btn (bsh.html only) ── */
+.cta {
+  margin-top: 54px; background: var(--mustard); color: var(--bg-deep);
+  border-radius: 20px; padding: 34px 32px 36px;
+}
+.cta h2 { font-family: "Bricolage Grotesque", sans-serif; font-size: 26px; font-weight: 800; margin: 0 0 8px; letter-spacing: -0.015em; color: var(--bg-deep); }
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--bg-deep); color: var(--mustard);
+  font-family: "Bricolage Grotesque", sans-serif; font-weight: 700; font-size: 18px;
+  padding: 15px 26px; border-radius: 999px; text-decoration: none;
+  transition: transform .15s ease, background .18s ease;
+}
+.btn:hover { transform: translateY(-2px); background: oklch(0.27 0.07 154); }
+.btn .arr { font-size: 17px; }
+
+/* ── .explore (bsh.html only) ── */
+.explore { margin-top: 40px; padding: 24px 26px; border: 2px solid var(--rule); border-radius: 16px; }
+.explore p { margin: 0; color: var(--muted); font-size: 18px; max-width: none; }
+.explore strong { color: var(--cream); font-weight: 600; }
+
+/* ── a.link (bsh.html only) ─────────────────────────────────
+   bsh.html scopes the base link treatment (see base.css) to `a.link`
+   instead of bare `a`. Kept here verbatim as bsh.html's own override, since
+   it is a per-page class rather than a shared component. */
+a.link { color: var(--mustard); text-decoration: none; box-shadow: inset 0 -2px 0 var(--rule); transition: box-shadow .18s ease, color .18s ease; padding-bottom: 1px; }
+a.link:hover { color: var(--cream); box-shadow: inset 0 -2px 0 var(--mustard); }
+a.link {
+  box-shadow: none; padding-bottom: 2px;
+  background-image: linear-gradient(var(--mustard), var(--mustard)), linear-gradient(var(--rule), var(--rule));
+  background-repeat: no-repeat; background-position: 0 100%, 0 100%;
+  background-size: 0% 2px, 100% 2px;
+  transition: background-size .28s cubic-bezier(.2,.6,.2,1), color .18s ease;
+}
+a.link:hover { color: var(--cream); box-shadow: none; background-size: 100% 2px, 100% 2px; }
+
+/* ── Typography fine-tuning (combined selectors, index.html) ── */
+.mono, .yr, .proj-num, .currently .row { font-variant-numeric: tabular-nums; }
+.lede, .name { font-feature-settings: "kern" 1, "liga" 1, "calt" 1; }
+
+/* ── privacy.html-specific document rules (h1, h2, .updated, ul/li, hr, footer) ──
+   NOTE (selector conflict): privacy.html's bare `h2` rule is a real styled
+   heading (font, size, color, margin) — unlike the shared `h2 { font-size:
+   inherit; font-weight: inherit; margin: 0; }` reset used by index.html,
+   bsh.html, and every projects/*.html page (7 files) for a decorative
+   heading pattern. Since 7 of 8 files that define `h2` use the reset, that
+   stays the default up top; privacy.html's real heading style is kept below
+   as `.h2--privacy` rather than silently overwriting the shared reset.
+   Same pattern for `footer`: privacy.html's is a plain color/font-size
+   rule with no spacing, unlike the shared footer (margin-top/padding-top/
+   border-top) — kept as `.footer--privacy`. */
+h1 {
+  color: var(--mustard);
+  font-family: var(--font-display);
+  font-size: clamp(27px, 4.3vw, 39px);
+  font-weight: 800; letter-spacing: -0.02em; line-height: 1.1;
+  margin: 0 0 10px;
+}
+.h2--privacy {
+  font-family: var(--font-display);
+  font-size: 21px; font-weight: 700; letter-spacing: -0.01em;
+  margin: 40px 0 10px; color: var(--cream);
+}
+.updated { color: var(--faint); margin: 0 0 36px; }
+ul { color: var(--muted); padding-left: 22px; margin: 0 0 16px; }
+li { margin-bottom: 8px; }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 44px 0 24px; }
+.footer--privacy { color: var(--faint); font-size: 16px; }

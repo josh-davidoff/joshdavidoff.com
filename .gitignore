@@ -10,3 +10,9 @@ uploads/
 
 # Sky Window is a separate project with its own repo/deploy (see its DEPLOY.md)
 flight tracker sky window/
+
+# Design system build + Claude Design sync artifacts
+design-system/node_modules/
+design-system/dist/
+ds-bundle/
+.ds-sync/

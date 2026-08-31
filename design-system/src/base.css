@@ -1,0 +1,96 @@
+@import "./tokens.css";
+
+/* ── Reset / document ─────────────────────────────────────
+   Identical across every source page (index.html, bsh.html, privacy.html,
+   projects/*.html). Raw font-family strings replaced with --font-* tokens. */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--cream);
+  font-family: var(--font-body);
+  font-size: 20px; line-height: 1.62;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+}
+
+/* ── Base typography ───────────────────────────────────── */
+p { margin: 0 0 22px; max-width: 60ch; text-wrap: pretty; }
+h2 { font-size: inherit; font-weight: inherit; margin: 0; }
+
+/* ── Links ─────────────────────────────────────────────────
+   Source pages define the link treatment twice: a plain inset-underline
+   rule early in the stylesheet, then an "Animated link underline" rule
+   later that overrides it (the animated version is what actually renders,
+   since it comes later in the cascade at equal specificity). Both are kept
+   here, in source order, so the final computed style matches the site
+   byte-for-byte.
+
+   NOTE (selector conflict): index.html, privacy.html, and every projects/*.html
+   page style bare `a`. bsh.html instead scopes this whole treatment to
+   `a.link` (its site-nav / back-link anchors are styled separately and never
+   get the underline animation). That is a real per-page difference, not
+   duplication — bsh.html's markup relies on `a` NOT carrying this by default.
+   Kept here as the shared default (`a`); consuming bsh-style markup should
+   apply an equivalent `.link` class on top if bare-`a` styling is unwanted. */
+a {
+  color: var(--mustard); text-decoration: none;
+  box-shadow: inset 0 -2px 0 var(--rule);
+  transition: box-shadow .18s ease, color .18s ease;
+  padding-bottom: 1px;
+}
+a:hover { color: var(--cream); box-shadow: inset 0 -2px 0 var(--mustard); }
+a:focus-visible { outline: 2px solid var(--mustard); outline-offset: 3px; border-radius: 2px; }
+
+/* Animated link underline (draws in from the left) — overrides the rule above */
+a {
+  box-shadow: none;
+  padding-bottom: 2px;
+  background-image: linear-gradient(var(--mustard), var(--mustard)), linear-gradient(var(--rule), var(--rule));
+  background-repeat: no-repeat;
+  background-position: 0 100%, 0 100%;
+  background-size: 0% 2px, 100% 2px;
+  transition: background-size .28s cubic-bezier(.2,.6,.2,1), color .18s ease;
+}
+a:hover { color: var(--cream); box-shadow: none; background-size: 100% 2px, 100% 2px; }
+
+/* arrow nudge on case / CTA links (index.html, and arr-back on projects/*.html) */
+.arr { display: inline-block; transition: transform .2s cubic-bezier(.2,.6,.2,1); }
+a:hover .arr { transform: translateX(4px); }
+a:hover .arr-back { transform: translateX(-4px); }
+
+/* ── Selection ─────────────────────────────────────────── */
+::selection { background: var(--mustard); color: var(--bg-deep); }
+
+/* ── View transitions (cross-page morph) ──────────────────── */
+@view-transition { navigation: auto; }
+
+/* ── Reduced motion / scroll behavior ─────────────────────
+   index.html additionally sets `html { scroll-padding-top: 66px; }` and
+   `section[id] { scroll-margin-top: 66px; }` for its sticky nav — those are
+   page-specific (tied to index's sticky nav height) and live in
+   components.css next to .site-nav rather than here. */
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+
+/* ── Entrance + scroll reveal (index.html only; kept as shared base utility) ── */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    opacity: 0; transform: translateY(12px);
+    transition: opacity .62s cubic-bezier(.2,.6,.2,1), transform .62s cubic-bezier(.2,.6,.2,1);
+  }
+  [data-reveal].in { opacity: 1; transform: none; }
+}
+
+/* ── Film grain (very subtle texture) ─────────────────────── */
+body::after {
+  content: ""; position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+  opacity: 0.04; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+/* ── .mono utility ─────────────────────────────────────────
+   Base declaration is identical on every page; index.html additionally
+   folds `.mono` into a tabular-nums rule shared with `.yr`, `.proj-num`,
+   `.currently .row` — that combined selector lives in components.css next
+   to those components, this is just the standalone utility. */
+.mono { font-family: var(--font-ui); font-size: 12.5px; letter-spacing: 0.12em; text-transform: uppercase; }
