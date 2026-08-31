@@ -54,5 +54,6 @@ export {
 } from "./components/SegmentedFilter";
 export { SiteFooter, type SiteFooterProps } from "./components/SiteFooter";
 export { SiteNav, type SiteNavLink, type SiteNavProps } from "./components/SiteNav";
+export { SiteRoot, type SiteRootProps } from "./components/SiteRoot";
 export { TalkCard, type TalkCardProps, type TalkEvent } from "./components/TalkCard";
 export { TalkListCard, type TalkListCardProps } from "./components/TalkListCard";

@@ -1,0 +1,26 @@
+{
+  "pkg": "@joshdavidoff/site-ds",
+  "globalName": "JDSiteDS",
+  "shape": "package",
+  "buildCmd": "npm run build",
+  "srcDir": "src",
+  "tsconfig": "tsconfig.json",
+  "cssEntry": "dist/components.css",
+  "tokensGlob": "dist/tokens.css",
+  "docsDir": "docs",
+  "provider": {
+    "component": "SiteRoot"
+  },
+  "overrides": {
+    "RefTable": {
+      "cardMode": "column"
+    },
+    "Hero": {
+      "cardMode": "column"
+    },
+    "SiteNav": {
+      "cardMode": "column"
+    }
+  },
+  "readmeHeader": ".design-sync/conventions.md"
+}

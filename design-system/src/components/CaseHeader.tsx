@@ -11,6 +11,14 @@ export interface CaseHeaderProps {
   /** Optional dek/summary line rendered as `p.subtitle`. */
   subtitle?: ReactNode;
   /** Additional class name(s) appended to the `<header>` element. */
+  /**
+   * Which page shape this header belongs to. `"case"` (the default) is the
+   * case-study scale used on `/projects/*`; `"bsh"` is the larger talk-deck
+   * scale, which the extracted stylesheet carries as `.title--bsh` /
+   * `.subtitle--bsh`.
+   */
+  variant?: "case" | "bsh";
+  /** Additional class name(s) appended to the `header` element. */
   className?: string;
 }
 
@@ -19,7 +27,9 @@ export interface CaseHeaderProps {
  * decorative `.dot` glyph), the `h1.title`, and the optional `p.subtitle`.
  */
 export function CaseHeader(props: CaseHeaderProps) {
-  const { kicker, title, subtitle, className } = props;
+  const { kicker, title, subtitle, variant, className } = props;
+  const titleClass = variant === "bsh" ? "title title--bsh" : "title";
+  const subtitleClass = variant === "bsh" ? "subtitle subtitle--bsh" : "subtitle";
 
   return (
     <header className={className}>
@@ -27,8 +37,8 @@ export function CaseHeader(props: CaseHeaderProps) {
         <span className="dot" aria-hidden="true"></span>
         {kicker}
       </p>
-      <h1 className="title">{title}</h1>
-      {subtitle !== undefined ? <p className="subtitle">{subtitle}</p> : null}
+      <h1 className={titleClass}>{title}</h1>
+      {subtitle !== undefined ? <p className={subtitleClass}>{subtitle}</p> : null}
     </header>
   );
 }

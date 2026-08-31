@@ -13,6 +13,20 @@ body {
   -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
 }
 
+/* ── Theme root ───────────────────────────────────────────
+   The site applies its ground and body type to <body> directly, which only
+   works when the design system owns the whole document. `.site-root` carries
+   the same declarations so components mounted inside an arbitrary container
+   still get the dark ground and editorial type they are designed against —
+   without it, cream-on-white text is effectively invisible. */
+.site-root {
+  background: var(--bg); color: var(--cream);
+  font-family: var(--font-body);
+  font-size: 20px; line-height: 1.62;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+}
+
 /* ── Base typography ───────────────────────────────────── */
 p { margin: 0 0 22px; max-width: 60ch; text-wrap: pretty; }
 h2 { font-size: inherit; font-weight: inherit; margin: 0; }

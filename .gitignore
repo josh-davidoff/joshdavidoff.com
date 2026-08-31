@@ -16,3 +16,8 @@ design-system/node_modules/
 design-system/dist/
 ds-bundle/
 .ds-sync/
+
+# design-sync machine state (durable inputs under .design-sync/ ARE committed)
+.design-sync/.cache/
+.design-sync/learnings/
+.design-sync/node_modules

@@ -31,6 +31,23 @@ export interface SiteNavProps {
   /** Ordered list of links rendered in `.site-nav-links`. */
   links: SiteNavLink[];
   /** Additional class name(s) appended after the base `site-nav` class. */
+  /**
+   * Which page shape this nav belongs to. `"home"` (the default) matches the
+   * home page, where the wordmark starts hidden and is revealed on scroll;
+   * `"case"` uses the always-visible wordmark of the case-study and talk pages.
+   */
+  variant?: "home" | "case";
+  /**
+   * Whether the wordmark is visible. Only meaningful when `variant` is
+   * `"home"`, where the wordmark is hidden by default (`opacity: 0`) and the
+   * site reveals it with scroll JS once the hero name scrolls away.
+   *
+   * **Set this to `true` for any static layout.** Without it the wordmark is
+   * present but fully transparent, which reads as a missing logo rather than
+   * an intentional pre-scroll state.
+   */
+  nameVisible?: boolean;
+  /** Additional class name(s) appended after the base `site-nav` class. */
   className?: string;
 }
 
@@ -40,13 +57,19 @@ export interface SiteNavProps {
  * `.site-nav-links` link group.
  */
 export function SiteNav(props: SiteNavProps) {
-  const { name, homeHref, links, className } = props;
+  const { name, homeHref, links, variant, nameVisible, className } = props;
   const classes = ["site-nav", className].filter(Boolean).join(" ");
+  const nameClasses = [
+    variant === "case" ? "site-nav-name--case" : "site-nav-name",
+    variant !== "case" && nameVisible ? "visible" : null,
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <nav className={classes} aria-label="Site navigation">
       <div className="site-nav-inner">
-        <a className="site-nav-name" href={homeHref}>
+        <a className={nameClasses} href={homeHref}>
           <span className="nav-dot" aria-hidden="true"></span>
           {name}
         </a>
