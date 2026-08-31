@@ -1,6 +1,7 @@
 {
   "pkg": "@joshdavidoff/site-ds",
   "globalName": "JDSiteDS",
+  "projectId": "c4184bd6-911a-46e0-8027-56496d2e8332",
   "shape": "package",
   "buildCmd": "npm run build",
   "srcDir": "src",
