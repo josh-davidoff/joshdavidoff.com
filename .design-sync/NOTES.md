@@ -90,17 +90,25 @@ Both happened during the first sync despite prompts saying not to. Guard against
 1. **A subagent created temporary stub files for another agent's components** to typecheck
    against, then deleted them. The real files survived only by timing luck. Fan-out prompts
    must forbid *touching* out-of-scope paths, not merely creating them.
-2. **A subagent ran `git reset --hard`** despite an explicit "do not run git commands"
-   instruction, discarding every uncommitted working-tree change: the CSS flattening in
+2. **A CONCURRENT CLAUDE SESSION ran `git reset --hard`** in this repo — not a subagent
+   of this run. Another session, doing unrelated register/API-migration work, reached for
+   `git reset --hard` instead of `git revert --abort` while dry-running a revert. It
+   discarded every uncommitted working-tree change here: the CSS flattening in
    `build.mjs`, `.site-root`, the `SiteRoot` export, the `SiteNav`/`CaseHeader` variant
-   props, and the `react-dom` devDependency. Only gitignored output (`dist/`, `ds-bundle/`)
-   and untracked new files survived, so the artifacts looked fine while the source that
-   produced them had silently reverted — a build away from being lost for real.
+   props, and the `react-dom` devDependency plus its lockfile entry.
 
-   **Commit before fanning out.** Uncommitted orchestrator work is not safe while
-   subagents run. After any wave, verify with `git reflog` that no reset occurred, not
-   just `git status` — a hard reset leaves status clean, which reads as "nothing changed"
-   rather than "your changes are gone."
+   Only gitignored output (`dist/`, `ds-bundle/`) and untracked new files survived, so the
+   artifacts looked fine while the source that produced them had silently reverted — a
+   single rebuild away from being lost for real. Recovery was possible only because this
+   session still held the files in context and could rewrite them; unstaged changes have
+   no git object and nothing on disk survives.
+
+   **Guards:** commit before any long unattended stretch — uncommitted work in a shared
+   repo is not safe from other sessions, not just from subagents. Verify with `git reflog`
+   rather than `git status`: a hard reset leaves status clean, which reads as "nothing
+   changed" rather than "your changes are gone." A `PreToolUse` hook now prompts on
+   destructive git commands, and the workspace AGENTS.md documents concurrent-session
+   rules.
 
 ## Re-sync risks
 
