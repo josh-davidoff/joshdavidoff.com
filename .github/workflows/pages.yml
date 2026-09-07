@@ -1,0 +1,90 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # Stage only what belongs on the public site.
+      #
+      # This exclude list mirrors, one for one, the rsync excludes that the retired
+      # scripts/deploy-site.sh used, so the published site is exactly what the droplet
+      # served. building/ and stack/ are excluded because commit 13a2a6e retired those
+      # pages; they stay in the repo as source but are not served, which is why
+      # https://joshdavidoff.com/building/ returns 404 today.
+      #
+      # NOT HANDLED YET: /sky/. Sky Window is a separate project served from the same
+      # domain off the droplet, and it is gitignored here. Before the DNS cutover it
+      # must move to its own hostname and this workflow must publish a redirect at
+      # /sky/, or that URL breaks. See infrastructure/deploy-decoupling-plan.md.
+      - name: Stage site files
+        run: |
+          mkdir -p _site
+          rsync -a \
+            --exclude '.git/' \
+            --exclude '.gitignore' \
+            --exclude '.gitattributes' \
+            --exclude '.gitmodules' \
+            --exclude '.github/' \
+            --exclude '.DS_Store' \
+            --exclude '*.zip' \
+            --exclude '*.docx' \
+            --exclude 'scripts/' \
+            --exclude 'screenshots/' \
+            --exclude '_review/' \
+            --exclude '.thumbnail' \
+            --exclude 'AGENTS.md' \
+            --exclude 'archive/' \
+            --exclude 'design-canvas.jsx' \
+            --exclude 'Directions.html' \
+            --exclude 'directions/' \
+            --exclude 'uploads/' \
+            --exclude 'building/' \
+            --exclude 'stack/' \
+            --exclude 'flight tracker sky window/' \
+            --exclude 'design-system/' \
+            --exclude 'ds-bundle/' \
+            --exclude '.ds-sync/' \
+            --exclude '.design-sync/' \
+            ./ _site/
+
+      # Fail loudly rather than publishing a site missing a load-bearing file.
+      # The Search Console verification file gates Google publishing for the
+      # Gmail CLI's OAuth consent screen, and privacy.html is its privacy policy.
+      - name: Verify load-bearing files survived staging
+        run: |
+          for f in index.html privacy.html googlea100f475dc6193a2.html robots.txt bsh.html; do
+            [ -f "_site/$f" ] || { echo "MISSING from artifact: $f"; exit 1; }
+          done
+          for d in assets projects; do
+            [ -d "_site/$d" ] || { echo "MISSING directory: $d"; exit 1; }
+          done
+          for f in AGENTS.md scripts/deploy-site.sh building/index.html stack/index.html; do
+            [ -e "_site/$f" ] && { echo "LEAKED into artifact: $f"; exit 1; }
+          done
+          echo "artifact contents verified"
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4
