@@ -53,3 +53,10 @@ Single-file `tee` pushes over SSH are discouraged. They bypass the script's safe
 ```bash
 curl -s -o /dev/null -w "%{http_code}" https://joshdavidoff.com/
 ```
+## Before deploying to the shared droplet (PaaS)
+
+This service runs on the shared DigitalOcean droplet (REDACTED-HOST), operated as a small PaaS: independent services behind one nginx, each in its own account, unit, port, and venv. Before any deploy here:
+
+1. **Check for a concurrent deploy and claim the marker:** `/Users/josh/codex/infrastructure/monitoring/deploy-lock.sh status`, then `acquire "<what you are deploying>"`, and `release` when done. Prevents the collision that happened on 2026-09-04.
+2. Follow the SSH connection budget and deploy discipline in `/Users/josh/codex/AGENTS.md`.
+3. Health, HTTP status, and TLS expiry are watched by `/Users/josh/codex/infrastructure/monitoring/` (a Mac-side check that alerts via `alerter`, plus an on-host status page). Verify the affected endpoint after deploying.
