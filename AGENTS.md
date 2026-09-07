@@ -2,10 +2,11 @@
 
 Static personal site. Hand-written HTML with no build step.
 
-**This repository is slated to be published publicly.** Do not commit host
-addresses, server paths, credentials, private notes, or anything else that
-should not be world-readable. Infrastructure details live in the private
-workspace under `infrastructure/`, not here.
+**This repository is public.** Do not commit host addresses, server paths,
+credentials, private notes, or anything else that should not be world-readable.
+Infrastructure details live in the private workspace under `infrastructure/`, not
+here. Its history was purged before publication, so anything added now is public
+permanently.
 
 Deployment inventory key: `joshdavidoff_site` in the workspace deployment
 inventory (`infrastructure/deployments.yaml`, private). The nested Sky Window
@@ -17,21 +18,22 @@ unprivileged account and `sudo`, and do not loop failed connection attempts.
 
 ## Git
 
-The site is a git repo (initial commit 2026-08-29) with a GitHub remote:
-[github.com/josh-davidoff/jd-site](https://github.com/josh-davidoff/jd-site)
-(`origin`, HTTPS, auth via `gh`).
+The site is a git repo (initial commit 2026-08-29) with a public GitHub remote:
+[github.com/josh-davidoff/joshdavidoff.com](https://github.com/josh-davidoff/joshdavidoff.com)
+(`origin`, HTTPS, auth via `gh`), named for its domain.
 
 `.gitignore` excludes `Directions.html`/`directions/` (personal notes),
-`uploads/` (scratch), and `flight tracker sky window/` (Sky Window is a
-separate project with its own repository and deploy doc; it is not tracked
-here).
+`uploads/` (scratch), `flight tracker sky window/` (Sky Window has its own
+repository), and `building/`/`stack/` (retired pages, kept on disk but out of the
+repo).
 
 ## Deployment
 
-The site is migrating to GitHub Pages, which deploys on push to `main`. Until
-that cutover completes, it deploys to the shared droplet via the rsync script
-described below. The migration plan is
-`infrastructure/deploy-decoupling-plan.md` in the private workspace.
+The site deploys to GitHub Pages on push to `main` via
+`.github/workflows/pages.yml`. That build is live and verified, but **DNS still
+points `joshdavidoff.com` at the droplet**, so the droplet is still what visitors
+see. The cutover waits on Sky Window moving to its own hostname, because Pages
+cannot proxy its flight API. Plan: `infrastructure/deploy-decoupling-plan.md`.
 
 Rules that apply regardless of how deploy is wired:
 
@@ -39,18 +41,17 @@ Rules that apply regardless of how deploy is wired:
 - Treat a production deploy as requiring explicit per-run approval from Josh.
 - Verify the public endpoint after deploying, before reporting the task complete.
 
-### Deploying (current route: SSH/rsync, being retired)
+### Deploying
 
-Run `scripts/deploy-site.sh` from anywhere in the repo. It reads the host and
-web root from its own configuration, refuses a dirty working tree, stamps the
-deployed commit, excludes the Sky Window source, and protects the deployed
-`/sky` files from `--delete`.
+To GitHub Pages: `git push origin main`. No SSH.
 
-Always use that script rather than copying its rsync command. Single-file `tee`
-pushes over SSH are discouraged: they bypass the script's safety checks and
-leave the deployed site diverging from the repository.
+To the droplet, which is still the live route until DNS moves: the rsync script
+now lives outside this repo, in the private workspace under `infrastructure/`,
+because it names the host. It refuses a dirty working tree and stamps the deployed
+commit. Single-file `tee` pushes over SSH are discouraged: they bypass its safety
+checks and leave the deployed site diverging from the repository.
 
-Sky Window is deployed independently from its own project.
+Sky Window is deployed independently from its own repository.
 
 ## Nginx config (droplet route only)
 
@@ -62,11 +63,13 @@ Sky Window is deployed independently from its own project.
   - If user input, auth, or form components are ever added, revisit whether JS
     should be removed entirely to deploy `script-src 'none'`.
 
-## Unpublished pages
+## Retired pages
 
-`building/` and `stack/` are drafts. They are excluded from deployment and
-their nav links are removed, so they are not reachable on the live site. They
-remain in the repository as source.
+`building/` and `stack/` are retired. Their nav links are removed and they are
+excluded from deployment, so both return 404 on the live site. Their source was
+removed from this repository before publication and is gitignored; the files stay
+on disk so `register/bin/render.py` can regenerate them if `RENDER_TARGETS`
+re-enables those outputs.
 
 ## Verify
 
