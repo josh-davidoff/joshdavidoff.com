@@ -31,10 +31,10 @@ jobs:
       # pages; they stay in the repo as source but are not served, which is why
       # https://joshdavidoff.com/building/ returns 404 today.
       #
-      # NOT HANDLED YET: /sky/. Sky Window is a separate project served from the same
-      # domain off the droplet, and it is gitignored here. Before the DNS cutover it
-      # must move to its own hostname and this workflow must publish a redirect at
-      # /sky/, or that URL breaks. See infrastructure/deploy-decoupling-plan.md.
+      # /sky/ is a redirect. Sky Window moved to its own hostname
+      # (sky.joshdavidoff.com) because Pages cannot proxy its flight API; sky/index.html
+      # here keeps the old URL working. Its source stays gitignored in this tree and
+      # lives in its own repository.
       - name: Stage site files
         run: |
           mkdir -p _site
@@ -77,6 +77,7 @@ jobs:
           for d in assets projects; do
             [ -d "_site/$d" ] || { echo "MISSING directory: $d"; exit 1; }
           done
+          [ -f "_site/sky/index.html" ] || { echo "MISSING: sky/index.html redirect"; exit 1; }
           for f in AGENTS.md scripts/deploy-site.sh building/index.html stack/index.html; do
             [ -e "_site/$f" ] && { echo "LEAKED into artifact: $f"; exit 1; }
           done

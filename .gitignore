@@ -21,3 +21,14 @@ ds-bundle/
 .design-sync/.cache/
 .design-sync/learnings/
 .design-sync/node_modules
+
+# Retired pages, kept on disk but out of the repo.
+#
+# /building/ and /stack/ were unpublished (nav links removed, excluded from
+# deployment, both return 404 live). Their source was removed from this repo before
+# it was published publicly, because one entry describes credential hygiene problems
+# in this workspace. The files stay here so register/bin/render.py can regenerate
+# them if RENDER_TARGETS re-enables those outputs. To publish them, delete these two
+# lines and commit.
+building/
+stack/
