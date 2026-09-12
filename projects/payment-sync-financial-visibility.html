@@ -153,23 +153,23 @@
     <a class="back mono" href="/">← joshdavidoff.com</a>
 
     <header>
-      <p class="kicker mono"><span class="dot" aria-hidden="true"></span>Case Study</p>
+      <p class="kicker mono"><span class="dot" aria-hidden="true"></span>Case study</p>
       <h1 class="title">Payment sync and financial visibility</h1>
-      <p class="subtitle">High-control payment workflows connecting Fluxx payment records to team trackers and Power BI dashboards, with a Bill.com invoice intake layer.</p>
+      <p class="subtitle">Controlled payment workflows connecting Fluxx payment records to team trackers and Power BI dashboards, with a Bill.com invoice intake layer.</p>
     </header>
 
     <section>
-      <h2 class="label mono"><span class="star" aria-hidden="true"></span>The Problem</h2>
-      <p class="body">Payment data had to serve several needs at once: day-to-day tracking, financial reporting, and budget visibility. Fluxx was the source of truth, but staff still needed easier ways to access live, manipulable data without relying on stale spreadsheet exports.</p>
+      <h2 class="label mono"><span class="star" aria-hidden="true"></span>The problem</h2>
+      <p class="body">Payment data had to serve several needs at once: day-to-day tracking, financial reporting, and budget visibility. Fluxx was the source of truth, but staff still needed easier ways to access live data they could sort and filter without relying on stale spreadsheet exports.</p>
     </section>
 
     <section>
-      <h2 class="label mono"><span class="star" aria-hidden="true"></span>What I Built</h2>
+      <h2 class="label mono"><span class="star" aria-hidden="true"></span>What I built</h2>
       <p class="body">A controlled sync layer from Fluxx to Monday and SharePoint. Monday gives the team an operational view, and SharePoint Lists provides structured data for Power BI. A narrow set of fields, including state and due date, can update back through restricted paths, while Fluxx remains authoritative. An automated email layer sends invoices to Bill.com for processing.</p>
     </section>
 
     <section>
-      <h2 class="label mono"><span class="star" aria-hidden="true"></span>System Flow</h2>
+      <h2 class="label mono"><span class="star" aria-hidden="true"></span>System flow</h2>
       <div class="diagram-box">
         <svg viewBox="0 0 520 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="System flow: Fluxx (source of truth) syncs via Power Automate to Monday for operational views, SharePoint for reporting lists, and Power BI for dashboards. A restricted path allows state and due-date writebacks to Fluxx." style="width:100%;max-width:520px;height:auto;display:block;margin:0 auto;">
           <defs>
@@ -181,7 +181,7 @@
             </marker>
           </defs>
           <rect x="10" y="35" width="100" height="36" rx="6" fill="none" stroke="#e3b23c" stroke-width="1.5"/>
-          <text x="60" y="58" text-anchor="middle" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="11" font-weight="600">Fluxx (SOT)</text>
+          <text x="60" y="58" text-anchor="middle" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="11" font-weight="600">Fluxx (system of record)</text>
           <rect x="170" y="35" width="120" height="36" rx="6" fill="none" stroke="#999" stroke-width="1.5"/>
           <text x="230" y="58" text-anchor="middle" fill="#999" font-family="Instrument Sans, sans-serif" font-size="11" font-weight="600">Power Automate</text>
           <line x1="110" y1="53" x2="165" y2="53" stroke="#869a6a" stroke-width="1.5" marker-end="url(#arr)"/>
@@ -204,13 +204,13 @@
     </section>
 
     <section>
-      <h2 class="label mono"><span class="star" aria-hidden="true"></span>What Made It Hard</h2>
-      <p class="body">Payments are high-risk. A missing record or stale status can cause chaos. The work was not just syncing data. It was designing clear authority rules and repair paths when something drifted.</p>
+      <h2 class="label mono"><span class="star" aria-hidden="true"></span>What made it hard</h2>
+      <p class="body">A sync error in payment data is one a grantee will notice. A missing record or a stale status ends up in a conversation with them. So most of the design is about authority and repair. Fluxx wins when two systems disagree. Only a few fields may flow back. When a record drifts there is a defined way to fix it without anyone editing three places by hand.</p>
     </section>
 
     <section>
-      <h2 class="label mono"><span class="star" aria-hidden="true"></span>What Changed</h2>
-      <p class="body">The team gained clearer payment visibility across systems, ditched clunky spreadsheets, and maintained Fluxx as the source of truth.</p>
+      <h2 class="label mono"><span class="star" aria-hidden="true"></span>What changed</h2>
+      <p class="body">Staff now check payment status in Monday and Power BI instead of an exported spreadsheet, and Fluxx is still the only place a payment gets edited.</p>
     </section>
 
     <p style="margin-top:52px;font-size:17px;"><a href="/#projects"><span class="arr arr-back" aria-hidden="true">←</span> All projects</a></p>

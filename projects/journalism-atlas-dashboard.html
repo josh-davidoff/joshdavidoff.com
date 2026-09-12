@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Journalism Research Dashboard — Josh Davidoff</title>
-<meta name="description" content="A local enrichment pipeline and review dashboard that helped a program team turn a flat creator spreadsheet into a browsable, evidence-aware research tool." />
-<meta property="og:title" content="Journalism Research Dashboard" />
+<title>Journalism research dashboard — Josh Davidoff</title>
+<meta name="description" content="A local enrichment pipeline and review dashboard that turned a flat spreadsheet of independent journalists into a browsable database with sources attached to every classification." />
+<meta property="og:title" content="Journalism research dashboard" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://joshdavidoff.com/projects/journalism-atlas-dashboard" />
   <meta property="og:image" content="https://joshdavidoff.com/assets/og-card.png" />
@@ -155,8 +155,8 @@
     <a class="back mono" href="/">← joshdavidoff.com</a>
 
     <header>
-      <p class="kicker mono"><span class="dot" aria-hidden="true"></span>Case Study</p>
-      <h1 class="title">Independent journalist dashboard</h1>
+      <p class="kicker mono"><span class="dot" aria-hidden="true"></span>Case study</p>
+      <h1 class="title">Journalism research dashboard</h1>
       <p class="subtitle">A research dashboard that made a database of independent journalists and creators easier to browse and assess.</p>
     </header>
   </div>
@@ -178,14 +178,19 @@
   <div class="wrap" style="padding-top:0;">
 
     <section>
-      <h2 class="label mono"><span class="star" aria-hidden="true"></span>The Problem</h2>
-      <p class="body">The program team had a long list of independent journalists and creators with just their names and outlets. This was not enough context to review the database with confidence. They needed me to enrich the data and make it easier to browse and assess.</p>
+      <h2 class="label mono"><span class="star" aria-hidden="true"></span>The problem</h2>
+      <p class="body">The program team had a long list of independent journalists and creators with just their names and outlets. This was not enough context to review the database with confidence. They asked whether I could fill in the gaps and make the list easier to browse and assess.</p>
     </section>
 
     <section>
-      <h2 class="label mono"><span class="star" aria-hidden="true"></span>What I Built</h2>
+      <h2 class="label mono"><span class="star" aria-hidden="true"></span>What I built</h2>
       <p class="body">I built a local enrichment workflow and a single-file browser dashboard. The pipeline starts with creator names and outlets, runs bounded web searches, extracts evidence, and classifies each record by beat, creator type, geography, confidence, and review status. Source URLs, snippets, rationale, and review flags stay attached to each record so reviewers can see why a classification was suggested.</p>
-      <p class="body">The dashboard embeds the merged 1,165-record dataset and gives staff summary stats, beat distribution, filters, sortable pagination, a detail drawer, evidence cards, editable classifications, reviewer notes, starring, and annotated CSV export.</p>
+      <p class="body">The dashboard embeds the merged 1,165-record dataset. A summary strip shows counts by beat and review status. Reviewers can filter and sort the table and open any record to read the evidence behind its classification. If they disagree they can correct the classification and leave a note. Records worth a second look get a star, and the annotated set exports back to CSV.</p>
+    </section>
+
+    <section>
+      <h2 class="label mono"><span class="star" aria-hidden="true"></span>What made it hard</h2>
+      <p class="body">Every classification shows the snippet and the one-line rationale it came from. Low confidence is a real status that sends a record to a person rather than a guess that gets exported.</p>
     </section>
 
     <p style="margin-top:52px;font-size:17px;"><a href="/#projects"><span class="arr arr-back" aria-hidden="true">←</span> All projects</a></p>
@@ -196,11 +201,16 @@
       '../assets/journalism-atlas/02-table.png',
       '../assets/journalism-atlas/03-detail-drawer.png'
     ];
+    const alts=[
+      'Dashboard overview',
+      'Record table with filters and beat counts',
+      'Detail drawer showing the evidence behind one record'
+    ];
     let current=0;
     function changeSlide(d){
       current=Math.max(0,Math.min(slides.length-1,current+d));
       document.getElementById('slide-img').src=slides[current];
-      document.getElementById('slide-img').alt='Screenshot '+(current+1);
+      document.getElementById('slide-img').alt=alts[current];
       document.getElementById('slide-counter').textContent=(current+1)+' / '+slides.length;
       document.getElementById('prev-btn').disabled=current===0;
       document.getElementById('next-btn').disabled=current===slides.length-1;

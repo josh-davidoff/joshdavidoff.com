@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Fluxx to Monday operational layer — Josh Davidoff</title>
-<meta name="description" content="A controlled shadow system giving staff usable workflow views in Monday without displacing Fluxx as the authoritative grants system." />
+<meta name="description" content="A controlled operational layer giving staff usable workflow views in Monday without displacing Fluxx as the authoritative grants system." />
 <meta property="og:title" content="Fluxx to Monday operational layer" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://joshdavidoff.com/projects/fluxx-monday-operational-layer" />
@@ -165,23 +165,23 @@
     <a class="back mono" href="/">← joshdavidoff.com</a>
 
     <header>
-      <p class="kicker mono"><span class="dot" aria-hidden="true"></span>Case Study</p>
+      <p class="kicker mono"><span class="dot" aria-hidden="true"></span>Case study</p>
       <h1 class="title">Fluxx to Monday operational layer</h1>
-      <p class="subtitle">A controlled mirror layer that surfaces critical grant tasks in user-friendly Monday views.</p>
+      <p class="subtitle">A controlled operational layer that surfaces grant tasks in Monday views staff will actually open, with Fluxx staying the system of record.</p>
     </header>
 
     <section>
-      <h2 class="label mono"><span class="star" aria-hidden="true"></span>The Problem</h2>
+      <h2 class="label mono"><span class="star" aria-hidden="true"></span>The problem</h2>
       <p class="body">Fluxx holds the authoritative grants data, but it lacks project management functionality. The team needed accessible views for reports, agreements, payments, and pipeline tracking without losing data discipline.</p>
     </section>
 
     <section>
-      <h2 class="label mono"><span class="star" aria-hidden="true"></span>What I Built</h2>
-      <p class="body">A controlled operational layer in Monday. Records in certain states sync from Fluxx into custom Monday boards, and designated fields write back. Staff receive notifications and access dynamic views to support planning and reduce anxiety around key grants-management functions.</p>
+      <h2 class="label mono"><span class="star" aria-hidden="true"></span>What I built</h2>
+      <p class="body">A controlled operational layer in Monday. Records in certain states sync from Fluxx into custom Monday boards, and designated fields write back. Staff get a notification when a report or agreement changes state and can plan from views that used to be locked inside Fluxx. Nobody needs a side spreadsheet to feel sure of the status.</p>
     </section>
 
     <section>
-      <h2 class="label mono"><span class="star" aria-hidden="true"></span>Object Rules</h2>
+      <h2 class="label mono"><span class="star" aria-hidden="true"></span>Object rules</h2>
       <div class="diagram-box">
         <table class="ref-table">
           <thead>
@@ -242,8 +242,8 @@
     </section>
 
     <section>
-      <h2 class="label mono"><span class="star" aria-hidden="true"></span>What I Learned</h2>
-      <p class="body">Shadow systems can be useful as a way to overcome hardcoded tool limitations. A correct implementation requires a clear purpose, strong guardrails, and extremely careful error handling and two-way sync.</p>
+      <h2 class="label mono"><span class="star" aria-hidden="true"></span>What I learned</h2>
+      <p class="body">Most of the design work went into the table above. For each object I had to decide what Monday may write back and what it may only display. Every write-back field is a place the two systems can disagree, so the list stays short and a failed sync has to be loud rather than silent.</p>
     </section>
 
     <p style="margin-top:52px;font-size:17px;"><a href="/#projects"><span class="arr arr-back" aria-hidden="true">←</span> All projects</a></p>

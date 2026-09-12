@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Home dashboard system — Josh Davidoff</title>
+<title>Bedside dashboard — Josh Davidoff</title>
 <meta name="description" content="A bedside OLED dashboard for Mets scores, weather, subway arrivals, calendar context, and smart-light controls. Built through AI-assisted prototyping across hardware, APIs, deployment, and physical controls." />
-<meta property="og:title" content="Home dashboard system" />
+<meta property="og:title" content="Bedside dashboard" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://joshdavidoff.com/projects/home-dashboard-system" />
   <meta property="og:image" content="https://joshdavidoff.com/assets/og-card.png" />
@@ -170,23 +170,23 @@
 
     <header>
       <p class="kicker mono"><span class="dot" aria-hidden="true"></span>Experiment</p>
-      <h1 class="title">Home dashboard system</h1>
+      <h1 class="title">Bedside dashboard</h1>
       <p class="subtitle">A vibecoded bedside display that turns the information I check every day into one small physical interface.</p>
     </header>
 
     <section>
-      <h2 class="label mono"><span class="star" aria-hidden="true"></span>Why I Built It</h2>
-      <p class="body">I wanted to be able to leave my phone outside of my bedroom without missing out on key modules like weather, subway arrivals, calendar, time, smart-light controls, and… obviously, the Mets score.</p>
+      <h2 class="label mono"><span class="star" aria-hidden="true"></span>Why I built it</h2>
+      <p class="body">I wanted to be able to leave my phone outside of my bedroom without missing out on the things I check anyway, like weather, subway arrivals, calendar, time, smart-light controls, and… obviously, the Mets score.</p>
     </section>
 
     <section>
-      <h2 class="label mono"><span class="star" aria-hidden="true"></span>What It Does</h2>
+      <h2 class="label mono"><span class="star" aria-hidden="true"></span>What it does</h2>
       <p class="body">The display pulls together live MLB data, weather and air quality, NYC subway arrivals, calendar events, Google Sheet data, LIFX scenes, and a short AI-generated weather summary. It includes night mode, burn-in mitigation, stale data fallbacks, background refreshes, BLE button controls, a phone web UI, and a DigitalOcean deployment.</p>
     </section>
 
     <section>
-      <h2 class="label mono"><span class="star" aria-hidden="true"></span>How I Built It With AI</h2>
-      <p class="body">This is a vibecoded prototyping project, not a claim of expertise in any of these technologies. I used language models to break the idea into modules, reason through unfamiliar libraries, debug hardware and server issues, and keep extending the system while learning in motion.</p>
+      <h2 class="label mono"><span class="star" aria-hidden="true"></span>How I built it with AI</h2>
+      <p class="body">This is a vibecoded prototyping project, not a claim of expertise in any of these technologies. I used language models to break the idea into pieces, reason through unfamiliar libraries, debug hardware and server issues, and keep adding to it as I figured out what I wanted.</p>
       <p class="body">The architecture is split: an ESP32 drives a tiny 128&times;64 OLED screen, while a Python control plane handles data aggregation, caching, module selection, button dispatch, and phone controls.</p>
     </section>
 
@@ -230,8 +230,8 @@
     </section>
 
     <section>
-      <h2 class="label mono"><span class="star" aria-hidden="true"></span>What I Learned</h2>
-      <p class="body">This project shows how I use AI in practice: not as a substitute for judgment, but as a way to move faster through unfamiliar terrain, build working prototypes, and learn by iterating on something real.</p>
+      <h2 class="label mono"><span class="star" aria-hidden="true"></span>What I learned</h2>
+      <p class="body">This is how I use AI for things I could not build alone. I did not know ESP32 firmware or BLE before this, and I still could not write either from scratch. What I could do was describe what I wanted, then test the result on real hardware and keep going until it worked.</p>
     </section>
 
     <p style="margin-top:52px;font-size:17px;"><a href="/#projects"><span class="arr arr-back" aria-hidden="true">←</span> All projects</a></p>
