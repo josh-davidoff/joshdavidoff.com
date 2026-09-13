@@ -79,9 +79,10 @@ default; divergent values became explicit modifiers rather than letting one page
 
 ## Deploy safety
 
-`scripts/deploy-site.sh` rsyncs the repo root with `--delete`. It now excludes
-`design-system/`, `ds-bundle/`, `.ds-sync/`, and `.design-sync/`. Without those excludes
-a full deploy pushes `node_modules` into `/var/www/joshdavidoff.com/`. Do not remove them.
+The site deploys to GitHub Pages from `.github/workflows/pages.yml`, which stages the repo
+with an rsync exclude list. That list excludes `design-system/`, `ds-bundle/`, `.ds-sync/`,
+and `.design-sync/`. Without those excludes a deploy publishes `node_modules` to the public
+site. Do not remove them. The retired `scripts/deploy-site.sh` carried the same excludes.
 
 ## Process notes for fan-out — two real incidents
 
