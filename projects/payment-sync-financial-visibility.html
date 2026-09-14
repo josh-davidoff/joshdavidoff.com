@@ -162,12 +162,12 @@
 
     <section>
       <h2 class="label mono"><span class="star" aria-hidden="true"></span>The problem</h2>
-      <p class="body">Payment data had to serve several needs at once: day-to-day tracking, financial reporting, and budget visibility. Fluxx was the source of truth, but staff still needed easier ways to access live data they could sort and filter without relying on stale spreadsheet exports.</p>
+      <p class="body">Payment data had to serve several needs at once, including day-to-day tracking, financial reporting, and budget visibility. Fluxx was the source of truth, but staff still needed easier ways to access live data they could sort and filter without relying on stale spreadsheet exports.</p>
     </section>
 
     <section>
       <h2 class="label mono"><span class="star" aria-hidden="true"></span>What I built</h2>
-      <p class="body">A controlled sync layer from Fluxx to Monday and SharePoint. Monday gives the team an operational view, and SharePoint Lists provides structured data for Power BI. A narrow set of fields, including state and due date, can update back through restricted paths, while Fluxx remains authoritative. An automated email layer sends invoices to Bill.com for processing.</p>
+      <p class="body">A controlled sync layer from Fluxx to Monday and SharePoint: Monday gives the team an operational view, and SharePoint Lists provides structured data for Power BI. A narrow set of fields, including state and due date, can update back through restricted paths, while Fluxx remains authoritative. An automated email layer sends invoices to Bill.com for processing.</p>
     </section>
 
     <section>
@@ -207,7 +207,7 @@
 
     <section>
       <h2 class="label mono"><span class="star" aria-hidden="true"></span>What made it hard</h2>
-      <p class="body">A sync error in payment data is one a grantee will notice. A missing record or a stale status ends up in a conversation with them. So most of the design is about authority and repair. Fluxx wins when two systems disagree. Only a few fields may flow back. When a record drifts there is a defined way to fix it without anyone editing three places by hand.</p>
+      <p class="body">A grantee will notice a sync error in payment data, so most of the design is about mitigating this risk and enforcing Fluxx's authority as the source of truth. When a record drifts, I built a defined way to fix it without having to edit in three places by hand.</p>
     </section>
 
     <section>
