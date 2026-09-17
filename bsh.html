@@ -19,48 +19,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/site.css" />
 <style>
-  :root {
-    --bg: oklch(0.36 0.085 153);
-    --bg-deep: oklch(0.31 0.08 154);
-    --cream: oklch(0.96 0.025 96);
-    --muted: oklch(0.86 0.04 110);
-    --faint: oklch(0.74 0.05 120);
-    --mustard: oklch(0.84 0.15 87);
-    --tomato: oklch(0.68 0.17 38);
-    --rule: oklch(0.5 0.07 150);
-  }
-  * { box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; }
-  body {
-    margin: 0; background: var(--bg); color: var(--cream);
-    font-family: "Newsreader", Georgia, serif;
-    font-size: 20px; line-height: 1.62;
-    font-optical-sizing: auto;
-    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
-  }
   .wrap { max-width: 680px; margin: 0 auto; padding: 44px 32px 120px; }
-  .mono { font-family: "Instrument Sans", system-ui, sans-serif; font-size: 12.5px; letter-spacing: 0.12em; text-transform: uppercase; }
 
   a.link { color: var(--mustard); text-decoration: none; box-shadow: inset 0 -2px 0 var(--rule); transition: box-shadow .18s ease, color .18s ease; padding-bottom: 1px; }
   a.link:hover { color: var(--cream); box-shadow: inset 0 -2px 0 var(--mustard); }
-  a:focus-visible { outline: 2px solid var(--mustard); outline-offset: 3px; border-radius: 2px; }
 
-  .site-nav {
-    position: sticky; top: 0; z-index: 100;
-    background: color-mix(in oklch, var(--bg) 82%, transparent); border-bottom: 1px solid color-mix(in oklch, var(--rule) 72%, transparent);
-    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-  }
-  .site-nav-inner { max-width: 680px; margin: 0 auto; padding: 0 32px; height: 50px; display: flex; align-items: center; justify-content: space-between; }
   .site-nav-name { color: var(--cream); display: inline-flex; align-items: center; gap: 8px; font-family: "Bricolage Grotesque", system-ui, sans-serif; font-size: 15px; font-weight: 700; letter-spacing: -0.01em; text-decoration: none; }
   .site-nav-name:hover { color: var(--mustard); }
-  .site-nav-name .nav-dot { color: var(--mustard); font-family: Georgia, serif; font-size: 12px; line-height: 1; }
-  .site-nav-name .nav-dot::before { content: "✽"; }
-  .site-nav-links { display: flex; gap: 22px; align-items: center; }
   .site-nav-links a { color: var(--faint); font-family: "Newsreader", Georgia, serif; font-size: 16px; text-decoration: none; }
   .site-nav-links a:hover { color: var(--mustard); }
-  .site-nav-links .linkedin-icon { border: 1px solid var(--rule); border-radius: 4px; display: inline-grid; place-items: center; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 11px; font-weight: 600; height: 22px; letter-spacing: 0; line-height: 1; width: 22px; }
-  .site-nav-links .linkedin-icon:hover { border-color: var(--mustard); }
   @media (max-width: 480px) {
     .site-nav-inner { padding: 0 20px; }
     .site-nav-name { display: none; }
@@ -68,12 +37,6 @@
     .site-nav-links a { font-size: 14px; }
   }
 
-  .back { display: inline-flex; align-items: center; gap: 8px; color: var(--faint); text-decoration: none; margin-bottom: 46px; transition: color .18s ease; }
-  .back:hover { color: var(--mustard); }
-
-  .kicker { color: var(--mustard); font-weight: 600; margin: 0 0 16px; display: flex; align-items: center; gap: 10px; }
-  .kicker .dot { color: var(--mustard); display: inline-block; font-family: Georgia, serif; font-size: 15px; line-height: 1; }
-  .kicker .dot::before { content: "✽"; }
   .title {
     font-family: "Bricolage Grotesque", system-ui, sans-serif;
     font-size: clamp(40px, 7.5vw, 66px); line-height: 0.98; font-weight: 800;
@@ -85,7 +48,6 @@
     margin: 0; letter-spacing: -0.01em;
   }
 
-  p { margin: 0 0 22px; max-width: 60ch; text-wrap: pretty; }
   .context { margin-top: 40px; margin-bottom: 0; }
   .context p { color: var(--muted); }
   .context strong { color: var(--cream); font-weight: 600; }
@@ -96,10 +58,6 @@
     display: flex; align-items: center; gap: 11px;
     padding-bottom: 10px; border-bottom: 2px solid var(--rule);
   }
-  .label .star { color: var(--mustard); display: inline-block; font-family: Georgia, serif; font-size: 0; line-height: 1; }
-  .label .star::before { content: "✽"; font-size: 15px; }
-  .body { color: var(--muted); }
-  .body strong { color: var(--cream); font-weight: 600; }
 
   .feat { display: grid; gap: 16px; margin: 0; padding: 0; list-style: none; }
   .feat li { display: grid; grid-template-columns: 22px 1fr; gap: 12px; color: var(--muted); font-size: 18px; align-items: baseline; max-width: 58ch; }
@@ -125,35 +83,10 @@
   .explore p { margin: 0; color: var(--muted); font-size: 18px; max-width: none; }
   .explore strong { color: var(--cream); font-weight: 600; }
 
-  .deck { margin-top: 52px; margin-bottom: 52px; }
-  .deck-inner { max-width: 960px; margin: 0 auto; padding: 0 32px; }
-  .deck .label { max-width: 680px; margin-left: auto; margin-right: auto; }
-  .slide-viewer { margin: 0 auto; }
-  .slide-viewer img { width: 100%; aspect-ratio: 16/9; object-fit: contain; border-radius: 10px; border: 2px solid var(--rule); display: block; background: oklch(0.22 0.05 153); }
-  .slide-controls { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
-  .slide-btn { background: none; border: 2px solid var(--rule); color: var(--cream); font-family: "Bricolage Grotesque", sans-serif; font-weight: 700; font-size: 15px; padding: 8px 18px; border-radius: 8px; cursor: pointer; transition: border-color .18s ease, color .18s ease; }
-  .slide-btn:hover { border-color: var(--mustard); color: var(--mustard); }
-  .slide-btn:disabled { opacity: .3; cursor: default; }
-  .slide-btn:disabled:hover { border-color: var(--rule); color: var(--cream); }
-  .slide-counter { color: var(--faint); font-family: "Instrument Sans", system-ui, sans-serif; font-size: 11px; letter-spacing: 0.08em; }
-
   footer { margin-top: 64px; padding-top: 28px; border-top: 2px solid var(--rule); }
-  .links { display: flex; flex-wrap: wrap; gap: 10px 22px; font-size: 18px; }
-  .loc { margin-top: 24px; font-size: 14px; color: var(--mustard); font-weight: 600; }
-  h2 { font-size: inherit; font-weight: inherit; margin: 0; }
 
   /* ── Cross-page polish (view transitions, selection, grain) ── */
-  @view-transition { navigation: auto; }
-  ::selection { background: var(--mustard); color: var(--bg-deep); }
-  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
   .mono { font-variant-numeric: tabular-nums; }
-  .arr { display: inline-block; transition: transform .2s cubic-bezier(.2,.6,.2,1); }
-  a:hover .arr { transform: translateX(4px); }
-  body::after {
-    content: ""; position: fixed; inset: 0; z-index: 9999; pointer-events: none;
-    opacity: 0.04; mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size: 180px 180px;
-  }
   a.link {
     box-shadow: none; padding-bottom: 2px;
     background-image: linear-gradient(var(--mustard), var(--mustard)), linear-gradient(var(--rule), var(--rule));

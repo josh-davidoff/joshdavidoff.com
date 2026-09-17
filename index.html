@@ -35,6 +35,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/site.css" />
 <style>
   :root {
     --bg: oklch(0.36 0.085 153);
@@ -46,21 +47,10 @@
     --tomato: oklch(0.76 0.15 38);
     --rule: oklch(0.5 0.07 150);
   }
-  * { box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; }
-  body {
-    margin: 0; background: var(--bg); color: var(--cream);
-    font-family: "Newsreader", Georgia, serif;
-    font-size: 20px; line-height: 1.62;
-    font-optical-sizing: auto;
-    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
-  }
   .wrap { max-width: 680px; margin: 0 auto; padding: 56px 32px 120px; }
-  .mono { font-family: "Instrument Sans", system-ui, sans-serif; font-size: 12.5px; letter-spacing: 0.12em; text-transform: uppercase; }
 
   a { color: var(--mustard); text-decoration: none; box-shadow: inset 0 -2px 0 var(--rule); transition: box-shadow .18s ease, color .18s ease; padding-bottom: 1px; }
   a:hover { color: var(--cream); box-shadow: inset 0 -2px 0 var(--mustard); }
-  a:focus-visible { outline: 2px solid var(--mustard); outline-offset: 3px; border-radius: 2px; }
 
   .name {
     color: var(--mustard);
@@ -88,7 +78,6 @@
   .portrait { width: 168px; aspect-ratio: 1/1; object-fit: cover; object-position: center 25%; border-radius: 10px; border: 2px solid var(--mustard); display: block; }
   @media (max-width: 600px) { .head-row { grid-template-columns: 1fr; gap: 24px; } .portrait { width: 138px; } }
 
-  p { margin: 0 0 22px; max-width: 60ch; text-wrap: pretty; }
   .intro { margin-top: 32px; }
   .intro p { color: var(--muted); }
   .intro strong { color: var(--mustard); font-weight: 600; }
@@ -99,8 +88,6 @@
     display: flex; align-items: center; gap: 11px;
     padding-bottom: 10px; border-bottom: 2px solid var(--rule);
   }
-  .label .star { color: var(--mustard); display: inline-block; font-family: Georgia, serif; font-size: 0; line-height: 1; }
-  .label .star::before { content: "✽"; font-size: 15px; }
 
   .entry { margin-bottom: 26px; }
   .entry:last-child { margin-bottom: 0; }
@@ -130,8 +117,6 @@
   }
 
   footer { margin-top: 66px; padding-top: 28px; border-top: 2px solid var(--rule); }
-  .links { display: flex; flex-wrap: wrap; gap: 10px 22px; font-size: 18px; }
-  .loc { margin-top: 24px; font-size: 14px; color: var(--mustard); font-weight: 600; }
 
   .ph {
     background: repeating-linear-gradient(45deg, var(--bg-deep) 0 12px, oklch(0.4 0.085 152) 12px 24px);
@@ -194,18 +179,8 @@
   .exp-card h3 { font-family: "Bricolage Grotesque", system-ui, sans-serif; font-size: 18px; font-weight: 700; margin: 0 0 4px; color: var(--cream); letter-spacing: -0.01em; }
   .exp-card p { margin: 0; font-size: 16px; line-height: 1.45; color: var(--muted); }
   .exp-card .proj-sys { margin-top: 8px; }
-  h2 { font-size: inherit; font-weight: inherit; margin: 0; }
 
   /* ── Sticky nav ────────────────────────────────────────── */
-  .site-nav {
-    position: sticky; top: 0; z-index: 100;
-    background: color-mix(in oklch, var(--bg) 82%, transparent); border-bottom: 1px solid color-mix(in oklch, var(--rule) 72%, transparent);
-    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-  }
-  .site-nav-inner {
-    max-width: 680px; margin: 0 auto; padding: 0 32px;
-    height: 50px; display: flex; align-items: center; justify-content: space-between;
-  }
   .site-nav-name { opacity: 0; transition: opacity .25s ease; pointer-events: none; }
   .site-nav-name.visible { opacity: 1; pointer-events: auto; }
   .site-nav-name, .site-nav-name.visible {
@@ -219,8 +194,6 @@
     color: var(--mustard); display: inline-block; flex-shrink: 0;
     font-family: Georgia, serif; font-size: 12px; line-height: 1;
   }
-  .site-nav-name .nav-dot::before { content: "✽"; }
-  .site-nav-links { display: flex; gap: 22px; align-items: center; }
   .site-nav-links a {
     font-family: "Newsreader", Georgia, serif;
     font-size: 16px; color: var(--faint);
@@ -264,12 +237,9 @@
   .comp-item p { border: 1px solid var(--rule); border-top: 0; border-radius: 0 0 14px 14px; color: var(--faint); font-size: 15.5px; line-height: 1.45; margin: 0; max-width: none; padding: 12px 16px 14px; }
 
   /* ── View transitions (cross-page morph) ───────────────── */
-  @view-transition { navigation: auto; }
 
   /* ── Selection & focus polish ──────────────────────────── */
-  ::selection { background: var(--mustard); color: var(--bg-deep); }
   html { scroll-padding-top: 66px; }
-  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
   section[id] { scroll-margin-top: 66px; }
 
   /* lining/tabular figures where numerals matter */
@@ -290,8 +260,6 @@
   .site-nav-name, .site-nav-links a { background-image: none; padding-bottom: 0; }
 
   /* arrow nudge on case / CTA links */
-  .arr { display: inline-block; transition: transform .2s cubic-bezier(.2,.6,.2,1); }
-  a:hover .arr { transform: translateX(4px); }
 
   /* active section in sticky nav */
   .site-nav-links a.active { color: var(--mustard); }
@@ -306,12 +274,6 @@
   }
 
   /* ── Film grain (very subtle texture) ──────────────────── */
-  body::after {
-    content: ""; position: fixed; inset: 0; z-index: 9999; pointer-events: none;
-    opacity: 0.04; mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size: 180px 180px;
-  }
 </style>
 <script data-goatcounter="https://joshdavidoff.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
