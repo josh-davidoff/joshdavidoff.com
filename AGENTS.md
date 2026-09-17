@@ -71,6 +71,18 @@ curl -s -o /dev/null -w "%{http_code}" https://joshdavidoff.com/
 
 `curl -sI https://joshdavidoff.com/` should report `server: GitHub.com`.
 
+## Tests
+
+`/Users/josh/codex/.venv/bin/python -m pytest -q tests` — Tier 2 smoke test
+(boots/serves plus security regressions per the workspace `AGENTS.md`
+"Testing" section). Current result: 14 passed, 1 xfailed, 1 failed. The
+failure is `test_html_parses_and_has_one_title[googlea100f475dc6193a2.html]`:
+that tracked `*.html` file is a Google Search Console verification token
+(plain text, no markup), not a real page, so it has zero `<title>` tags. The
+test as specified checks every tracked `*.html` file for exactly one
+`<title>`; whether to exclude verification-token files from that check is an
+open decision, not yet made.
+
 ## URL notes
 
 - Pages serves extensionless URLs, so `bsh.html` answers at `/bsh` and
