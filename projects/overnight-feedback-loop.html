@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Overnight feedback loop — Josh Davidoff</title>
+<meta name="description" content="Hooks, a skill, and four scheduled tasks that capture every AI-assisted coding session, brief me on it by morning, and hand every proposed change back to a person to rule on." />
+<meta property="og:title" content="Overnight feedback loop" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://joshdavidoff.com/projects/overnight-feedback-loop" />
+  <meta property="og:image" content="https://joshdavidoff.com/assets/og-card.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://joshdavidoff.com/assets/og-card.png" />
+<link rel="canonical" href="https://joshdavidoff.com/projects/overnight-feedback-loop" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%232f5640'/%3E%3Ccircle cx='50' cy='50' r='21' fill='%23e3b23c'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/site.css" />
+<style>
+  a { color: var(--mustard); text-decoration: none; box-shadow: inset 0 -2px 0 var(--rule); transition: box-shadow .18s ease, color .18s ease; padding-bottom: 1px; }
+  a:hover { color: var(--cream); box-shadow: inset 0 -2px 0 var(--mustard); }
+
+  .subtitle {
+    font-family: "Bricolage Grotesque", system-ui, sans-serif;
+    font-size: clamp(18px, 2.8vw, 22px); font-weight: 600; color: var(--mustard);
+    margin: 0 0 40px; letter-spacing: -0.01em; line-height: 1.3;
+  }
+
+  .inset {
+    background: var(--bg-deep); border: 2px solid var(--rule);
+    border-radius: 10px; padding: 20px 22px; margin: 30px 0 22px;
+  }
+  .inset .ilabel {
+    color: var(--mustard); font-weight: 600; margin: 0 0 12px;
+    display: flex; align-items: center; gap: 11px;
+    padding-bottom: 8px; border-bottom: 2px solid var(--rule);
+  }
+  .inset .ilabel .dot { color: var(--mustard); display: inline-block; font-family: Georgia, serif; font-size: 0; line-height: 1; }
+  .inset .ilabel .dot::before { content: "✽"; font-size: 15px; }
+  .inset ul { margin: 0; padding: 0; list-style: none; }
+  .inset li { color: var(--muted); font-size: 17px; margin-bottom: 8px; padding-left: 18px; position: relative; }
+  .inset li:last-child { margin-bottom: 0; }
+  .inset li::before { content: "→"; position: absolute; left: 0; color: var(--tomato); font-family: "Instrument Sans", system-ui, sans-serif; font-weight: 600; }
+
+  /* ── Cross-page polish (view transitions, selection, grain) ── */
+  .mono { font-variant-numeric: tabular-nums; }
+  a {
+    box-shadow: none; padding-bottom: 2px;
+    background-image: linear-gradient(var(--mustard), var(--mustard)), linear-gradient(var(--rule), var(--rule));
+    background-repeat: no-repeat; background-position: 0 100%, 0 100%;
+    background-size: 0% 2px, 100% 2px;
+    transition: background-size .28s cubic-bezier(.2,.6,.2,1), color .18s ease;
+  }
+  a:hover { color: var(--cream); box-shadow: none; background-size: 100% 2px, 100% 2px; }
+  .back { background-image: none; padding-bottom: 0; }
+  .site-nav-name { color: var(--cream); display: inline-flex; align-items: center; gap: 8px; font-family: "Bricolage Grotesque", system-ui, sans-serif; font-size: 15px; font-weight: 700; letter-spacing: -0.01em; }
+  .site-nav-name:hover { color: var(--mustard); }
+  .site-nav-links a:hover { color: var(--mustard); }
+  .site-nav-name, .site-nav-links a { background-image: none; padding-bottom: 0; }
+  @media (max-width: 480px) {
+    .site-nav-inner { padding: 0 20px; }
+    .site-nav-name { display: none; }
+    .site-nav-links { gap: 10px; width: 100%; justify-content: space-between; }
+    .site-nav-links a { font-size: 14px; }
+  }
+</style>
+<script data-goatcounter="https://joshdavidoff.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+  <nav class="site-nav" aria-label="Site navigation">
+    <div class="site-nav-inner">
+      <a class="site-nav-name" href="/"><span class="nav-dot" aria-hidden="true"></span>Josh Davidoff</a>
+      <div class="site-nav-links">
+        <a href="/#projects">Work</a>
+        <a href="mailto:joshdavidoff@gmail.com">Email</a>
+        <a class="linkedin-icon" href="https://www.linkedin.com/in/joshdavidoff/" aria-label="LinkedIn">in</a>
+      </div>
+    </div>
+  </nav>
+  <div class="wrap" data-screen-label="Overnight Feedback Loop">
+    <a class="back mono" href="/">← joshdavidoff.com</a>
+
+    <header>
+      <p class="kicker mono"><span class="dot" aria-hidden="true"></span>AI enablement</p>
+      <h1 class="title">Overnight feedback loop</h1>
+      <p class="subtitle">Hooks, a skill, and four scheduled tasks that capture every AI-assisted coding session, brief me on it by morning, and hand every proposed change back to a person to rule on.</p>
+    </header>
+
+    <section>
+      <h2 class="label mono"><span class="star" aria-hidden="true"></span>The problem</h2>
+      <p class="body">Eight months of building with coding agents across roughly twenty projects had produced no durable record of any of it. The only history lived in the agents' own session caches, which are designed to be pruned. Worse, the most useful signal from each session, the tool calls I rejected, the corrections I typed, the tests that failed, evaporated the moment the session ended. Every day started from zero.</p>
+      <p class="body">The obvious fix was to let an agent maintain its own instructions and memory. I did not want that. An agent that edits its own operating rules unattended is exactly the automation-bias failure I argue against in <a href="/bsh">The Bot Stops Here</a>. The design constraint was to automate collection and synthesis completely while keeping every write-back behind a human decision.</p>
+    </section>
+
+    <section>
+      <h2 class="label mono"><span class="star" aria-hidden="true"></span>What it does</h2>
+      <p class="body">The suite has three layers. The first two run without me. The third does not run without me.</p>
+      <div class="inset">
+        <p class="ilabel"><span class="dot" aria-hidden="true"></span>Collect, automatically</p>
+        <ul>
+          <li>A session-start hook re-mines the Codex and Claude Code caches into a metadata-only timeline and commits the archive once a day. Dates, working directory, models, tool counts. Never conversation content, which would drag employer and financial material into the record.</li>
+          <li>A session-end hook writes one machine stub per session: where it happened and what the repository looked like afterward. No prose, no judgment.</li>
+          <li>A nightly digest builder walks every transcript, rollout, and repository touched since the last run and keeps signal in priority order: every prompt I typed, every rejected tool call and correction, every error and failed test, what changed and what was committed, and each session's closing message.</li>
+        </ul>
+      </div>
+      <div class="inset">
+        <p class="ilabel"><span class="dot" aria-hidden="true"></span>Synthesize, automatically</p>
+        <ul>
+          <li>At 2:25am a scheduled task reads the digest and writes one executive brief: what broke, what to build, where to go next, how the agent setup itself should improve, and what memory changed.</li>
+          <li>Suggestions carry night to night in a threads file with four states, open, handed, acted, parked, and a backlog holds every idea until I rule on it. Anything unruled for seven nights is flagged overdue.</li>
+          <li>The nightly task hands items to the sweep that owns them: a Monday register sweep for tests, tier drift, model pins, and write-up candidates; a twice-monthly review of the instruction files for staleness; a twice-monthly security sweep. Each sweep reads its handoffs at its next run. Each reports and offers. None of them writes an entry.</li>
+        </ul>
+      </div>
+      <div class="inset">
+        <p class="ilabel"><span class="dot" aria-hidden="true"></span>Assimilate, deliberately</p>
+        <ul>
+          <li>Nothing in the suite edits code, configuration, instructions, skills, or memory unattended. Every proposed change is a one-line suggestion I carry into a live session by hand. Memory merges and deletes are proposed, never applied.</li>
+          <li>A <span class="mono">/log</span> skill turns what I describe into the right entry, a project dossier, a dated build-log note, or a tools-ledger note, and defaults every entry to private.</li>
+          <li>The register renders this site. It publishes on an explicit public flag alone, and from a project dossier it takes only the card fields, never the write-up. A project can appear on the homepage while its prose stays private.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="label mono"><span class="star" aria-hidden="true"></span>Architecture</h2>
+      <div class="diagram-box" style="margin-bottom:14px;">
+        <svg viewBox="0 0 540 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Architecture: session hooks and a nightly digest collect metadata and corrections; a 2:25am brief synthesizes them and hands items to weekly and twice-monthly sweeps; every proposed change goes to a human, who rules on it in a live session and logs the outcome back into the register." style="width:100%;max-width:540px;height:auto;display:block;margin:0 auto;">
+          <defs>
+            <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M0,0 L10,5 L0,10 Z" fill="#869a6a"/>
+            </marker>
+            <marker id="arr-t" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M0,0 L10,5 L0,10 Z" fill="#c1643a"/>
+            </marker>
+          </defs>
+          <text x="5" y="30" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="10" font-weight="600">Collect</text>
+          <text x="177" y="30" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="10" font-weight="600">Synthesize</text>
+          <text x="366" y="30" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="10" font-weight="600">Rule</text>
+          <line x1="5" y1="33" x2="540" y2="33" stroke="#869a6a" stroke-width="1"/>
+
+          <rect x="5" y="45" width="130" height="56" rx="6" fill="none" stroke="#869a6a" stroke-width="1.2"/>
+          <text x="70" y="62" text-anchor="middle" fill="#869a6a" font-family="Instrument Sans, sans-serif" font-size="8">session-start hook · miner</text>
+          <text x="70" y="76" text-anchor="middle" fill="#869a6a" font-family="Instrument Sans, sans-serif" font-size="8">session-end hook · stub</text>
+          <text x="70" y="90" text-anchor="middle" fill="#869a6a" font-family="Instrument Sans, sans-serif" font-size="8">nightly digest · corrections</text>
+          <line x1="135" y1="73" x2="160" y2="73" stroke="#869a6a" stroke-width="1.2" marker-end="url(#arr)"/>
+
+          <rect x="162" y="53" width="130" height="40" rx="6" fill="none" stroke="#e3b23c" stroke-width="1.5"/>
+          <text x="227" y="68" text-anchor="middle" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="9" font-weight="600">2:25am brief</text>
+          <text x="227" y="83" text-anchor="middle" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="8">threads · backlog · handoffs</text>
+          <line x1="227" y1="93" x2="227" y2="112" stroke="#869a6a" stroke-width="1.2" marker-end="url(#arr)"/>
+
+          <rect x="162" y="114" width="130" height="40" rx="6" fill="none" stroke="#e3b23c" stroke-width="1.5"/>
+          <text x="227" y="129" text-anchor="middle" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="9" font-weight="600">Sweeps</text>
+          <text x="227" y="144" text-anchor="middle" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="8">register · config · security</text>
+
+          <line x1="292" y1="73" x2="335" y2="73" stroke="#c1643a" stroke-width="1.2" marker-end="url(#arr-t)"/>
+          <line x1="292" y1="134" x2="320" y2="134" stroke="#c1643a" stroke-width="1.2"/>
+          <line x1="320" y1="134" x2="320" y2="73" stroke="#c1643a" stroke-width="1.2"/>
+
+          <rect x="337" y="53" width="130" height="40" rx="6" fill="none" stroke="#c1643a" stroke-width="1.5"/>
+          <text x="402" y="68" text-anchor="middle" fill="#c1643a" font-family="Instrument Sans, sans-serif" font-size="9" font-weight="600">A person decides</text>
+          <text x="402" y="83" text-anchor="middle" fill="#c1643a" font-family="Instrument Sans, sans-serif" font-size="8">nothing written unattended</text>
+          <line x1="467" y1="73" x2="492" y2="73" stroke="#869a6a" stroke-width="1.2" marker-end="url(#arr)"/>
+
+          <rect x="494" y="45" width="42" height="56" rx="6" fill="none" stroke="#869a6a" stroke-width="1.2"/>
+          <text x="515" y="66" text-anchor="middle" fill="#869a6a" font-family="Instrument Sans, sans-serif" font-size="8">live</text>
+          <text x="515" y="78" text-anchor="middle" fill="#869a6a" font-family="Instrument Sans, sans-serif" font-size="8">session</text>
+          <text x="515" y="90" text-anchor="middle" fill="#869a6a" font-family="Instrument Sans, sans-serif" font-size="8">/log</text>
+
+          <line x1="515" y1="101" x2="515" y2="172" stroke="#869a6a" stroke-width="1.2"/>
+          <line x1="515" y1="172" x2="70" y2="172" stroke="#869a6a" stroke-width="1.2"/>
+          <line x1="70" y1="172" x2="70" y2="104" stroke="#869a6a" stroke-width="1.2" marker-end="url(#arr)"/>
+          <text x="292" y="184" text-anchor="middle" fill="#869a6a" font-family="Instrument Sans, sans-serif" font-size="8">register: dossiers · build log · tools ledger · this site</text>
+        </svg>
+      </div>
+      <p class="body">Hooks and a nightly digest collect → a 2:25am brief synthesizes and hands off to the sweeps → every proposal reaches a person → the person acts in a live session and logs the outcome, which the next night's digest reads.</p>
+    </section>
+
+    <section>
+      <h2 class="label mono"><span class="star" aria-hidden="true"></span>Hardening that mattered</h2>
+      <p class="body">The register also audits the agents' own dependencies. A model ID hardcoded in a deployed service fails unattended, which is a different problem from a stale ID in a script run by hand. A checker inventories every pinned model across the workspace and ranks it by blast radius against the deployment inventory. It deliberately does not decide what is obsolete, because there is no offline way to know a current lineup and a confident wrong answer is worse than a list. It reports three states instead: checked against my reference file, observed working in one of my own sessions on a given date, or unverified.</p>
+      <p class="body">Even the reference file has a guard. Only the region between two markers counts as verified. If the whole file were scanned, writing "this model is not yet verified" would mark it verified, and the note recording the doubt would clear the warning.</p>
+      <p class="body">The weekly sweep runs the workspace's nineteen registered test suites and flags any project whose blast radius has outgrown its tests. The digest builder has its own guard suite, because a tool that quotes real sessions is a tool that can leak them.</p>
+    </section>
+
+    <section>
+      <h2 class="label mono"><span class="star" aria-hidden="true"></span>How I built it with AI</h2>
+      <p class="body">The history came from 162 rollout files in a rolling cache, and three modeling problems inflated the numbers until each was handled. Resumed threads get a fresh file under the original id. Subagents write sidecar transcripts under the parent session. And a session's working directory changes as it runs, so the most frequent directory is the honest attribution, not the last one seen. 162 files were 140 threads. The archive now holds 265 sessions back to February 2026, across 34 project dossiers and 24 tools-ledger entries.</p>
+      <p class="body">Before the renderer was allowed to generate anything, it had to reproduce the eleven hand-written homepage cards byte for byte. If it could not regenerate what already existed, it had no business generating more.</p>
+      <p class="body">The safeguards were built to fail differently, which turned out to matter. The generated ignore file used a trailing comment on a token pattern, and gitignore has no trailing-comment syntax, so the pattern matched nothing while looking correct. An independent filename scan caught the OAuth files anyway. Two checks that fail together are one check.</p>
+      <p class="body">The same principle runs the loop itself. When I ran a review of every active project through parallel reviewer agents, four claims that two helpers were "byte-identical" were wrong, one "zero coverage" claim pointed at a path that already had a test, and one "unused dependency" claim was half wrong. None of that would have surfaced by reading the reviews alone. Agents propose. Verification is a separate step, and it is mine.</p>
+    </section>
+
+    <section>
+      <h2 class="label mono"><span class="star" aria-hidden="true"></span>What I learned</h2>
+      <p class="body">The tools that record your work and the tools that preserve it are not the same tools, and nothing tells you which is which. Everything in this suite except the session archive gets easier to build later. The archive only decays.</p>
+      <p class="body">And the part of a feedback loop worth protecting is the checkpoint. Collection and synthesis are cheap to automate and safe to automate. The moment a system starts editing its own rules from its own summaries, the person is no longer the one learning.</p>
+    </section>
+
+    <p style="margin-top:52px;font-size:17px;"><a href="/#projects"><span class="arr arr-back" aria-hidden="true">←</span> All projects</a></p>
+  </div>
+</body>
+</html>
