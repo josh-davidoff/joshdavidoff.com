@@ -92,35 +92,34 @@
 
     <section>
       <h2 class="label mono"><span class="star" aria-hidden="true"></span>The problem</h2>
-      <p class="body">Eight months of building with coding agents across roughly twenty projects had produced no durable record of any of it. The only history lived in the agents' own session caches, which are designed to be pruned. Worse, the most useful signal from each session, the tool calls I rejected, the corrections I typed, the tests that failed, evaporated the moment the session ended. Every day started from zero.</p>
-      <p class="body">The obvious fix was to let an agent maintain its own instructions and memory. I did not want that. An agent that edits its own operating rules unattended is exactly the automation-bias failure I argue against in <a href="/bsh">The Bot Stops Here</a>. The design constraint was to automate collection and synthesis completely while keeping every write-back behind a human decision.</p>
+      <p class="body">Eight months of building with coding agents across roughly twenty projects had produced no durable record of any of it. The only history lived in the agents' session caches, which are designed to be pruned, and the most useful signal from each session, the tool calls I rejected, the corrections I typed, the tests that failed, evaporated when the session ended.</p>
+      <p class="body">The obvious fix was to let an agent maintain its own instructions and memory. I did not want that. An agent that edits its own operating rules unattended is the automation-bias failure I argue against in <a href="/bsh">The Bot Stops Here</a>. The constraint was to automate collection and synthesis completely while keeping every write-back behind a human decision.</p>
     </section>
 
     <section>
       <h2 class="label mono"><span class="star" aria-hidden="true"></span>What it does</h2>
-      <p class="body">The suite has three layers. The first two run without me. The third does not run without me.</p>
       <div class="inset">
         <p class="ilabel"><span class="dot" aria-hidden="true"></span>Collect, automatically</p>
         <ul>
-          <li>A session-start hook re-mines the Codex and Claude Code caches into a metadata-only timeline and commits the archive once a day. Dates, working directory, models, tool counts. Never conversation content, which would drag employer and financial material into the record.</li>
-          <li>A session-end hook writes one machine stub per session: where it happened and what the repository looked like afterward. No prose, no judgment.</li>
-          <li>A nightly digest builder walks every transcript, rollout, and repository touched since the last run and keeps signal in priority order: every prompt I typed, every rejected tool call and correction, every error and failed test, what changed and what was committed, and each session's closing message.</li>
+          <li>A session-start hook re-mines the Codex and Claude Code caches into a metadata-only timeline: dates, working directory, models, tool counts. No conversation content, which would drag employer and financial material into the record.</li>
+          <li>A session-end hook writes one stub per session: where it happened and what the repository looked like afterward.</li>
+          <li>A nightly digest builder walks every transcript and repository touched since the last run and keeps, in priority order, every prompt I typed, every rejected tool call and correction, every error and failed test, and what changed.</li>
         </ul>
       </div>
       <div class="inset">
         <p class="ilabel"><span class="dot" aria-hidden="true"></span>Synthesize, automatically</p>
         <ul>
-          <li>At 2:25am a scheduled task reads the digest and writes one executive brief: what broke, what to build, where to go next, how the agent setup itself should improve, and what memory changed.</li>
-          <li>Suggestions carry night to night in a threads file with four states, open, handed, acted, parked, and a backlog holds every idea until I rule on it. Anything unruled for seven nights is flagged overdue.</li>
-          <li>The nightly task hands items to the sweep that owns them: a Monday register sweep for tests, tier drift, model pins, and write-up candidates; a twice-monthly review of the instruction files for staleness; a twice-monthly security sweep. Each sweep reads its handoffs at its next run. Each reports and offers. None of them writes an entry.</li>
+          <li>At 2:25am a scheduled task reads the digest and writes one brief: what broke, what to build, how the agent setup should improve, and what memory changed.</li>
+          <li>Suggestions carry night to night in a threads file, and a backlog holds every idea until I rule on it. Anything unruled for seven nights is flagged.</li>
+          <li>The nightly task hands items to the sweep that owns them: a Monday register sweep for tests, tier drift, and model pins; a twice-monthly review of the instruction files; a twice-monthly security sweep. Each reports and offers.</li>
         </ul>
       </div>
       <div class="inset">
         <p class="ilabel"><span class="dot" aria-hidden="true"></span>Assimilate, deliberately</p>
         <ul>
-          <li>Nothing in the suite edits code, configuration, instructions, skills, or memory unattended. Every proposed change is a one-line suggestion I carry into a live session by hand. Memory merges and deletes are proposed, never applied.</li>
-          <li>A <span class="mono">/log</span> skill turns what I describe into the right entry, a project dossier, a dated build-log note, or a tools-ledger note, and defaults every entry to private.</li>
-          <li>The register renders this site. It publishes on an explicit public flag alone, and from a project dossier it takes only the card fields, never the write-up. A project can appear on the homepage while its prose stays private.</li>
+          <li>Nothing in the suite edits code, configuration, instructions, skills, or memory unattended. Every proposed change is a one-line suggestion I carry into a live session.</li>
+          <li>A <span class="mono">/log</span> skill turns what I describe into a project dossier, a build-log note, or a tools-ledger note, private by default.</li>
+          <li>The register renders this site from the entries flagged public, using only the card fields. A project can appear on the homepage while its write-up stays private.</li>
         </ul>
       </div>
     </section>
@@ -182,23 +181,15 @@
 
     <section>
       <h2 class="label mono"><span class="star" aria-hidden="true"></span>Hardening that mattered</h2>
-      <p class="body">The register also audits the agents' own dependencies. A model ID hardcoded in a deployed service fails unattended, which is a different problem from a stale ID in a script run by hand. A checker inventories every pinned model across the workspace and ranks it by blast radius against the deployment inventory. It deliberately does not decide what is obsolete, because there is no offline way to know a current lineup and a confident wrong answer is worse than a list. It reports three states instead: checked against my reference file, observed working in one of my own sessions on a given date, or unverified.</p>
-      <p class="body">Even the reference file has a guard. Only the region between two markers counts as verified. If the whole file were scanned, writing "this model is not yet verified" would mark it verified, and the note recording the doubt would clear the warning.</p>
-      <p class="body">The weekly sweep runs the workspace's nineteen registered test suites and flags any project whose blast radius has outgrown its tests. The digest builder has its own guard suite, because a tool that quotes real sessions is a tool that can leak them.</p>
+      <p class="body">The register also audits the agents' dependencies. A model ID hardcoded in a deployed service fails unattended, so a checker inventories every pinned model across the workspace and ranks it by blast radius against the deployment inventory. It does not decide what is obsolete, since there is no offline way to know a current lineup and a confident wrong answer is worse than a list. It reports three states instead: checked against my reference file, observed working in one of my own sessions on a given date, or unverified.</p>
+      <p class="body">Only the region between two markers in that reference file counts as verified. Otherwise writing "this model is not yet verified" would mark it verified. The weekly sweep runs the workspace's nineteen registered test suites and flags any project whose blast radius has outgrown its tests.</p>
     </section>
 
     <section>
       <h2 class="label mono"><span class="star" aria-hidden="true"></span>How I built it with AI</h2>
-      <p class="body">The history came from 162 rollout files in a rolling cache, and three modeling problems inflated the numbers until each was handled. Resumed threads get a fresh file under the original id. Subagents write sidecar transcripts under the parent session. And a session's working directory changes as it runs, so the most frequent directory is the honest attribution, not the last one seen. 162 files were 140 threads. The archive now holds 265 sessions back to February 2026, across 34 project dossiers and 24 tools-ledger entries.</p>
-      <p class="body">Before the renderer was allowed to generate anything, it had to reproduce the eleven hand-written homepage cards byte for byte. If it could not regenerate what already existed, it had no business generating more.</p>
-      <p class="body">The safeguards were built to fail differently, which turned out to matter. The generated ignore file used a trailing comment on a token pattern, and gitignore has no trailing-comment syntax, so the pattern matched nothing while looking correct. An independent filename scan caught the OAuth files anyway. Two checks that fail together are one check.</p>
-      <p class="body">The same principle runs the loop itself. When I ran a review of every active project through parallel reviewer agents, four claims that two helpers were "byte-identical" were wrong, one "zero coverage" claim pointed at a path that already had a test, and one "unused dependency" claim was half wrong. None of that would have surfaced by reading the reviews alone. Agents propose. Verification is a separate step, and it is mine.</p>
-    </section>
-
-    <section>
-      <h2 class="label mono"><span class="star" aria-hidden="true"></span>What I learned</h2>
-      <p class="body">The tools that record your work and the tools that preserve it are not the same tools, and nothing tells you which is which. Everything in this suite except the session archive gets easier to build later. The archive only decays.</p>
-      <p class="body">And the part of a feedback loop worth protecting is the checkpoint. Collection and synthesis are cheap to automate and safe to automate. The moment a system starts editing its own rules from its own summaries, the person is no longer the one learning.</p>
+      <p class="body">The history came from 162 rollout files in a rolling cache, and three modeling problems inflated the numbers until each was handled: resumed threads get a fresh file under the original id, subagents write sidecar transcripts under the parent session, and a session's working directory changes as it runs. 162 files were 140 threads. The archive now holds 265 sessions back to February 2026, across 34 project dossiers and 24 tools-ledger entries.</p>
+      <p class="body">Before the renderer could generate anything, it had to reproduce the eleven hand-written homepage cards byte for byte. The safeguards were built to fail differently: the generated ignore file used a trailing comment on a token pattern, which gitignore does not support, so the pattern matched nothing while looking correct. An independent filename scan caught the OAuth files anyway.</p>
+      <p class="body">When I ran a review of every active project through parallel reviewer agents, four claims that two helpers were byte-identical were wrong, one zero-coverage claim pointed at a path that already had a test, and one unused-dependency claim was half wrong. Agents propose. Verification is a separate step.</p>
     </section>
 
     <p style="margin-top:52px;font-size:17px;"><a href="/#projects"><span class="arr arr-back" aria-hidden="true">←</span> All projects</a></p>
