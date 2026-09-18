@@ -75,13 +75,10 @@ curl -s -o /dev/null -w "%{http_code}" https://joshdavidoff.com/
 
 `/Users/josh/codex/.venv/bin/python -m pytest -q tests` — Tier 2 smoke test
 (boots/serves plus security regressions per the workspace `AGENTS.md`
-"Testing" section). Current result: 14 passed, 1 xfailed, 1 failed. The
-failure is `test_html_parses_and_has_one_title[googlea100f475dc6193a2.html]`:
-that tracked `*.html` file is a Google Search Console verification token
-(plain text, no markup), not a real page, so it has zero `<title>` tags. The
-test as specified checks every tracked `*.html` file for exactly one
-`<title>`; whether to exclude verification-token files from that check is an
-open decision, not yet made.
+"Testing" section). Current result: all pass (17 on 2026-09-18; the
+`<title>` check is parametrized per page, so the count grows with the site).
+That check skips `google*.html`, the Search Console verification token (plain
+text, no markup), which is not a page but must stay tracked.
 
 ### Verifying a zero-visual-change CSS refactor
 
@@ -96,7 +93,7 @@ against the working tree by hand:
    --directory "$REF"` and the same on 8002 for the working tree.
 2. Pages: `git ls-files '*.html'` minus the three redirect pages
    (`bot-stops-here.html`, `projects/ai-diligence-review-pattern.html`,
-   `sky/index.html`) and the Search Console token; nine pages today. Widths
+   `sky/index.html`) and the Search Console token. Widths
    390, 560, 700 and 1440 (the breakpoints are 480, 600, 680 and 720).
 3. Screenshot every page at every width from both servers and `cmp` each pair;
    expect every pair byte-identical. The renderer is the headless shell that
@@ -116,9 +113,19 @@ against the working tree by hand:
    never `vh`, so the fixed 6000 px window is safe. Chrome's own binary
    (`/Applications/Google Chrome.app/Contents/MacOS/Google Chrome
    --headless=new`, same flags) makes the same kind of capture but on Chrome
-   153 hangs after writing the file; kill it once the PNG lands. Checked
-   2026-09-18: two runs of one page at 390 and 1440 were byte-identical with
-   either binary.
+   153 hangs after writing the file; kill it once the PNG lands.
+
+   Known noise: on `index.html` at 700 and 1440 the sticky nav's "Work" link
+   is caught partway through its `.18s` color transition (the scrollspy marks
+   it active on the screenshot frame), so a few hundred pixels in the top 30
+   rows around x 880-925 differ between any two captures, including two of
+   the same tree. No flag fixes it (`--deterministic-mode`,
+   `--animation-duration-scale=0`, longer budgets were all tried). Confirm
+   noise by capturing the same side twice; anything else on `index.html`, and
+   any diff on another page, is real. To localize a diff without Pillow,
+   `sips -s format bmp` both files and compare rows in a stdlib Python loop.
+   Checked 2026-09-18 against `main` at `1b818fe`: 38 of 40 pairs identical,
+   the other two being that noise.
 4. Optional second check from the browser pane: dump `getComputedStyle` and
    `getBoundingClientRect` for every element and its `::before`/`::after` on
    both servers and diff the JSON.
