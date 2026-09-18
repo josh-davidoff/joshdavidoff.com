@@ -83,6 +83,47 @@ test as specified checks every tracked `*.html` file for exactly one
 `<title>`; whether to exclude verification-token files from that check is an
 open decision, not yet made.
 
+### Verifying a zero-visual-change CSS refactor
+
+There is no committed screenshot harness. The site is small enough that one is
+not worth maintaining (backlog B71, closed 2026-09-18 after review: one such
+refactor in three weeks, and the Playwright install it wanted was not earned).
+Before committing a refactor that must not change rendering, compare `main`
+against the working tree by hand:
+
+1. Materialize the reference with `git archive main | tar -x -C "$REF"` into a
+   temp dir. Serve both trees: `python3 -m http.server 8001 --bind 127.0.0.1
+   --directory "$REF"` and the same on 8002 for the working tree.
+2. Pages: `git ls-files '*.html'` minus the three redirect pages
+   (`bot-stops-here.html`, `projects/ai-diligence-review-pattern.html`,
+   `sky/index.html`) and the Search Console token; nine pages today. Widths
+   390, 560, 700 and 1440 (the breakpoints are 480, 600, 680 and 720).
+3. Screenshot every page at every width from both servers and `cmp` each pair;
+   expect every pair byte-identical. The renderer is the headless shell that
+   the design-system tooling already cached:
+
+   ```bash
+   CH=$(ls ~/Library/Caches/ms-playwright/chromium_headless_shell-*/chrome-headless-shell-mac-arm64/chrome-headless-shell | tail -1)
+   "$CH" --headless --no-first-run --hide-scrollbars --disable-gpu --force-prefers-reduced-motion --virtual-time-budget=5000 --host-resolver-rules="MAP gc.zgo.at ~NOTFOUND" --user-data-dir="$TMP/profile" --window-size=390,6000 --screenshot="$OUT/index-390-ref.png" http://127.0.0.1:8001/index.html
+   ```
+
+   The flags matter. `--force-prefers-reduced-motion` and
+   `--virtual-time-budget` settle the reveal transitions; without them two runs
+   of the same page differ. `--disable-gpu` changes the encoded bytes, so it
+   goes on both sides. The resolver rule keeps GoatCounter from logging a
+   pageview per capture. One shared `--user-data-dir` means Google Fonts are
+   fetched once and served from cache to both sides. The site uses `vw` but
+   never `vh`, so the fixed 6000 px window is safe. Chrome's own binary
+   (`/Applications/Google Chrome.app/Contents/MacOS/Google Chrome
+   --headless=new`, same flags) makes the same kind of capture but on Chrome
+   153 hangs after writing the file; kill it once the PNG lands. Checked
+   2026-09-18: two runs of one page at 390 and 1440 were byte-identical with
+   either binary.
+4. Optional second check from the browser pane: dump `getComputedStyle` and
+   `getBoundingClientRect` for every element and its `::before`/`::after` on
+   both servers and diff the JSON.
+5. Record the result in the commit message, as `e47158b` did.
+
 ## URL notes
 
 - Pages serves extensionless URLs, so `bsh.html` answers at `/bsh` and
