@@ -82,54 +82,24 @@ text, no markup), which is not a page but must stay tracked.
 
 ### Verifying a zero-visual-change CSS refactor
 
-There is no committed screenshot harness. The site is small enough that one is
-not worth maintaining (backlog B71, closed 2026-09-18 after review: one such
-refactor in three weeks, and the Playwright install it wanted was not earned).
-Before committing a refactor that must not change rendering, compare `main`
-against the working tree by hand:
+Run this before committing a refactor that must not change rendering. There is no
+committed screenshot harness (B71, closed 2026-09-18), so compare `main` by hand:
 
-1. Materialize the reference with `git archive main | tar -x -C "$REF"` into a
-   temp dir. Serve both trees: `python3 -m http.server 8001 --bind 127.0.0.1
-   --directory "$REF"` and the same on 8002 for the working tree.
-2. Pages: `git ls-files '*.html'` minus the three redirect pages
-   (`bot-stops-here.html`, `projects/ai-diligence-review-pattern.html`,
-   `sky/index.html`) and the Search Console token. Widths
-   390, 560, 700 and 1440 (the breakpoints are 480, 600, 680 and 720).
-3. Screenshot every page at every width from both servers and `cmp` each pair;
-   expect every pair byte-identical. The renderer is the headless shell that
-   the design-system tooling already cached:
+```bash
+REF=$(mktemp -d); TMP=$(mktemp -d); OUT=$(mktemp -d); git archive main | tar -x -C "$REF"
+python3 -m http.server 8001 --bind 127.0.0.1 --directory "$REF" & python3 -m http.server 8002 --bind 127.0.0.1 --directory . &
+CH=$(ls ~/Library/Caches/ms-playwright/chromium_headless_shell-*/chrome-headless-shell-mac-arm64/chrome-headless-shell | tail -1)
+for p in $(git ls-files '*.html' | grep -v -e bot-stops-here -e ai-diligence-review-pattern -e sky/index -e '^google'); do
+  for w in 390 560 700 1440; do for s in ref:8001 new:8002; do
+    "$CH" --headless --no-first-run --hide-scrollbars --disable-gpu --force-prefers-reduced-motion --virtual-time-budget=5000 --host-resolver-rules="MAP gc.zgo.at ~NOTFOUND" --user-data-dir="$TMP/profile" --window-size=$w,6000 --screenshot="$OUT/${p//\//_}-$w-${s%%:*}.png" "http://127.0.0.1:${s##*:}/$p"
+done; done; done
+for f in "$OUT"/*-ref.png; do cmp -s "$f" "${f%-ref.png}-new.png" || echo "DIFF ${f##*/}"; done
+```
 
-   ```bash
-   CH=$(ls ~/Library/Caches/ms-playwright/chromium_headless_shell-*/chrome-headless-shell-mac-arm64/chrome-headless-shell | tail -1)
-   "$CH" --headless --no-first-run --hide-scrollbars --disable-gpu --force-prefers-reduced-motion --virtual-time-budget=5000 --host-resolver-rules="MAP gc.zgo.at ~NOTFOUND" --user-data-dir="$TMP/profile" --window-size=390,6000 --screenshot="$OUT/index-390-ref.png" http://127.0.0.1:8001/index.html
-   ```
-
-   The flags matter. `--force-prefers-reduced-motion` and
-   `--virtual-time-budget` settle the reveal transitions; without them two runs
-   of the same page differ. `--disable-gpu` changes the encoded bytes, so it
-   goes on both sides. The resolver rule keeps GoatCounter from logging a
-   pageview per capture. One shared `--user-data-dir` means Google Fonts are
-   fetched once and served from cache to both sides. The site uses `vw` but
-   never `vh`, so the fixed 6000 px window is safe. Chrome's own binary
-   (`/Applications/Google Chrome.app/Contents/MacOS/Google Chrome
-   --headless=new`, same flags) makes the same kind of capture but on Chrome
-   153 hangs after writing the file; kill it once the PNG lands.
-
-   Known noise: on `index.html` at 700 and 1440 the sticky nav's "Work" link
-   is caught partway through its `.18s` color transition (the scrollspy marks
-   it active on the screenshot frame), so a few hundred pixels in the top 30
-   rows around x 880-925 differ between any two captures, including two of
-   the same tree. No flag fixes it (`--deterministic-mode`,
-   `--animation-duration-scale=0`, longer budgets were all tried). Confirm
-   noise by capturing the same side twice; anything else on `index.html`, and
-   any diff on another page, is real. To localize a diff without Pillow,
-   `sips -s format bmp` both files and compare rows in a stdlib Python loop.
-   Checked 2026-09-18 against `main` at `1b818fe`: 38 of 40 pairs identical,
-   the other two being that noise.
-4. Optional second check from the browser pane: dump `getComputedStyle` and
-   `getBoundingClientRect` for every element and its `::before`/`::after` on
-   both servers and diff the JSON.
-5. Record the result in the commit message, as `e47158b` did.
+Expect no `DIFF` lines beyond the known noise: on `index.html` at 700 and 1440 the
+sticky nav's "Work" link is caught partway through its `.18s` color transition, so a
+few hundred pixels in the top 30 rows near x 880-925 differ between any two captures.
+Confirm noise by recapturing the same side; any other diff, on any page, is real.
 
 ## Updated dates
 
