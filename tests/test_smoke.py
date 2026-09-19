@@ -148,3 +148,61 @@ def test_pages_workflow_deploys() -> None:
     workflow_path = REPO_ROOT / ".github" / "workflows" / "pages.yml"
     assert workflow_path.exists(), "pages.yml workflow is missing"
     assert "actions/deploy-pages" in workflow_path.read_text(encoding="utf-8")
+
+
+# "Updated" dates: the register renders each card's date from its dossier, and
+# the linked case page carries the same date by hand, so the two can drift.
+MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+CARD_RE = re.compile(r'<article class="proj-card[^"]*"[^>]*>(.*?)</article>', re.S)
+CARD_TIME_RE = re.compile(r'<time class="proj-updated" datetime="([^"]+)">([^<]*)</time>')
+CARD_LINK_RE = re.compile(r'<p class="proj-link"><a href="([^"]+)">')
+PAGE_TIME_RE = re.compile(r'<p class="page-updated mono"><time datetime="([^"]+)">([^<]*)</time></p>')
+
+
+def _short_date(iso: str) -> str:
+    year, month, day = (int(part) for part in iso.split("-"))
+    return f"{MONTHS[month - 1]} {day}, {year}"
+
+
+def _cards() -> list[tuple[str | None, str, str]]:
+    """(link href, datetime, label) for every card on the home page."""
+    text = (REPO_ROOT / "index.html").read_text(encoding="utf-8")
+    cards = CARD_RE.findall(text)
+    assert cards, "no project cards found on index.html"
+    out = []
+    for body in cards:
+        times = CARD_TIME_RE.findall(body)
+        assert len(times) == 1, f"card has {len(times)} updated dates: {body[:80]!r}"
+        link = CARD_LINK_RE.search(body)
+        out.append((link.group(1) if link else None, times[0][0], times[0][1]))
+    return out
+
+
+def test_card_dates_are_valid_and_labelled() -> None:
+    from datetime import date
+
+    for _, iso, label in _cards():
+        date.fromisoformat(iso)  # raises on a malformed or impossible date
+        assert label == f"Updated {_short_date(iso)}", (iso, label)
+
+
+def test_case_page_dates_match_cards() -> None:
+    from datetime import date
+
+    mismatches: list[str] = []
+    for href, iso, _ in _cards():
+        if not href or not href.startswith("/") or href == "/sky":
+            continue
+        page = REPO_ROOT / (href.lstrip("/") + ".html")
+        assert page.exists(), f"card links to {href} but {page} is missing"
+        found = PAGE_TIME_RE.findall(page.read_text(encoding="utf-8"))
+        if len(found) != 1:
+            mismatches.append(f"{href}: {len(found)} updated lines in header")
+            continue
+        page_iso, page_label = found[0]
+        date.fromisoformat(page_iso)
+        if page_iso != iso:
+            mismatches.append(f"{href}: card says {iso}, page says {page_iso}")
+        if page_label != f"Updated {_short_date(page_iso)}":
+            mismatches.append(f"{href}: label {page_label!r} does not match {page_iso}")
+    assert not mismatches, "; ".join(mismatches)

@@ -10,7 +10,12 @@ export interface CaseHeaderProps {
   title: ReactNode;
   /** Optional dek/summary line rendered as `p.subtitle`. */
   subtitle?: ReactNode;
-  /** Additional class name(s) appended to the `<header>` element. */
+  /**
+   * "Last updated" stamp rendered after the subtitle as `p.page-updated.mono`.
+   * `datetime` is ISO (`2026-09-14`); `label` is the visible text, e.g.
+   * "Updated Sep 14, 2026".
+   */
+  updated?: { datetime: string; label: string };
   /**
    * Which page shape this header belongs to. `"case"` (the default) is the
    * case-study scale used on `/projects/*`; `"bsh"` is the larger talk-deck
@@ -27,7 +32,7 @@ export interface CaseHeaderProps {
  * decorative `.dot` glyph), the `h1.title`, and the optional `p.subtitle`.
  */
 export function CaseHeader(props: CaseHeaderProps) {
-  const { kicker, title, subtitle, variant, className } = props;
+  const { kicker, title, subtitle, updated, variant, className } = props;
   const titleClass = variant === "bsh" ? "title title--bsh" : "title";
   const subtitleClass = variant === "bsh" ? "subtitle subtitle--bsh" : "subtitle";
 
@@ -39,6 +44,11 @@ export function CaseHeader(props: CaseHeaderProps) {
       </p>
       <h1 className={titleClass}>{title}</h1>
       {subtitle !== undefined ? <p className={subtitleClass}>{subtitle}</p> : null}
+      {updated ? (
+        <p className="page-updated mono">
+          <time dateTime={updated.datetime}>{updated.label}</time>
+        </p>
+      ) : null}
     </header>
   );
 }

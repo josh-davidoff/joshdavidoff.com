@@ -24,6 +24,12 @@ export interface ProjectCardProps {
   focus?: ReactNode;
   /** Optional trailing arrow link (`p.proj-link`), e.g. "View case →". */
   link?: { label: string; href: string };
+  /**
+   * "Last updated" dateline rendered as `time.proj-updated` on its own line
+   * above the categories. `datetime` is ISO (`2026-09-14`); `label` is the
+   * visible text, e.g. "Updated Sep 14, 2026".
+   */
+  updated?: { datetime: string; label: string };
   /** Value written to `data-type` on the `article`, used by the site's filter UI. */
   type?: string;
   /** Additional class name(s) appended after the base `proj-card` class. */
@@ -45,6 +51,7 @@ export function ProjectCard(props: ProjectCardProps) {
     systems,
     focus,
     link,
+    updated,
     type,
     className,
     children,
@@ -53,6 +60,11 @@ export function ProjectCard(props: ProjectCardProps) {
 
   return (
     <article className={classes} data-type={type}>
+      {updated ? (
+        <time className="proj-updated" dateTime={updated.datetime}>
+          {updated.label}
+        </time>
+      ) : null}
       {num !== undefined ? <span className="proj-num">{num}</span> : null}
       {categories && categories.length > 1 ? (
         <div className="category-row">

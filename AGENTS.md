@@ -75,7 +75,7 @@ curl -s -o /dev/null -w "%{http_code}" https://joshdavidoff.com/
 
 `/Users/josh/codex/.venv/bin/python -m pytest -q tests` — Tier 2 smoke test
 (boots/serves plus security regressions per the workspace `AGENTS.md`
-"Testing" section). Current result: all pass (17 on 2026-09-18; the
+"Testing" section). Current result: all pass (19 on 2026-09-18; the
 `<title>` check is parametrized per page, so the count grows with the site).
 That check skips `google*.html`, the Search Console verification token (plain
 text, no markup), which is not a page but must stay tracked.
@@ -130,6 +130,18 @@ against the working tree by hand:
    `getBoundingClientRect` for every element and its `::before`/`::after` on
    both servers and diff the JSON.
 5. Record the result in the commit message, as `e47158b` did.
+
+## Updated dates
+
+Every project card and case page carries an "Updated" date. It is the date the
+public copy last changed, set by hand, not project activity. The source is the
+`updated` field in the project's dossier in the private register, which
+`register/bin/render.py` renders into the card; the case page header carries
+the same date in a `p.page-updated` line, edited by hand. When you change a
+case page or its card copy, bump both. `tests/test_smoke.py` fails if a card's
+date and its linked page's date differ, or if a label does not match its ISO
+value. The home page's "Sort by" control reorders the grid by these dates;
+the default "Featured" order is the register's `card_order`.
 
 ## URL notes
 

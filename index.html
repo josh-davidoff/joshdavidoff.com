@@ -134,6 +134,10 @@
     transition: border-color .18s ease, color .18s ease, background .18s ease;
   }
   .segmented button:hover, .segmented button.is-active { border-color: var(--mustard); color: var(--cream); background: color-mix(in oklch, var(--mustard) 14%, var(--bg-deep)); }
+  .controls { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 8px 22px; margin: 0 0 22px; }
+  .controls .segmented { margin: 0; }
+  .sort { align-items: center; }
+  .sort-label { color: var(--faint); font-family: "Instrument Sans", system-ui, sans-serif; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; }
   .project-grid, .experiment-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
   .proj-card {
     border: 2px solid var(--rule); border-radius: 10px; padding: 20px 22px;
@@ -143,6 +147,7 @@
   .proj-card:hover { border-color: var(--mustard); }
   .proj-card[hidden] { display: none; }
   .proj-num { color: var(--tomato); font-weight: 600; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 14px; display: block; margin-bottom: 4px; }
+  .proj-updated { display: block; color: var(--faint); font-family: "Instrument Sans", system-ui, sans-serif; font-size: 12px; line-height: 1.2; font-variant-numeric: tabular-nums; margin: 0 0 8px; }
   .category { color: var(--tomato); font-weight: 600; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 8px; }
   .proj-card h3 { font-family: "Bricolage Grotesque", system-ui, sans-serif; font-size: 22px; font-weight: 700; margin: 0 0 6px; color: var(--cream); letter-spacing: -0.01em; }
   .proj-card p { margin: 0 0 10px; font-size: 18px; color: var(--muted); }
@@ -217,6 +222,7 @@
   @media (max-width: 680px) {
     .project-grid, .experiment-grid, .extras { grid-template-columns: 1fr; }
     .segmented button { flex: 1 1 100%; text-align: left; }
+    .sort button { flex: 1 1 auto; text-align: center; }
   }
 
   /* ── Currently panel ─────────────────────────────────────── */
@@ -333,6 +339,7 @@
     <section id="projects" data-reveal>
       <h2 class="label mono"><span class="star" aria-hidden="true">✳</span>Projects, by type</h2>
 
+      <div class="controls">
       <div class="segmented" role="group" aria-label="Filter projects">
         <button type="button" class="is-active" data-filter="all" aria-pressed="true">All work <span data-count="all"></span></button>
         <button type="button" data-filter="system" aria-pressed="false">System integration <span data-count="system"></span></button>
@@ -340,10 +347,17 @@
         <button type="button" data-filter="speaking" aria-pressed="false">Public speaking <span data-count="speaking"></span></button>
         <button type="button" data-filter="experiment" aria-pressed="false">Experiments <span data-count="experiment"></span></button>
       </div>
+      <div class="segmented sort" role="group" aria-label="Sort projects">
+        <span class="sort-label">Sort by</span>
+        <button type="button" class="is-active" data-sort="featured" aria-pressed="true">Featured</button>
+        <button type="button" data-sort="updated" aria-pressed="false">Recently updated</button>
+      </div>
+      </div>
 
       <div class="project-grid">
         <!-- register:cards:start -->
         <article class="proj-card" data-type="system">
+          <time class="proj-updated" datetime="2026-09-14">Updated Sep 14, 2026</time>
           <span class="category">System integration</span>
           <h3>Payment sync and reporting</h3>
           <p>Controlled sync from Fluxx payment records to team trackers and Power BI dashboards, with Fluxx staying the system of record.</p>
@@ -352,6 +366,7 @@
         </article>
 
         <article class="proj-card" data-type="system">
+          <time class="proj-updated" datetime="2026-09-14">Updated Sep 14, 2026</time>
           <span class="category">System integration</span>
           <h3>Fluxx to Monday operational layer</h3>
           <p>A controlled operational layer that surfaces grant tasks in Monday without displacing Fluxx as the system of record.</p>
@@ -360,6 +375,7 @@
         </article>
 
         <article class="proj-card" data-type="system">
+          <time class="proj-updated" datetime="2026-09-12">Updated Sep 12, 2026</time>
           <span class="category">System integration</span>
           <h3>Meeting prep infrastructure</h3>
           <p>A structured workflow for board planning, meeting readiness, discussion guide staging, publish dates, and board packet preparation.</p>
@@ -368,6 +384,7 @@
         </article>
 
         <article class="proj-card" data-type="ai">
+          <time class="proj-updated" datetime="2026-09-18">Updated Sep 18, 2026</time>
           <span class="category">AI enablement</span>
           <h3>AI workflow governance suite</h3>
           <p>Hooks, a skill, and four scheduled tasks that capture every AI-assisted coding session, brief me on it by morning, and hand every proposed change back to a person to rule on.</p>
@@ -376,6 +393,7 @@
         </article>
 
         <article class="proj-card" data-type="system">
+          <time class="proj-updated" datetime="2026-09-18">Updated Sep 18, 2026</time>
           <span class="category">System integration</span>
           <h3>Daily briefing and alerting platform</h3>
           <p>Scheduled jobs read mail, calendars, reminders, finances, and weather from a dozen sources, assemble one briefing for a phone dashboard and a bedside display, and page me when a job or service breaks.</p>
@@ -384,6 +402,7 @@
         </article>
 
         <article class="proj-card" data-type="ai">
+          <time class="proj-updated" datetime="2026-09-12">Updated Sep 12, 2026</time>
           <span class="category">AI enablement</span>
           <h3>Journalism research dashboard</h3>
           <p>A local enrichment pipeline and review dashboard that turned a flat spreadsheet of independent journalists into a browsable database with sources attached to every classification.</p>
@@ -392,6 +411,7 @@
         </article>
 
         <article class="proj-card speaking-card" data-type="speaking ai">
+          <time class="proj-updated" datetime="2026-09-12">Updated Sep 12, 2026</time>
           <div class="category-row">
             <span class="category">Public speaking</span>
             <span class="category">AI enablement</span>
@@ -407,6 +427,7 @@
         </article>
 
         <article class="proj-card speaking-card" data-type="speaking system">
+          <time class="proj-updated" datetime="2026-09-12">Updated Sep 12, 2026</time>
           <div class="category-row">
             <span class="category">Public speaking</span>
             <span class="category">System integration</span>
@@ -420,6 +441,7 @@
         </article>
 
         <article class="proj-card" data-type="experiment">
+          <time class="proj-updated" datetime="2026-09-12">Updated Sep 12, 2026</time>
           <span class="category">Experiment</span>
           <h3>Sky Window</h3>
           <p>A live, ambient map of the aircraft crossing a customizable strip of sky above any location.</p>
@@ -428,6 +450,7 @@
         </article>
 
         <article class="proj-card" data-type="experiment">
+          <time class="proj-updated" datetime="2026-09-12">Updated Sep 12, 2026</time>
           <span class="category">Experiment</span>
           <h3>Bedside dashboard</h3>
           <p>A server-driven bedside dashboard that combines Mets scores, weather, subway arrivals, calendar context, clock modes, and smart-light controls.</p>
@@ -436,6 +459,7 @@
         </article>
 
         <article class="proj-card" data-type="experiment">
+          <time class="proj-updated" datetime="2026-09-12">Updated Sep 12, 2026</time>
           <span class="category">Experiment</span>
           <h3>Vinyl cataloging tool</h3>
           <p>A cataloging tool that reads a record label from a phone photo and grades the condition. It looks up the pressing on Discogs for pricing and release data and adds a row to a Google Sheet.</p>
@@ -443,6 +467,7 @@
         </article>
 
         <article class="proj-card" data-type="experiment">
+          <time class="proj-updated" datetime="2026-09-12">Updated Sep 12, 2026</time>
           <span class="category">Experiment</span>
           <h3>Snail: Slow Dating by Mail</h3>
           <p>A small live dating service that makes one match at a time and runs the introductions through handwritten letters in the mail.</p>
@@ -540,6 +565,31 @@
       var countEl = button.querySelector('[data-count]');
       if (countEl) countEl.textContent = count(type);
       button.addEventListener('click', function(){ applyFilter(type); });
+    });
+
+    var sortButtons = [].slice.call(document.querySelectorAll('[data-sort]'));
+    var grid = cards[0].parentNode;
+    cards.forEach(function(card, i){ card.dataset.order = i; });
+
+    function updatedOn(card) {
+      var time = card.querySelector('.proj-updated');
+      return (time && time.getAttribute('datetime')) || '';
+    }
+
+    function applySort(mode) {
+      sortButtons.forEach(function(b){
+        var active = b.dataset.sort === mode;
+        b.classList.toggle('is-active', active);
+        b.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+      cards.slice().sort(function(a, b){
+        if (mode === 'updated' && updatedOn(a) !== updatedOn(b)) return updatedOn(a) > updatedOn(b) ? -1 : 1;
+        return a.dataset.order - b.dataset.order;
+      }).forEach(function(card){ grid.appendChild(card); });
+    }
+
+    sortButtons.forEach(function(button){
+      button.addEventListener('click', function(){ applySort(button.dataset.sort); });
     });
   })();
 

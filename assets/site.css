@@ -31,6 +31,7 @@ a:focus-visible { outline: 2px solid var(--mustard); outline-offset: 3px; border
 .kicker { color: var(--mustard); font-weight: 600; margin: 0 0 16px; display: flex; align-items: center; gap: 10px; }
 .kicker .dot { color: var(--mustard); display: inline-block; font-family: Georgia, serif; font-size: 15px; line-height: 1; }
 .kicker .dot::before { content: "✽"; }
+.page-updated { color: var(--faint); margin: 0; font-variant-numeric: tabular-nums; }
 .title {
   font-family: "Bricolage Grotesque", system-ui, sans-serif;
   font-size: clamp(36px, 6.5vw, 55px); line-height: 1.0; font-weight: 800;
