@@ -3,7 +3,7 @@ import { SegmentedFilter } from "@joshdavidoff/site-ds";
 const OPTIONS = [
   { value: "all", label: "All work", count: 9 },
   { value: "system", label: "System integration", count: 3 },
-  { value: "ai", label: "AI enablement", count: 2 },
+  { value: "ai", label: "AI uplift", count: 2 },
   { value: "speaking", label: "Public Speaking", count: 2 },
   { value: "experiment", label: "Experiments", count: 2 },
 ];

@@ -26,7 +26,7 @@ export const OperationalLayerSystems = () => (
 /** Longer tool labels wrap onto a second row rather than overflowing. */
 export const WrappingLongLabels = () => (
   <article className="proj-card">
-    <span className="category">AI enablement</span>
+    <span className="category">AI uplift</span>
     <h3>AI due-diligence judgment architecture</h3>
     <ChipRow items={["Claude Code / Codex", "Skill.MD packets", "HTML/CSS/JavaScript", "AI vision model"]} />
   </article>

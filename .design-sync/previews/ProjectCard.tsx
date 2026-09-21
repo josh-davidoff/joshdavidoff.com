@@ -15,7 +15,7 @@ export const Default = () => (
 /** Two categories switch the layout to the `.category-row` treatment. */
 export const MultipleCategories = () => (
   <ProjectCard
-    categories={["Public Speaking", "AI enablement"]}
+    categories={["Public Speaking", "AI uplift"]}
     title="The Bot Stops Here"
     description="Cognitive checkpoints are a practical design approach to keep teams engaged during AI-assisted analytical tasks."
     systems={["Skill.MD packets", "Python", "Responsible AI"]}

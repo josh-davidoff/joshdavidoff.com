@@ -4,7 +4,7 @@ import { TalkCard } from "@joshdavidoff/site-ds";
 export const Upcoming = () => (
   <TalkCard
     title="The Bot Stops Here"
-    categories={["Public Speaking", "AI enablement"]}
+    categories={["Public Speaking", "AI uplift"]}
     events={[
       {
         organization: "Technology Association of Grantmakers",

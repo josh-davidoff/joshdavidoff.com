@@ -20,7 +20,7 @@ export const ViewDeck = () => (
   <article className="proj-card">
     <div className="category-row">
       <span className="category">Public Speaking</span>
-      <span className="category">AI enablement</span>
+      <span className="category">AI uplift</span>
     </div>
     <h3>The Bot Stops Here</h3>
     <p className="proj-link">

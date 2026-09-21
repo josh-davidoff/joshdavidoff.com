@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 export interface CategoryTagProps {
-  /** Category label text, e.g. "System integration" or "AI enablement". */
+  /** Category label text, e.g. "System integration" or "AI uplift". */
   children: ReactNode;
   /** Additional class names appended after the base `category` class. */
   className?: string;

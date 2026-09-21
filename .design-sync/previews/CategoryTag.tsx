@@ -26,7 +26,7 @@ export const MultiTagRow = () => (
   <article className="proj-card">
     <div className="category-row">
       <CategoryTag>Public Speaking</CategoryTag>
-      <CategoryTag>AI enablement</CategoryTag>
+      <CategoryTag>AI uplift</CategoryTag>
     </div>
     <h3>The Bot Stops Here</h3>
   </article>
