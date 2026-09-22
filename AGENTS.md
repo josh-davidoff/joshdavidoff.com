@@ -106,12 +106,21 @@ Confirm noise by recapturing the same side; any other diff, on any page, is real
 Every project card and case page carries an "Updated" date. It is the date the
 public copy last changed, set by hand, not project activity. The source is the
 `updated` field in the project's dossier in the private register, which
-`register/bin/render.py` renders into the card; the case page header carries
-the same date in a `p.page-updated` line, edited by hand. When you change a
-case page or its card copy, bump both. `tests/test_smoke.py` fails if a card's
-date and its linked page's date differ, or if a label does not match its ISO
-value. The home page's "Sort by" control reorders the grid by these dates;
-the default "Featured" order is the register's `card_order`.
+`register/bin/render.py` renders into the card's `data-updated` attribute. Each
+case page shows the same date in a `p.page-updated` line at the bottom of the
+page, edited by hand. When you change a case page or its card copy, bump both.
+`tests/test_smoke.py` fails if a card's date and its linked page's date differ,
+or if a visible label does not match its ISO value.
+
+Two homepage features built on these dates are switched off (2026-09-22) but
+kept so they can come back:
+
+- Visible dates on cards. Set `SHOW_CARD_DATES = True` in
+  `register/bin/render.py` and re-render.
+- The "Sort by" control (Featured / Recently updated). Remove the `hidden`
+  attribute from `div.segmented.sort` in `index.html`. It sorts by
+  `data-updated`, so it works whether or not the card dates are visible. The
+  default "Featured" order is the register's `card_order`.
 
 ## URL notes
 

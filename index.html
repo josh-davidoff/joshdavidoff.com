@@ -137,6 +137,7 @@
   .controls { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 8px 22px; margin: 0 0 22px; }
   .controls .segmented { margin: 0; }
   .sort { align-items: center; }
+  .sort[hidden] { display: none; }
   .sort-label { color: var(--faint); font-family: "Instrument Sans", system-ui, sans-serif; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; }
   .project-grid, .experiment-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
   .proj-card {
@@ -347,7 +348,8 @@
         <button type="button" data-filter="speaking" aria-pressed="false">Public speaking <span data-count="speaking"></span></button>
         <button type="button" data-filter="experiment" aria-pressed="false">Experiments <span data-count="experiment"></span></button>
       </div>
-      <div class="segmented sort" role="group" aria-label="Sort projects">
+      <!-- Sort control hidden 2026-09-22. Remove "hidden" to bring it back; it sorts by each card's data-updated. -->
+      <div class="segmented sort" role="group" aria-label="Sort projects" hidden>
         <span class="sort-label">Sort by</span>
         <button type="button" class="is-active" data-sort="featured" aria-pressed="true">Featured</button>
         <button type="button" data-sort="updated" aria-pressed="false">Recently updated</button>
@@ -356,8 +358,7 @@
 
       <div class="project-grid">
         <!-- register:cards:start -->
-        <article class="proj-card" data-type="system">
-          <time class="proj-updated" datetime="2026-09-22">Updated Sep 22, 2026</time>
+        <article class="proj-card" data-type="system" data-updated="2026-09-22">
           <span class="category">System integration</span>
           <h3>Payment sync and reporting</h3>
           <p>Payment records flow from Fluxx into the team's Monday trackers and Power BI dashboards, and Fluxx stays the only place a payment gets edited.</p>
@@ -365,8 +366,7 @@
           <p class="proj-link"><a href="/projects/payment-sync-financial-visibility">View case <span class="arr" aria-hidden="true">→</span></a></p>
         </article>
 
-        <article class="proj-card" data-type="system">
-          <time class="proj-updated" datetime="2026-09-22">Updated Sep 22, 2026</time>
+        <article class="proj-card" data-type="system" data-updated="2026-09-22">
           <span class="category">System integration</span>
           <h3>Fluxx to Monday operational layer</h3>
           <p>Grant tasks from Fluxx show up on Monday boards the team plans from, and Fluxx stays the system of record.</p>
@@ -374,8 +374,7 @@
           <p class="proj-link"><a href="/projects/fluxx-monday-operational-layer">View case <span class="arr" aria-hidden="true">→</span></a></p>
         </article>
 
-        <article class="proj-card" data-type="system">
-          <time class="proj-updated" datetime="2026-09-22">Updated Sep 22, 2026</time>
+        <article class="proj-card" data-type="system" data-updated="2026-09-22">
           <span class="category">System integration</span>
           <h3>Meeting prep infrastructure</h3>
           <p>A Monday workflow that automates the repeatable parts of board meeting prep and leaves the readiness calls to staff.</p>
@@ -383,8 +382,7 @@
           <p class="proj-link"><a href="/projects/board-prep-meeting-workflow">View case <span class="arr" aria-hidden="true">→</span></a></p>
         </article>
 
-        <article class="proj-card" data-type="ai">
-          <time class="proj-updated" datetime="2026-09-22">Updated Sep 22, 2026</time>
+        <article class="proj-card" data-type="ai" data-updated="2026-09-22">
           <span class="category">AI uplift</span>
           <h3>AI workflow governance suite</h3>
           <p>Scheduled tasks record every AI coding session and brief me each morning. Nothing they propose takes effect until I approve it.</p>
@@ -392,8 +390,7 @@
           <p class="proj-link"><a href="/projects/ai-workflow-governance-suite">View case <span class="arr" aria-hidden="true">→</span></a></p>
         </article>
 
-        <article class="proj-card" data-type="system">
-          <time class="proj-updated" datetime="2026-09-22">Updated Sep 22, 2026</time>
+        <article class="proj-card" data-type="system" data-updated="2026-09-22">
           <span class="category">System integration</span>
           <h3>Daily briefing and alerting platform</h3>
           <p>Scheduled jobs pull from a dozen sources into one briefing on my phone and a bedside display, and alert me when anything breaks.</p>
@@ -401,8 +398,7 @@
           <p class="proj-link"><a href="/projects/daily-briefing-and-alerting-platform">View case <span class="arr" aria-hidden="true">→</span></a></p>
         </article>
 
-        <article class="proj-card" data-type="ai">
-          <time class="proj-updated" datetime="2026-09-22">Updated Sep 22, 2026</time>
+        <article class="proj-card" data-type="ai" data-updated="2026-09-22">
           <span class="category">AI uplift</span>
           <h3>Journalism research dashboard</h3>
           <p>A research pipeline and dashboard that turned a list of names into a browsable database of 1,165 independent journalists, with a source behind every classification.</p>
@@ -410,8 +406,7 @@
           <p class="proj-link"><a href="/projects/journalism-atlas-dashboard">View case <span class="arr" aria-hidden="true">→</span></a></p>
         </article>
 
-        <article class="proj-card speaking-card" data-type="speaking ai">
-          <time class="proj-updated" datetime="2026-09-22">Updated Sep 22, 2026</time>
+        <article class="proj-card speaking-card" data-type="speaking ai" data-updated="2026-09-22">
           <div class="category-row">
             <span class="category">Public speaking</span>
             <span class="category">AI uplift</span>
@@ -425,8 +420,7 @@
           <p class="proj-link"><a href="/bsh">View talk and repo <span class="arr" aria-hidden="true">→</span></a></p>
         </article>
 
-        <article class="proj-card speaking-card" data-type="speaking system">
-          <time class="proj-updated" datetime="2026-09-22">Updated Sep 22, 2026</time>
+        <article class="proj-card speaking-card" data-type="speaking system" data-updated="2026-09-22">
           <div class="category-row">
             <span class="category">Public speaking</span>
             <span class="category">System integration</span>
@@ -439,8 +433,7 @@
           <p class="proj-sys"><span class="chip">Fluxx</span><span class="chip">Power Automate</span></p>
         </article>
 
-        <article class="proj-card" data-type="experiment">
-          <time class="proj-updated" datetime="2026-09-12">Updated Sep 12, 2026</time>
+        <article class="proj-card" data-type="experiment" data-updated="2026-09-12">
           <span class="category">Experiment</span>
           <h3>Sky Window</h3>
           <p>A live, ambient map of the aircraft crossing a customizable strip of sky above any location.</p>
@@ -448,8 +441,7 @@
           <p class="proj-link"><a href="/sky">Open Sky Window <span class="arr" aria-hidden="true">→</span></a></p>
         </article>
 
-        <article class="proj-card" data-type="experiment">
-          <time class="proj-updated" datetime="2026-09-22">Updated Sep 22, 2026</time>
+        <article class="proj-card" data-type="experiment" data-updated="2026-09-22">
           <span class="category">Experiment</span>
           <h3>Bedside dashboard</h3>
           <p>A small screen by the bed that shows what I'd otherwise check on my phone, starting with the Mets score.</p>
@@ -457,16 +449,14 @@
           <p class="proj-link"><a href="/projects/home-dashboard-system">View case <span class="arr" aria-hidden="true">→</span></a></p>
         </article>
 
-        <article class="proj-card" data-type="experiment">
-          <time class="proj-updated" datetime="2026-09-22">Updated Sep 22, 2026</time>
+        <article class="proj-card" data-type="experiment" data-updated="2026-09-22">
           <span class="category">Experiment</span>
           <h3>Vinyl cataloging tool</h3>
           <p>A cataloging tool that reads a record label from a phone photo and grades its condition. It looks up the pressing on Discogs for pricing and release data and adds a row to a Google Sheet.</p>
           <p class="proj-sys"><span class="chip">AI vision model</span><span class="chip">Discogs</span><span class="chip">Google Sheets</span></p>
         </article>
 
-        <article class="proj-card" data-type="experiment">
-          <time class="proj-updated" datetime="2026-09-22">Updated Sep 22, 2026</time>
+        <article class="proj-card" data-type="experiment" data-updated="2026-09-22">
           <span class="category">Experiment</span>
           <h3>Snail: Slow Dating by Mail</h3>
           <p>A small dating service that sets up one match at a time and makes each introduction by handwritten letter.</p>
@@ -571,8 +561,7 @@
     cards.forEach(function(card, i){ card.dataset.order = i; });
 
     function updatedOn(card) {
-      var time = card.querySelector('.proj-updated');
-      return (time && time.getAttribute('datetime')) || '';
+      return card.dataset.updated || '';
     }
 
     function applySort(mode) {

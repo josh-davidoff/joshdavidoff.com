@@ -150,10 +150,12 @@ def test_pages_workflow_deploys() -> None:
     assert "actions/deploy-pages" in workflow_path.read_text(encoding="utf-8")
 
 
-# "Updated" dates: the register renders each card's date from its dossier, and
-# the linked case page carries the same date by hand, so the two can drift.
+# "Updated" dates: the register renders each card's dossier date into
+# data-updated (and a visible label only when SHOW_CARD_DATES is on), and the
+# linked case page carries the same date by hand, so the two can drift.
 MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-CARD_RE = re.compile(r'<article class="proj-card[^"]*"[^>]*>(.*?)</article>', re.S)
+CARD_RE = re.compile(r'<article class="proj-card[^"]*"([^>]*)>(.*?)</article>', re.S)
+CARD_DATA_RE = re.compile(r'data-updated="([^"]+)"')
 CARD_TIME_RE = re.compile(r'<time class="proj-updated" datetime="([^"]+)">([^<]*)</time>')
 CARD_LINK_RE = re.compile(r'<p class="proj-link"><a href="([^"]+)">')
 PAGE_TIME_RE = re.compile(r'<p class="page-updated mono"><time datetime="([^"]+)">([^<]*)</time></p>')
@@ -164,26 +166,29 @@ def _short_date(iso: str) -> str:
     return f"{MONTHS[month - 1]} {day}, {year}"
 
 
-def _cards() -> list[tuple[str | None, str, str]]:
-    """(link href, datetime, label) for every card on the home page."""
+def _cards() -> list[tuple[str | None, str, list[tuple[str, str]]]]:
+    """(link href, data-updated, visible (datetime, label) pairs) for every card."""
     text = (REPO_ROOT / "index.html").read_text(encoding="utf-8")
     cards = CARD_RE.findall(text)
     assert cards, "no project cards found on index.html"
     out = []
-    for body in cards:
-        times = CARD_TIME_RE.findall(body)
-        assert len(times) == 1, f"card has {len(times)} updated dates: {body[:80]!r}"
+    for attrs, body in cards:
+        data = CARD_DATA_RE.search(attrs)
+        assert data, f"card has no data-updated: {body[:80]!r}"
         link = CARD_LINK_RE.search(body)
-        out.append((link.group(1) if link else None, times[0][0], times[0][1]))
+        out.append((link.group(1) if link else None, data.group(1), CARD_TIME_RE.findall(body)))
     return out
 
 
 def test_card_dates_are_valid_and_labelled() -> None:
     from datetime import date
 
-    for _, iso, label in _cards():
+    for _, iso, visible in _cards():
         date.fromisoformat(iso)  # raises on a malformed or impossible date
-        assert label == f"Updated {_short_date(iso)}", (iso, label)
+        assert len(visible) <= 1, (iso, visible)
+        for shown_iso, label in visible:
+            assert shown_iso == iso, (iso, shown_iso)
+            assert label == f"Updated {_short_date(iso)}", (iso, label)
 
 
 def test_case_page_dates_match_cards() -> None:
@@ -197,7 +202,7 @@ def test_case_page_dates_match_cards() -> None:
         assert page.exists(), f"card links to {href} but {page} is missing"
         found = PAGE_TIME_RE.findall(page.read_text(encoding="utf-8"))
         if len(found) != 1:
-            mismatches.append(f"{href}: {len(found)} updated lines in header")
+            mismatches.append(f"{href}: {len(found)} updated lines")
             continue
         page_iso, page_label = found[0]
         date.fromisoformat(page_iso)
