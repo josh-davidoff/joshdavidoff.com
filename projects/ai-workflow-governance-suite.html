@@ -127,54 +127,28 @@
     <section>
       <h2 class="label mono"><span class="star" aria-hidden="true"></span>Architecture</h2>
       <div class="diagram-box" style="margin-bottom:14px;">
-        <svg viewBox="0 0 540 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Architecture: session hooks and a nightly digest collect metadata and corrections; a 2:25am brief synthesizes them and hands items to weekly and twice-monthly sweeps; every proposed change goes to a human, who rules on it in a live session and logs the outcome back into the register." style="width:100%;max-width:540px;height:auto;display:block;margin:0 auto;">
-          <defs>
-            <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-              <path d="M0,0 L10,5 L0,10 Z" fill="#869a6a"/>
-            </marker>
-            <marker id="arr-t" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-              <path d="M0,0 L10,5 L0,10 Z" fill="#c1643a"/>
-            </marker>
-          </defs>
-          <text x="5" y="30" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="10" font-weight="600">Collect</text>
-          <text x="177" y="30" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="10" font-weight="600">Summarize</text>
-          <text x="366" y="30" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="10" font-weight="600">Decide</text>
-          <line x1="5" y1="33" x2="540" y2="33" stroke="#869a6a" stroke-width="1"/>
-
-          <rect x="5" y="45" width="130" height="56" rx="6" fill="none" stroke="#869a6a" stroke-width="1.2"/>
-          <text x="70" y="62" text-anchor="middle" fill="#869a6a" font-family="Instrument Sans, sans-serif" font-size="8">session-start hook · miner</text>
-          <text x="70" y="76" text-anchor="middle" fill="#869a6a" font-family="Instrument Sans, sans-serif" font-size="8">session-end hook · stub</text>
-          <text x="70" y="90" text-anchor="middle" fill="#869a6a" font-family="Instrument Sans, sans-serif" font-size="8">nightly digest · corrections</text>
-          <line x1="135" y1="73" x2="160" y2="73" stroke="#869a6a" stroke-width="1.2" marker-end="url(#arr)"/>
-
-          <rect x="162" y="53" width="130" height="40" rx="6" fill="none" stroke="#e3b23c" stroke-width="1.5"/>
-          <text x="227" y="68" text-anchor="middle" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="9" font-weight="600">2:25am brief</text>
-          <text x="227" y="83" text-anchor="middle" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="8">threads · backlog · handoffs</text>
-          <line x1="227" y1="93" x2="227" y2="112" stroke="#869a6a" stroke-width="1.2" marker-end="url(#arr)"/>
-
-          <rect x="162" y="114" width="130" height="40" rx="6" fill="none" stroke="#e3b23c" stroke-width="1.5"/>
-          <text x="227" y="129" text-anchor="middle" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="9" font-weight="600">Sweeps</text>
-          <text x="227" y="144" text-anchor="middle" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="8">register · config · security</text>
-
-          <line x1="292" y1="73" x2="335" y2="73" stroke="#c1643a" stroke-width="1.2" marker-end="url(#arr-t)"/>
-          <line x1="292" y1="134" x2="320" y2="134" stroke="#c1643a" stroke-width="1.2"/>
-          <line x1="320" y1="134" x2="320" y2="73" stroke="#c1643a" stroke-width="1.2"/>
-
-          <rect x="337" y="53" width="130" height="40" rx="6" fill="none" stroke="#c1643a" stroke-width="1.5"/>
-          <text x="402" y="68" text-anchor="middle" fill="#c1643a" font-family="Instrument Sans, sans-serif" font-size="9" font-weight="600">A person decides</text>
-          <text x="402" y="83" text-anchor="middle" fill="#c1643a" font-family="Instrument Sans, sans-serif" font-size="8">nothing written unattended</text>
-          <line x1="467" y1="73" x2="492" y2="73" stroke="#869a6a" stroke-width="1.2" marker-end="url(#arr)"/>
-
-          <rect x="494" y="45" width="42" height="56" rx="6" fill="none" stroke="#869a6a" stroke-width="1.2"/>
-          <text x="515" y="66" text-anchor="middle" fill="#869a6a" font-family="Instrument Sans, sans-serif" font-size="8">live</text>
-          <text x="515" y="78" text-anchor="middle" fill="#869a6a" font-family="Instrument Sans, sans-serif" font-size="8">session</text>
-          <text x="515" y="90" text-anchor="middle" fill="#869a6a" font-family="Instrument Sans, sans-serif" font-size="8">/log</text>
-
-          <line x1="515" y1="101" x2="515" y2="172" stroke="#869a6a" stroke-width="1.2"/>
-          <line x1="515" y1="172" x2="70" y2="172" stroke="#869a6a" stroke-width="1.2"/>
-          <line x1="70" y1="172" x2="70" y2="104" stroke="#869a6a" stroke-width="1.2" marker-end="url(#arr)"/>
-          <text x="292" y="184" text-anchor="middle" fill="#869a6a" font-family="Instrument Sans, sans-serif" font-size="8">register: dossiers · build log · tools ledger · this site</text>
-        </svg>
+        <div class="flow" role="img" aria-label="Architecture: session hooks and a nightly digest collect metadata and corrections; a 2:25am brief synthesizes them and hands items to weekly and twice-monthly sweeps; every proposed change goes to a human, who rules on it in a live session and logs the outcome back into the register." style="--cols: auto 28px auto 32px auto 28px auto;">
+          <div class="flow-head" style="--at: 1/1/2/3;">Collect</div>
+          <div class="flow-node fill" style="--at: 2/1;"><span>session-start hook&nbsp;· miner</span><span>session-end hook&nbsp;· stub</span><span>nightly digest&nbsp;· corrections</span></div>
+          <i class="c l r to-r step" style="--at: 2/2;"></i>
+          <div class="flow-head" style="--at: 1/3/2/5;">Summarize</div>
+          <div class="flow-node key fill" style="--at: 2/3;"><b>2:25am brief</b><span>threads&nbsp;· backlog&nbsp;· handoffs</span></div>
+          <i class="c t b to-b step" style="--at: 3/3;"></i>
+          <div class="flow-node key" style="--at: 4/3;"><b>Sweeps</b><span>register&nbsp;· config&nbsp;· security</span></div>
+          <i class="c l r b to-r warm" style="--at: 2/4;"></i>
+          <i class="c t b warm" style="--at: 3/4;"></i>
+          <i class="c l t warm step" style="--at: 4/4;"></i>
+          <div class="flow-head" style="--at: 1/5/2/8;">Decide</div>
+          <div class="flow-node warm fill" style="--at: 2/5;"><b>A person decides</b><span>nothing written unattended</span></div>
+          <i class="c l r to-r step" style="--at: 2/6;"></i>
+          <div class="flow-node fill" style="--at: 2/7;"><span>live session</span><span>/log</span></div>
+          <i class="c t b to-t" style="--at: 3/1/5/2;"></i>
+          <i class="c t r" style="--at: 5/1;"></i>
+          <i class="c l r" style="--at: 5/2/6/7;"></i>
+          <i class="c l t" style="--at: 5/7;"></i>
+          <i class="c t b" style="--at: 3/7/5/8;"></i>
+          <div class="flow-note loop" style="--at: 6/1/7/8;">register: dossiers&nbsp;· build log&nbsp;· tools ledger&nbsp;· this site</div>
+        </div>
       </div>
       <p class="body">Hooks and a nightly digest collect → a 2:25am brief synthesizes and hands off to the sweeps → every proposal reaches me → I act in a live session and log the outcome, which the next night's digest reads.</p>
     </section>

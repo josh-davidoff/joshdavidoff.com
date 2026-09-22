@@ -109,37 +109,23 @@
     <section>
       <h2 class="label mono"><span class="star" aria-hidden="true"></span>Architecture</h2>
       <div class="diagram-box" style="margin-bottom:14px;">
-                  <svg viewBox="0 0 540 148" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Architecture: External data sources feed a Python control plane, which sends a canonical payload to an ESP32 OLED display. BLE buttons and a phone UI send inputs back to the control plane." style="width:100%;max-width:540px;height:auto;display:block;margin:0 auto;">
-          <defs>
-            <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-              <path d="M0,0 L10,5 L0,10 Z" fill="#869a6a"/>
-            </marker>
-          </defs>
-          <rect x="5" y="45" width="90" height="56" rx="6" fill="none" stroke="#869a6a" stroke-width="1.2"/>
-          <text x="50" y="62" text-anchor="middle" fill="#869a6a" font-family="Instrument Sans, sans-serif" font-size="8">Mets</text>
-          <text x="50" y="76" text-anchor="middle" fill="#869a6a" font-family="Instrument Sans, sans-serif" font-size="8">weather</text>
-          <text x="50" y="90" text-anchor="middle" fill="#869a6a" font-family="Instrument Sans, sans-serif" font-size="8">subway · calendar · LIFX</text>
-          <line x1="95" y1="73" x2="120" y2="73" stroke="#869a6a" stroke-width="1.2" marker-end="url(#arr)"/>
-          <rect x="122" y="53" width="110" height="40" rx="6" fill="none" stroke="#e3b23c" stroke-width="1.5"/>
-          <text x="177" y="68" text-anchor="middle" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="9" font-weight="600">Python control plane</text>
-          <text x="177" y="83" text-anchor="middle" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="8">aggregate · select · cache</text>
-          <line x1="232" y1="73" x2="257" y2="73" stroke="#869a6a" stroke-width="1.2" marker-end="url(#arr)"/>
-          <rect x="259" y="53" width="110" height="40" rx="6" fill="none" stroke="#e3b23c" stroke-width="1.5"/>
-          <text x="314" y="68" text-anchor="middle" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="9" font-weight="600">Payload</text>
-          <text x="314" y="83" text-anchor="middle" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="8">canonical display state</text>
-          <line x1="369" y1="73" x2="394" y2="73" stroke="#869a6a" stroke-width="1.2" marker-end="url(#arr)"/>
-          <rect x="396" y="53" width="130" height="40" rx="6" fill="none" stroke="#e3b23c" stroke-width="1.5"/>
-          <text x="461" y="68" text-anchor="middle" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="9" font-weight="600">ESP32 OLED</text>
-          <text x="461" y="83" text-anchor="middle" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="8">128&times;64 display</text>
-          <!-- BLE button -->
-          <rect x="122" y="110" width="110" height="30" rx="6" fill="none" stroke="#c1643a" stroke-width="1.2"/>
-          <text x="177" y="129" text-anchor="middle" fill="#c1643a" font-family="Instrument Sans, sans-serif" font-size="8">BLE buttons · phone UI</text>
-          <line x1="177" y1="110" x2="177" y2="97" stroke="#c1643a" stroke-width="1.2" marker-end="url(#arr)"/>
-          <text x="5" y="30" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="10" font-weight="600">External data sources</text>
-          <text x="177" y="30" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="10" font-weight="600">Control plane</text>
-          <text x="380" y="30" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="10" font-weight="600">Display</text>
-          <line x1="5" y1="33" x2="540" y2="33" stroke="#869a6a" stroke-width="1"/>
-        </svg>
+        <div class="flow" role="img" aria-label="Architecture: External data sources feed a Python control plane, which sends a canonical payload to an ESP32 OLED display. BLE buttons and a phone UI send inputs back to the control plane." style="--cols: auto 28px auto 28px auto 28px auto;">
+          <div class="flow-head" style="--at: 1/1/2/3;">External data sources</div>
+          <div class="flow-node fill" style="--at: 2/1;"><span>Mets</span><span>weather</span><span>subway&nbsp;· calendar&nbsp;· LIFX</span></div>
+          <i class="c l r to-r step" style="--at: 2/2;"></i>
+          <div class="flow-head" style="--at: 1/3/2/7;">Control plane</div>
+          <div class="flow-pair">
+            <div class="flow-node key fill" style="--at: 2/3;"><b>Python control plane</b><span>aggregate&nbsp;· select&nbsp;· cache</span></div>
+            <i class="c side warm"></i>
+            <div class="flow-node warm fit" style="--at: 4/3;"><span>BLE buttons&nbsp;· phone UI</span></div>
+          </div>
+          <i class="c t b to-t warm" style="--at: 3/3;"></i>
+          <i class="c l r to-r step" style="--at: 2/4;"></i>
+          <div class="flow-node key fill" style="--at: 2/5;"><b>Payload</b><span>canonical display state</span></div>
+          <i class="c l r to-r step" style="--at: 2/6;"></i>
+          <div class="flow-head" style="--at: 1/7/2/8;">Display</div>
+          <div class="flow-node key fill" style="--at: 2/7;"><b>ESP32 OLED</b><span>128&times;64 display</span></div>
+        </div>
       </div>
       <p class="body">External data sources → Python control plane → canonical display payload → ESP32 OLED display</p>
       <p class="body">BLE buttons and the phone UI send inputs back to the control plane, which updates state and refreshes the display.</p>

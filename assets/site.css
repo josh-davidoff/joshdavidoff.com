@@ -67,6 +67,96 @@ section { margin-top: 36px; }
   background: var(--bg-deep); border: 2px solid var(--mustard);
   border-radius: 10px; padding: 24px; margin: 0 0 22px;
 }
+@media (max-width: 480px) { .diagram-box { padding: 18px 16px; } }
+
+/* ── Flow diagrams (case pages) ──
+   Boxes are HTML, so they grow with their labels instead of overflowing a fixed drawing.
+   Below 960px the items stack in source order and only .step arrows are drawn, pointing down;
+   a .flow-pair puts a side input beside its target, joined by a .side arrow.
+   From 960px the box widens past the text column and the items sit on a grid: the diagram sets
+   its columns with --cols (and an optional --max width) and each item its place with --at (a
+   grid-area value). A .c cell draws lines from its center to the edges named by l, r, t and b,
+   with an arrowhead at the edge named by to-l, to-r, to-t or to-b. A .fill box stretches to its
+   row's height; a .fit box wraps to its column's width instead of widening the column. */
+.flow {
+  --line: #869a6a; --lw: 1.5px;
+  display: flex; flex-direction: column;
+  font-family: "Instrument Sans", system-ui, sans-serif; font-size: 12px; line-height: 1.35; color: var(--faint);
+}
+.flow-head { color: var(--mustard); font-weight: 600; font-size: 12.5px; line-height: 1.25; }
+.flow-node {
+  display: flex; flex-direction: column; justify-content: center;
+  border: var(--lw) solid var(--line); border-radius: 6px; padding: 7px 12px 8px;
+  text-align: center; text-wrap: balance;
+}
+.flow-node b { font-weight: 600; font-size: 13px; line-height: 1.3; }
+.flow-node.key { border-color: var(--mustard); color: var(--mustard); }
+.flow-node.warm { border-color: var(--tomato); color: var(--tomato); }
+.flow-node.grey { border-color: #999; color: #bdbdbd; }
+.flow-node.dashed { border-style: dashed; }
+.flow-node .w { color: var(--tomato); }
+.flow-node .n { color: var(--faint); font-size: 11.5px; margin-top: 3px; }
+.flow-note { color: var(--faint); font-size: 11.5px; text-align: center; text-wrap: balance; margin-top: 12px; }
+.flow .c { --col: var(--line); position: relative; }
+.flow .c.warm { --col: var(--tomato); }
+.flow .c::after { position: absolute; width: 0; height: 0; border: 4.5px solid transparent; }
+.flow-duo small { font-size: 11px; line-height: 1.3; color: var(--faint); }
+
+@media (max-width: 959.98px) {
+  .flow { max-width: 460px; margin-inline: auto; }
+  .flow-head { margin: 4px 0 6px; }
+  .flow .c { display: none; }
+  .flow .c.step { display: block; height: 26px; background: linear-gradient(var(--col), var(--col)) 50% 0 / var(--lw) 100% no-repeat; }
+  .flow .c.step::after { content: ""; left: 50%; bottom: 0; margin-left: -4.5px; border-bottom: 0; border-top: 8px solid var(--col); }
+  .flow .c.step + .flow-head { margin-top: -4px; }
+  .flow-note.loop::before { content: "↺\00a0"; }
+  .flow-pair { display: flex; align-items: stretch; }
+  .flow-pair > .flow-node { flex: 1 1 0; }
+  .flow .c.side { display: block; flex: 0 0 24px; align-self: center; height: 9px; background: linear-gradient(var(--col), var(--col)) 0 50% / 100% var(--lw) no-repeat; }
+  .flow .c.side::after { content: ""; left: 0; top: 0; border-left: 0; border-right: 8px solid var(--col); }
+  .flow .c.fork { display: block; height: 12px; margin: 12px calc(25% - 2.5px) 0; border: var(--lw) solid var(--col); border-bottom: 0; }
+  .flow .c.fork::before { content: ""; position: absolute; left: 50%; top: -13.5px; height: 12px; margin-left: -0.75px; border-left: var(--lw) solid var(--col); }
+  .flow-fan { display: grid; grid-template-columns: 1fr 1fr; column-gap: 10px; }
+  .flow-fan > .fan-r { grid-column: 2; }
+  .flow-duo { display: flex; align-items: center; justify-content: center; gap: 6px; height: 40px; }
+  .flow-duo .c { display: block; width: 9px; height: 100%; background: linear-gradient(var(--col), var(--col)) 50% 0 / var(--lw) 100% no-repeat; }
+  .flow-duo .c::after { content: ""; left: 0; bottom: 0; border-bottom: 0; border-top: 8px solid var(--col); }
+  .flow-duo .c.dash { background: repeating-linear-gradient(180deg, var(--col) 0 4px, transparent 4px 7px) 50% 0 / var(--lw) 100% no-repeat; }
+  .flow-duo .c.dash::after { top: 0; bottom: auto; border-top: 0; border-bottom: 8px solid var(--col); }
+  .flow-duo small { margin-left: 6px; }
+}
+
+@media (min-width: 960px) {
+  .diagram-box:has(> .flow) { margin-inline: calc((100% - 880px) / 2); }
+  .flow { display: grid; grid-template-columns: var(--cols); align-items: center; max-width: var(--max, none); margin-inline: auto; }
+  .flow-note.loop { margin-top: 0; }
+  .flow > *, .flow-pair > *, .flow-fan > * { grid-area: var(--at, auto); }
+  .flow-pair, .flow-fan { display: contents; }
+  .flow-head { align-self: end; padding-bottom: 5px; margin-bottom: 12px; border-bottom: 1px solid var(--line); }
+  .flow .fill { align-self: stretch; }
+  .flow .fit { contain: inline-size; }
+  .flow .c {
+    align-self: stretch; min-width: 20px; min-height: 22px;
+    background:
+      linear-gradient(var(--col), var(--col)) 0 50% / var(--l, 0) var(--lw) no-repeat,
+      linear-gradient(var(--col), var(--col)) 100% 50% / var(--r, 0) var(--lw) no-repeat,
+      linear-gradient(var(--col), var(--col)) 50% 0 / var(--lw) var(--t, 0) no-repeat,
+      linear-gradient(var(--col), var(--col)) 50% 100% / var(--lw) var(--b, 0) no-repeat;
+  }
+  .flow .c.l { --l: calc(50% + var(--lw) / 2); }
+  .flow .c.r { --r: calc(50% + var(--lw) / 2); }
+  .flow .c.t { --t: calc(50% + var(--lw) / 2); }
+  .flow .c.b { --b: calc(50% + var(--lw) / 2); }
+  .flow .c.dash { background-image: repeating-linear-gradient(90deg, var(--col) 0 4px, transparent 4px 7px), repeating-linear-gradient(90deg, var(--col) 0 4px, transparent 4px 7px), none, none; }
+  .flow .c.to-r::after { content: ""; right: 0; top: 50%; margin-top: -4.5px; border-right: 0; border-left: 8px solid var(--col); }
+  .flow .c.to-l::after { content: ""; left: 0; top: 50%; margin-top: -4.5px; border-left: 0; border-right: 8px solid var(--col); }
+  .flow .c.to-t::after { content: ""; top: 0; left: 50%; margin-left: -4.5px; border-top: 0; border-bottom: 8px solid var(--col); }
+  .flow .c.to-b::after { content: ""; bottom: 0; left: 50%; margin-left: -4.5px; border-bottom: 0; border-top: 8px solid var(--col); }
+  .flow .c.side, .flow .c.fork { display: none; }
+  .flow-duo { align-self: center; position: relative; display: flex; flex-direction: column; gap: 7px; }
+  .flow-duo .c { height: 9px; min-height: 0; }
+  .flow-duo small { position: absolute; top: calc(100% + 6px); left: 0; right: 0; text-align: center; }
+}
 
 .note { font-size: 15px; color: var(--faint); font-style: italic; margin-top: 48px; }
 

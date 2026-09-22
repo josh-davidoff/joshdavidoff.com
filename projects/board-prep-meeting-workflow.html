@@ -87,31 +87,17 @@
     <section>
       <h2 class="label mono"><span class="star" aria-hidden="true"></span>Workflow states</h2>
       <div class="diagram-box">
-        <svg viewBox="0 0 540 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Workflow states: Pre-pipeline to Pipeline to Scheduling (manual gate) to Prep in process (automated scaffolding) to Prep complete (manual export)." style="width:100%;max-width:540px;height:auto;display:block;margin:0 auto;">
-          <defs>
-            <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-              <path d="M0,0 L10,5 L0,10 Z" fill="#869a6a"/>
-            </marker>
-          </defs>
-          <rect x="5" y="20" width="88" height="30" rx="6" fill="none" stroke="#e3b23c" stroke-width="1.5"/>
-          <text x="49" y="40" text-anchor="middle" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="9" font-weight="600">Pre-pipeline</text>
-          <line x1="93" y1="35" x2="108" y2="35" stroke="#869a6a" stroke-width="1.5" marker-end="url(#arr)"/>
-          <rect x="110" y="20" width="68" height="30" rx="6" fill="none" stroke="#e3b23c" stroke-width="1.5"/>
-          <text x="144" y="40" text-anchor="middle" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="9" font-weight="600">Pipeline</text>
-          <line x1="178" y1="35" x2="193" y2="35" stroke="#869a6a" stroke-width="1.5" marker-end="url(#arr)"/>
-          <rect x="195" y="15" width="80" height="40" rx="6" fill="none" stroke="#c1643a" stroke-width="1.5"/>
-          <text x="235" y="30" text-anchor="middle" fill="#c1643a" font-family="Instrument Sans, sans-serif" font-size="9" font-weight="600">Scheduling</text>
-          <text x="235" y="46" text-anchor="middle" fill="#c1643a" font-family="Instrument Sans, sans-serif" font-size="8">manual gate</text>
-          <line x1="275" y1="35" x2="290" y2="35" stroke="#869a6a" stroke-width="1.5" marker-end="url(#arr)"/>
-          <rect x="292" y="15" width="108" height="40" rx="6" fill="none" stroke="#e3b23c" stroke-width="1.5"/>
-          <text x="346" y="30" text-anchor="middle" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="9" font-weight="600">Prep in process</text>
-          <text x="346" y="46" text-anchor="middle" fill="#c1643a" font-family="Instrument Sans, sans-serif" font-size="8">auto scaffolding</text>
-          <line x1="400" y1="35" x2="415" y2="35" stroke="#869a6a" stroke-width="1.5" marker-end="url(#arr)"/>
-          <rect x="417" y="15" width="100" height="40" rx="6" fill="none" stroke="#e3b23c" stroke-width="1.5" stroke-dasharray="4,2"/>
-          <text x="467" y="30" text-anchor="middle" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="9" font-weight="600">Prep complete</text>
-          <text x="467" y="46" text-anchor="middle" fill="#c1643a" font-family="Instrument Sans, sans-serif" font-size="8">manual export</text>
-          <text x="235" y="75" text-anchor="middle" fill="#869a6a" font-family="Instrument Sans, sans-serif" font-size="8">discussion guides, reminders, publish dates</text>
-        </svg>
+        <div class="flow" role="img" aria-label="Workflow states: Pre-pipeline to Pipeline to Scheduling (manual gate) to Prep in process (automated scaffolding) to Prep complete (manual export)." style="--cols: auto 22px auto 22px auto 22px auto 22px auto;">
+          <div class="flow-node key" style="--at: 1/1;"><b>Pre-pipeline</b></div>
+          <i class="c l r to-r step" style="--at: 1/2;"></i>
+          <div class="flow-node key" style="--at: 1/3;"><b>Pipeline</b></div>
+          <i class="c l r to-r step" style="--at: 1/4;"></i>
+          <div class="flow-node warm" style="--at: 1/5;"><b>Scheduling</b><span>manual gate</span></div>
+          <i class="c l r to-r step" style="--at: 1/6;"></i>
+          <div class="flow-node key" style="--at: 1/7;"><b>Prep in process</b><span class="w">auto scaffolding</span><span class="n">discussion guides, reminders, publish dates</span></div>
+          <i class="c l r to-r step" style="--at: 1/8;"></i>
+          <div class="flow-node key dashed" style="--at: 1/9;"><b>Prep complete</b><span class="w">manual export</span></div>
+        </div>
       </div>
     </section>
 

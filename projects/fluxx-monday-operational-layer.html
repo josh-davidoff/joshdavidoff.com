@@ -40,6 +40,23 @@
   .ref-table .src { color: var(--cream); font-weight: 600; }
   .ref-table .mirror { color: var(--muted); }
   .ref-table .note { font-size: 14px; color: var(--faint); font-style: normal; margin-top: 2px; }
+  /* Phones: the four columns no longer fit, so each row becomes a card with its own column labels. */
+  @media (max-width: 639.98px) {
+    .ref-table thead { display: none; }
+    .ref-table, .ref-table tbody { display: block; }
+    .ref-table tbody tr { display: grid; grid-template-columns: max-content minmax(0, 1fr); column-gap: 18px; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+    .ref-table tbody tr:first-child { padding-top: 0; }
+    .ref-table tbody tr:last-child { border-bottom: none; padding-bottom: 0; }
+    .ref-table tbody td { display: block; padding: 0; border-bottom: none; line-height: 1.45; }
+    .ref-table tbody td:first-child { grid-column: 1 / -1; font-size: 17px; margin-bottom: 8px; }
+    .ref-table tbody td:nth-child(2)::before, .ref-table tbody td:nth-child(3)::before {
+      display: block; margin-bottom: 2px;
+      font-family: "Instrument Sans", system-ui, sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--mustard);
+    }
+    .ref-table tbody td:nth-child(2)::before { content: "System of record"; white-space: nowrap; }
+    .ref-table tbody td:nth-child(3)::before { content: "Operational mirror"; }
+    .ref-table tbody td:last-child { grid-column: 1 / -1; margin-top: 8px; }
+  }
 
   /* ── Cross-page polish (view transitions, selection, grain) ── */
   .mono { font-variant-numeric: tabular-nums; }
