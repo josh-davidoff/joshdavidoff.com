@@ -72,7 +72,7 @@
       <p class="kicker mono"><span class="dot" aria-hidden="true"></span>Case study</p>
       <h1 class="title">Journalism research dashboard</h1>
       <p class="subtitle">A research dashboard that made a database of independent journalists and creators easier to browse and assess.</p>
-      <p class="page-updated mono"><time datetime="2026-09-12">Updated Sep 12, 2026</time></p>
+      <p class="page-updated mono"><time datetime="2026-09-22">Updated Sep 22, 2026</time></p>
     </header>
   </div>
 
@@ -94,18 +94,18 @@
 
     <section>
       <h2 class="label mono"><span class="star" aria-hidden="true"></span>The problem</h2>
-      <p class="body">The program team had a long list of independent journalists and creators with just their names and outlets. This was not enough context to review the database with confidence. They asked whether I could fill in the gaps and make the list easier to browse and assess.</p>
+      <p class="body">The program team had a long list of independent journalists and creators with just their names and outlets. That wasn't enough to judge who belonged in the database, so they asked whether I could fill in the gaps.</p>
     </section>
 
     <section>
       <h2 class="label mono"><span class="star" aria-hidden="true"></span>What I built</h2>
-      <p class="body">I built a local enrichment workflow and a single-file browser dashboard. The pipeline starts with creator names and outlets, runs bounded web searches, extracts evidence, and classifies each record by beat, creator type, geography, confidence, and review status. Source URLs, snippets, rationale, and review flags stay attached to each record so reviewers can see why a classification was suggested.</p>
-      <p class="body">The dashboard embeds the merged 1,165-record dataset. A summary strip shows counts by beat and review status. Reviewers can filter and sort the table and open any record to read the evidence behind its classification. If they disagree they can correct the classification and leave a note. Records worth a second look get a star, and the annotated set exports back to CSV.</p>
+      <p class="body">I built a pipeline and a dashboard that opens as a single file in any browser. For each name, the pipeline runs a few targeted web searches, pulls out evidence, and tags the person by beat, type of creator, and location, with a confidence level. The sources and reasoning stay attached to each record so reviewers can see why it was tagged the way it was.</p>
+      <p class="body">The dashboard holds all 1,165 records. A summary strip shows counts by beat and review status. Reviewers can filter and sort the table and open any record to read the evidence behind its classification. If they disagree they can correct the classification and leave a note. Records worth a second look get a star, and the annotated set exports back to CSV.</p>
     </section>
 
     <section>
       <h2 class="label mono"><span class="star" aria-hidden="true"></span>What made it hard</h2>
-      <p class="body">Every classification shows the snippet and the one-line rationale it came from. Low confidence is a real status that sends a record to a person rather than a guess that gets exported.</p>
+      <p class="body">The risk was a tidy-looking label with nothing behind it. So every classification shows the snippet and one-line reasoning it came from, and a low-confidence match goes to a person for review instead of into the export.</p>
     </section>
 
     <p style="margin-top:52px;font-size:17px;"><a href="/#projects"><span class="arr arr-back" aria-hidden="true">←</span> All projects</a></p>

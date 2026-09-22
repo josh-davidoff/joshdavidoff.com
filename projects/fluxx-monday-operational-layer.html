@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Fluxx to Monday operational layer — Josh Davidoff</title>
-<meta name="description" content="A controlled operational layer giving staff usable workflow views in Monday without displacing Fluxx as the authoritative grants system." />
+<meta name="description" content="Grant tasks from Fluxx show up on Monday boards the team uses every day, and Fluxx stays the system of record." />
 <meta property="og:title" content="Fluxx to Monday operational layer" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://joshdavidoff.com/projects/fluxx-monday-operational-layer" />
@@ -83,13 +83,13 @@
     <header>
       <p class="kicker mono"><span class="dot" aria-hidden="true"></span>Case study</p>
       <h1 class="title">Fluxx to Monday operational layer</h1>
-      <p class="subtitle">A controlled operational layer that surfaces grant tasks in Monday views staff will actually open, with Fluxx staying the system of record.</p>
-      <p class="page-updated mono"><time datetime="2026-09-14">Updated Sep 14, 2026</time></p>
+      <p class="subtitle">Grant tasks from Fluxx show up on Monday boards the team uses every day, and Fluxx stays the system of record.</p>
+      <p class="page-updated mono"><time datetime="2026-09-22">Updated Sep 22, 2026</time></p>
     </header>
 
     <section>
       <h2 class="label mono"><span class="star" aria-hidden="true"></span>The problem</h2>
-      <p class="body">Fluxx holds the authoritative grants data, but it lacks project management functionality. The team needed accessible views for reports, agreements, payments, and pipeline tracking without losing data discipline.</p>
+      <p class="body">Fluxx holds the grants data, but it has no project management tools. The team needed to plan around reports, agreements, and payments without the data drifting away from Fluxx.</p>
     </section>
 
     <section>
@@ -109,13 +109,13 @@
               <td class="src">Grants / proposals</td>
               <td class="src">Fluxx</td>
               <td class="mirror">Monday, SharePoint, Power BI</td>
-              <td class="note">Fluxx is authoritative</td>
+              <td class="note">Edited only in Fluxx</td>
             </tr>
             <tr>
               <td class="src">Reports</td>
               <td class="src">Fluxx</td>
               <td class="mirror">Monday</td>
-              <td class="note">Team visibility; limited write-back of state and due date</td>
+              <td class="note">Only state and due date write back</td>
             </tr>
             <tr>
               <td class="src">Agreements</td>
@@ -127,13 +127,13 @@
               <td class="src">Payments</td>
               <td class="src">Fluxx</td>
               <td class="mirror">Monday, SharePoint</td>
-              <td class="note">High-control area; Power BI depends on SharePoint list integrity</td>
+              <td class="note">Power BI reads from the SharePoint list, so it has to stay accurate</td>
             </tr>
             <tr>
               <td class="src">Board prep planning</td>
               <td class="mirror">Monday</td>
               <td class="mirror">Outlook, dashboards</td>
-              <td class="note">Operational only — not source-of-truth grants data</td>
+              <td class="note">Planning data only, not grants data</td>
             </tr>
             <tr>
               <td class="src">Meeting scheduling</td>
@@ -145,13 +145,13 @@
               <td class="src">Receipts</td>
               <td class="mirror">Monday</td>
               <td class="mirror">QuickBooks (manual)</td>
-              <td class="note">Intake automated; reconciliation is manual</td>
+              <td class="note">Intake is automated and reconciliation is manual</td>
             </tr>
             <tr>
               <td class="src">Cash flow visuals</td>
               <td class="src">Fluxx</td>
               <td class="mirror">SharePoint → Power BI</td>
-              <td class="note">Verify upstream list health before trusting visuals</td>
+              <td class="note">Check the SharePoint list before trusting the charts</td>
             </tr>
           </tbody>
         </table>

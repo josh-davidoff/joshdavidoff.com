@@ -88,7 +88,7 @@
       <p class="kicker mono"><span class="dot" aria-hidden="true"></span>Experiment</p>
       <h1 class="title">Bedside dashboard</h1>
       <p class="subtitle">A vibecoded bedside display that turns the information I check every day into one small physical interface.</p>
-      <p class="page-updated mono"><time datetime="2026-09-12">Updated Sep 12, 2026</time></p>
+      <p class="page-updated mono"><time datetime="2026-09-22">Updated Sep 22, 2026</time></p>
     </header>
 
     <section>
@@ -98,13 +98,13 @@
 
     <section>
       <h2 class="label mono"><span class="star" aria-hidden="true"></span>What it does</h2>
-      <p class="body">The display pulls together live MLB data, weather and air quality, NYC subway arrivals, calendar events, Google Sheet data, LIFX scenes, and a short AI-generated weather summary. It includes night mode, burn-in mitigation, stale data fallbacks, background refreshes, BLE button controls, a phone web UI, and a DigitalOcean deployment.</p>
+      <p class="body">The display pulls live Mets scores, weather, subway arrivals, and my calendar, and it can switch the LIFX lights between scenes. It dims at night, protects the screen from burn-in, and falls back to the last good data when a source goes down. Bluetooth buttons and a page on my phone control it.</p>
     </section>
 
     <section>
       <h2 class="label mono"><span class="star" aria-hidden="true"></span>How I built it with AI</h2>
       <p class="body">This is a vibecoded prototyping project, not a claim of expertise in any of these technologies. I used language models to break the idea into pieces, reason through unfamiliar libraries, debug hardware and server issues, and keep adding to it as I figured out what I wanted.</p>
-      <p class="body">The architecture is split: an ESP32 drives a tiny 128&times;64 OLED screen, while a Python control plane handles data aggregation, caching, module selection, button dispatch, and phone controls.</p>
+      <p class="body">An ESP32 microcontroller drives a tiny 128&times;64 OLED screen, and a Python server does the rest by gathering the data, choosing what to show, and handling the buttons and phone controls.</p>
     </section>
 
     <section>

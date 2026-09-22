@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>AI workflow governance suite — Josh Davidoff</title>
-<meta name="description" content="Hooks, a skill, and four scheduled tasks that capture every AI-assisted coding session, brief me on it by morning, and hand every proposed change back to a person to rule on." />
+<meta name="description" content="Scheduled tasks record every AI coding session and brief me each morning. Nothing they propose takes effect until I approve it." />
 <meta property="og:title" content="AI workflow governance suite" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://joshdavidoff.com/projects/ai-workflow-governance-suite" />
@@ -87,40 +87,40 @@
     <header>
       <p class="kicker mono"><span class="dot" aria-hidden="true"></span>AI uplift</p>
       <h1 class="title">AI workflow governance suite</h1>
-      <p class="subtitle">Hooks, a skill, and four scheduled tasks that capture every AI-assisted coding session, brief me on it by morning, and hand every proposed change back to a person to rule on.</p>
-      <p class="page-updated mono"><time datetime="2026-09-18">Updated Sep 18, 2026</time></p>
+      <p class="subtitle">Scheduled tasks record every AI coding session and brief me each morning. Nothing they propose takes effect until I approve it.</p>
+      <p class="page-updated mono"><time datetime="2026-09-22">Updated Sep 22, 2026</time></p>
     </header>
 
     <section>
       <h2 class="label mono"><span class="star" aria-hidden="true"></span>The problem</h2>
-      <p class="body">Eight months of building with coding agents across roughly twenty projects had produced no durable record of any of it. The only history lived in the agents' session caches, which are designed to be pruned, and the most useful signal from each session, the tool calls I rejected, the corrections I typed, the tests that failed, evaporated when the session ended.</p>
-      <p class="body">The obvious fix was to let an agent maintain its own instructions and memory. I did not want that. An agent that edits its own operating rules unattended is the automation-bias failure I argue against in <a href="/bsh">The Bot Stops Here</a>. The constraint was to automate collection and synthesis completely while keeping every write-back behind a human decision.</p>
+      <p class="body">After eight months of building with coding agents across about twenty projects, I had no lasting record of any of it. The only history sat in the agents' session caches, which clear themselves out. The most useful moments, when I rejected a step or corrected the agent or a test failed, disappeared when each session ended.</p>
+      <p class="body">The obvious fix was to let an agent maintain its own instructions and memory. I did not want that. An agent that edits its own operating rules unattended is the automation-bias failure I argue against in <a href="/bsh">The Bot Stops Here</a>. So the system collects and summarizes everything on its own, and nothing it proposes takes effect until I approve it.</p>
     </section>
 
     <section>
       <h2 class="label mono"><span class="star" aria-hidden="true"></span>What it does</h2>
       <div class="inset">
-        <p class="ilabel"><span class="dot" aria-hidden="true"></span>Collect, automatically</p>
+        <p class="ilabel"><span class="dot" aria-hidden="true"></span>Collecting</p>
         <ul>
-          <li>A session-start hook re-mines the Codex and Claude Code caches into a metadata-only timeline: dates, working directory, models, tool counts. No conversation content, which would drag employer and financial material into the record.</li>
-          <li>A session-end hook writes one stub per session: where it happened and what the repository looked like afterward.</li>
-          <li>A nightly digest builder walks every transcript and repository touched since the last run and keeps, in priority order, every prompt I typed, every rejected tool call and correction, every error and failed test, and what changed.</li>
+          <li>When a session starts, a hook logs when and where it ran and which model it used. It saves nothing from the conversation, which keeps work and financial details out of the record.</li>
+          <li>When a session ends, a second hook notes where it happened and what the code looked like afterward.</li>
+          <li>Each night a script reads every session and project touched since the last run. It keeps what I typed, every place I overruled the agent or a test failed, and what changed.</li>
         </ul>
       </div>
       <div class="inset">
-        <p class="ilabel"><span class="dot" aria-hidden="true"></span>Synthesize, automatically</p>
+        <p class="ilabel"><span class="dot" aria-hidden="true"></span>Summarizing</p>
         <ul>
-          <li>At 2:25am a scheduled task reads the digest and writes one brief: what broke, what to build, how the agent setup should improve, and what memory changed.</li>
-          <li>Suggestions carry night to night in a threads file, and a backlog holds every idea until I rule on it. Anything unruled for seven nights is flagged.</li>
-          <li>The nightly task hands items to the sweep that owns them: a Monday register sweep for tests, tier drift, and model pins; a twice-monthly review of the instruction files; a twice-monthly security sweep. Each reports and offers.</li>
+          <li>At 2:25 a.m. a scheduled task turns that digest into a brief on what broke, what to build next, and how the setup could improve.</li>
+          <li>Open suggestions carry over from night to night until I decide on them, and anything left for a week gets flagged.</li>
+          <li>Bigger items go to scheduled reviews. A Monday sweep checks tests and model versions, and twice a month separate reviews cover the agents' instructions and security. Each one reports and proposes but changes nothing.</li>
         </ul>
       </div>
       <div class="inset">
-        <p class="ilabel"><span class="dot" aria-hidden="true"></span>Assimilate, deliberately</p>
+        <p class="ilabel"><span class="dot" aria-hidden="true"></span>Deciding</p>
         <ul>
-          <li>Nothing in the suite edits code, configuration, instructions, skills, or memory unattended. Every proposed change is a one-line suggestion I carry into a live session.</li>
-          <li>A <span class="mono">/log</span> skill turns what I describe into a project dossier, a build-log note, or a tools-ledger note, private by default.</li>
-          <li>The register renders this site from the entries flagged public, using only the card fields. A project can appear on the homepage while its write-up stays private.</li>
+          <li>Nothing in the suite changes code or the agents' instructions on its own. Every proposal reaches me as a one-line suggestion, and I make the change myself in a live session.</li>
+          <li>A <span class="mono">/log</span> command turns my description of what I built into a project note, private unless I mark it public.</li>
+          <li>The project cards on this site's homepage are generated from the notes marked public, so a project can appear here while its full write-up stays private.</li>
         </ul>
       </div>
     </section>
@@ -138,8 +138,8 @@
             </marker>
           </defs>
           <text x="5" y="30" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="10" font-weight="600">Collect</text>
-          <text x="177" y="30" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="10" font-weight="600">Synthesize</text>
-          <text x="366" y="30" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="10" font-weight="600">Rule</text>
+          <text x="177" y="30" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="10" font-weight="600">Summarize</text>
+          <text x="366" y="30" fill="#e3b23c" font-family="Instrument Sans, sans-serif" font-size="10" font-weight="600">Decide</text>
           <line x1="5" y1="33" x2="540" y2="33" stroke="#869a6a" stroke-width="1"/>
 
           <rect x="5" y="45" width="130" height="56" rx="6" fill="none" stroke="#869a6a" stroke-width="1.2"/>
@@ -177,20 +177,19 @@
           <text x="292" y="184" text-anchor="middle" fill="#869a6a" font-family="Instrument Sans, sans-serif" font-size="8">register: dossiers · build log · tools ledger · this site</text>
         </svg>
       </div>
-      <p class="body">Hooks and a nightly digest collect → a 2:25am brief synthesizes and hands off to the sweeps → every proposal reaches a person → the person acts in a live session and logs the outcome, which the next night's digest reads.</p>
+      <p class="body">Hooks and a nightly digest collect → a 2:25am brief synthesizes and hands off to the sweeps → every proposal reaches me → I act in a live session and log the outcome, which the next night's digest reads.</p>
     </section>
 
     <section>
-      <h2 class="label mono"><span class="star" aria-hidden="true"></span>Hardening that mattered</h2>
-      <p class="body">The register also audits the agents' dependencies. A model ID hardcoded in a deployed service fails unattended, so a checker inventories every pinned model across the workspace and ranks it by blast radius against the deployment inventory. It does not decide what is obsolete, since there is no offline way to know a current lineup and a confident wrong answer is worse than a list. It reports three states instead: checked against my reference file, observed working in one of my own sessions on a given date, or unverified.</p>
-      <p class="body">Only the region between two markers in that reference file counts as verified. Otherwise writing "this model is not yet verified" would mark it verified. The weekly sweep runs the workspace's nineteen registered test suites and flags any project whose blast radius has outgrown its tests.</p>
+      <h2 class="label mono"><span class="star" aria-hidden="true"></span>Safeguards</h2>
+      <p class="body">The register also tracks which AI model versions my deployed tools depend on, since a retired model breaks a scheduled job with no one watching. It doesn't guess which models are current. It marks each one as checked against my reference list, seen working on a given date, or unverified. A weekly sweep also runs the workspace's nineteen test suites and flags any project that has outgrown its tests.</p>
     </section>
 
     <section>
       <h2 class="label mono"><span class="star" aria-hidden="true"></span>How I built it with AI</h2>
-      <p class="body">The history came from 162 rollout files in a rolling cache, and three modeling problems inflated the numbers until each was handled: resumed threads get a fresh file under the original id, subagents write sidecar transcripts under the parent session, and a session's working directory changes as it runs. 162 files were 140 threads. The archive now holds 265 sessions back to February 2026, across 34 project dossiers and 24 tools-ledger entries.</p>
-      <p class="body">Before the renderer could generate anything, it had to reproduce the eleven hand-written homepage cards byte for byte. The safeguards were built to fail differently: the generated ignore file used a trailing comment on a token pattern, which gitignore does not support, so the pattern matched nothing while looking correct. An independent filename scan caught the OAuth files anyway.</p>
-      <p class="body">When I ran a review of every active project through parallel reviewer agents, four claims that two helpers were byte-identical were wrong, one zero-coverage claim pointed at a path that already had a test, and one unused-dependency claim was half wrong. Agents propose. Verification is a separate step.</p>
+      <p class="body">The history came from 162 files in a rolling cache. Three quirks inflated the count until I handled each one. A resumed session starts a new file under its old ID, helper agents write their own transcripts, and a session can switch folders partway through. The 162 files turned out to be 140 sessions. The archive now holds 265 sessions going back to February 2026.</p>
+      <p class="body">Before the generator could write any homepage cards, it had to reproduce the eleven existing cards exactly. I also built two separate checks to keep private files from being published. One had a syntax error that made it match nothing while looking correct, and the other still caught the private files.</p>
+      <p class="body">When I had reviewer agents audit every active project, six of their claims were wrong or half wrong, including four that called two pieces of code identical. I check every agent finding before acting on it.</p>
     </section>
 
     <p style="margin-top:52px;font-size:17px;"><a href="/#projects"><span class="arr arr-back" aria-hidden="true">←</span> All projects</a></p>

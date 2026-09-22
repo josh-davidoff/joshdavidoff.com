@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Daily briefing and alerting platform — Josh Davidoff</title>
-<meta name="description" content="A scheduled pipeline that reads mail, calendars, reminders, finances, and weather from a dozen sources, assembles one briefing for a phone dashboard and a bedside display, and pages me when a job or service breaks." />
+<meta name="description" content="Scheduled jobs pull from a dozen sources into one briefing on my phone and a bedside display, and alert me when anything breaks." />
 <meta property="og:title" content="Daily briefing and alerting platform" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://joshdavidoff.com/projects/daily-briefing-and-alerting-platform" />
@@ -87,39 +87,39 @@
     <header>
       <p class="kicker mono"><span class="dot" aria-hidden="true"></span>System integration</p>
       <h1 class="title">Daily briefing and alerting platform</h1>
-      <p class="subtitle">Scheduled jobs read mail, calendars, reminders, finances, and weather from a dozen sources, assemble one briefing for a phone dashboard and a bedside display, and page me when a job or service breaks. It has run accurately for months without my intervention.</p>
-      <p class="page-updated mono"><time datetime="2026-09-18">Updated Sep 18, 2026</time></p>
+      <p class="subtitle">Scheduled jobs pull from a dozen sources into one briefing on my phone and a bedside display, and alert me when anything breaks. It has run for months without my stepping in.</p>
+      <p class="page-updated mono"><time datetime="2026-09-22">Updated Sep 22, 2026</time></p>
     </header>
 
     <section>
       <h2 class="label mono"><span class="star" aria-hidden="true"></span>The problem</h2>
-      <p class="body">The information I check every day lives in a dozen places that were never designed to talk to each other: two Gmail accounts, Google Calendar, an Outlook calendar, Apple Reminders, a personal-finance app with no public API, a weather service, a fantasy baseball league's export tracker, and a few more. I didn't want to keep having to check each of these platforms several times a day.</p>
-      <p class="body">The harder problem was not reading any one source. It was making the whole thing dependable enough to run for months unattended, and safe enough to touch mail and finances without ever changing them.</p>
+      <p class="body">The information I check every day lives in about a dozen apps and accounts that don't connect to each other, and I didn't want to open each one several times a day.</p>
+      <p class="body">The harder part was making it reliable enough to run unattended for months, and safe enough to read my mail and finances with no way to change them.</p>
     </section>
 
     <section>
       <h2 class="label mono"><span class="star" aria-hidden="true"></span>What it does</h2>
-      <p class="body">Every two hours during the day, a job on my Mac assembles a briefing: weather and air quality, the day's calendar from both sources, a cash position, open reminders, a triaged summary of new mail, and a few personal trackers. It renders the result and pushes it to a password-gated dashboard on a small server, installed on my phone as a web app. The same server feeds the <a href="/projects/home-dashboard-system">bedside display</a>, so calendar and weather reach an OLED screen on the nightstand.</p>
+      <p class="body">Every two hours during the day, a job on my Mac builds a briefing with the weather, my calendar, my cash balance, open reminders, and a sorted summary of new mail. It publishes the briefing to a password-protected page that lives on my phone's home screen. The same server feeds the <a href="/projects/home-dashboard-system">bedside display</a>, so the calendar and weather also show up on the nightstand.</p>
       <div class="inset">
         <p class="ilabel"><span class="dot" aria-hidden="true"></span>Where the data comes from</p>
         <ul>
-          <li>Gmail, through an OAuth client I wrote as a local CLI. It fetches headers only and has no code path that labels, archives, trashes, or sends.</li>
+          <li>Gmail, through a command-line tool I wrote that reads message headers only and has no way to label, archive, delete, or send.</li>
           <li>Google Calendar through the official API on a read-only scope, and an Outlook calendar through a published sheet export.</li>
           <li>Apple Reminders through a small Swift helper compiled against EventKit, because there is no API and AppleScript cannot see enough.</li>
-          <li>A cash position from a personal-finance app with no public API, through a community client wrapped in a read-only script.</li>
-          <li>Weather and air quality, a fantasy baseball league's export tracker, a flight-data API's usage meter, and, in a sibling job, last.fm plays and a reading list.</li>
+          <li>My cash balance from a budgeting app with no public API, through an open-source client I restricted to reading.</li>
+          <li>Weather and air quality, my fantasy baseball league, and, in a separate job, my last.fm plays and reading list.</li>
         </ul>
       </div>
       <div class="inset">
         <p class="ilabel"><span class="dot" aria-hidden="true"></span>Where it goes</p>
         <ul>
-          <li>A hosted dashboard, installed as a web app on my phone. The Mac uploads rendered HTML through a token-authenticated, upload-only endpoint.</li>
+          <li>A private dashboard on my phone. The Mac can upload new briefings to it and do nothing else.</li>
           <li>The bedside OLED display, which reads calendar, weather, subway arrivals, and lights from the same server.</li>
           <li>Google Calendar, where a weekly job writes upcoming album and book releases as all-day events.</li>
           <li>Apple Reminders, through a second compiled CLI that can set repeat rules, which AppleScript cannot.</li>
           <li>macOS notifications, through one shared notification path that every scheduled job calls.</li>
           <li>Email, sent from me to me by the monitoring job when a deployed service raises a new alert signal.</li>
-          <li>Drafted email that is never sent: a twice-weekly job for my congregation reads the Sunday sign-up sheet, flags unfilled roles two Sundays out, and writes the reminder for me to review.</li>
+          <li>Draft emails that are never sent automatically. Twice a week a job for my congregation reads the Sunday sign-up sheet, flags open roles two weeks out, and drafts a reminder for me to review and send.</li>
         </ul>
       </div>
     </section>
@@ -180,41 +180,41 @@
     </section>
 
     <section>
-      <h2 class="label mono"><span class="star" aria-hidden="true"></span>Hardening that mattered</h2>
+      <h2 class="label mono"><span class="star" aria-hidden="true"></span>Safeguards</h2>
       <p class="body">Most of the engineering went into the parts that fail quietly.</p>
       <div class="inset">
-        <p class="ilabel"><span class="dot" aria-hidden="true"></span>Auth that heals itself</p>
+        <p class="ilabel"><span class="dot" aria-hidden="true"></span>Staying signed in</p>
         <ul>
-          <li>The finance app's saved session dies on its own schedule. The script re-authenticates with a one-time code on a fresh client when the failure is auth-shaped. Network errors propagate instead of triggering a login.</li>
-          <li>The community client shipped with certificate verification off. I wrapped it to force verification on before trusting it with a login.</li>
-          <li>Google's restricted mail scope expires its token roughly weekly on an unverified app. An hourly job checks token freshness for both accounts and re-nags until I re-authorize.</li>
+          <li>The finance app's saved login expires without warning. When a request fails because of the login, the script signs in again with a one-time code. A network error gets reported instead, so it can't set off a login attempt.</li>
+          <li>The open-source client shipped with HTTPS certificate checks turned off, and I turned them on before giving it a password.</li>
+          <li>Google makes me re-approve mail access about once a week. An hourly job checks both accounts and reminds me until I do.</li>
         </ul>
       </div>
       <div class="inset">
-        <p class="ilabel"><span class="dot" aria-hidden="true"></span>Failure that announces itself</p>
+        <p class="ilabel"><span class="dot" aria-hidden="true"></span>Catching failures</p>
         <ul>
-          <li>A server-side timer probes each deployed service every five minutes, and a Mac-side probe checks the same endpoints from outside. A check has to stay red for two consecutive runs before anyone gets paged.</li>
-          <li>A morning job pages for any scheduled job that missed its run overnight.</li>
-          <li>The notification path never waits on the user. The tool it replaced blocked on an undismissed alert and leaked memory until two of them took the Mac down.</li>
+          <li>A server-side timer probes each deployed service every five minutes, and a Mac-side probe checks the same endpoints from outside. A check has to fail twice in a row before I get an alert.</li>
+          <li>A morning job alerts me to any job that didn't run overnight.</li>
+          <li>Alerts never wait for me to dismiss them. The tool they replaced did, and two stuck alerts used up enough memory to crash the Mac.</li>
         </ul>
       </div>
       <div class="inset">
-        <p class="ilabel"><span class="dot" aria-hidden="true"></span>Writes that cannot surprise</p>
+        <p class="ilabel"><span class="dot" aria-hidden="true"></span>Limiting what can change</p>
         <ul>
-          <li>The dashboard gate compares tokens in constant time, and the ingest endpoint accepts uploads only. Sources that rate-limit are cached once a day.</li>
-          <li>Every project in the workspace is tiered by blast radius. Anything with an irreversible external effect earns guard tests of its dry-run default and refusal paths, a public service earns a smoke test, and local one-shots earn none. The briefing pipeline carries 380 tests.</li>
+          <li>Sources that limit how often they can be called are fetched once a day.</li>
+          <li>I test each project in proportion to the damage it could do. Anything that can send mail or touch money has tests proving it defaults to a dry run and refuses unsafe requests. The briefing pipeline has 380 tests.</li>
         </ul>
       </div>
     </section>
 
     <section>
       <h2 class="label mono"><span class="star" aria-hidden="true"></span>The feedback loop</h2>
-      <p class="body">Mail triage is the one place a language model runs in the pipeline, a single batched call on a small model each refresh. Buttons on the dashboard record a verdict on each suggestion into an append-only ledger, and a free-text note records anything else. "Not this kind" verdicts become sender and topic suppressions that expire after ninety days. A weekly job sweeps the notes into a review, and I promote the durable ones into the standing preferences the classifier honors.</p>
+      <p class="body">Mail triage is the only step that uses a language model, with one call to a small model per refresh. Buttons on the dashboard let me rate each suggestion, and a text box takes anything else. Marking a message as the wrong kind mutes that sender or topic for ninety days. Each week a job gathers my notes into a review, and I turn the ones worth keeping into standing rules for the model.</p>
     </section>
 
     <section>
       <h2 class="label mono"><span class="star" aria-hidden="true"></span>How I built it with AI</h2>
-      <p class="body">This is integration work across systems I did not know, built with coding agents: EventKit and Swift for the Reminders helper, launchd for scheduling, systemd and nginx on the server, an undocumented GraphQL schema for the finance app. What I brought was the operations discipline: decide what counts as a source of truth, decide which paths may write, test the guards rather than the views, and inventory what is deployed. The most useful decision was writing four small Google CLIs instead of using the agent-side connectors, which were convenient for a single read and wrong for scheduled bulk work.</p>
+      <p class="body">This is integration work across systems I did not know, built with coding agents: EventKit and Swift for the Reminders helper, launchd for scheduling, systemd and nginx on the server, an undocumented GraphQL schema for the finance app. What I brought was operations discipline. I decided which system is the source of truth for each kind of data and which paths may write to it, tested the safety checks before the screens, and kept an inventory of everything deployed. The most useful decision was writing four small Google command-line tools instead of relying on the AI tools' built-in connectors, which work for a quick lookup but not for scheduled jobs.</p>
     </section>
 
     <p style="margin-top:52px;font-size:17px;"><a href="/#projects"><span class="arr arr-back" aria-hidden="true">←</span> All projects</a></p>
