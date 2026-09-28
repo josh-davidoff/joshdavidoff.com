@@ -114,11 +114,10 @@
         <ul>
           <li>A private dashboard on my phone. The Mac can upload new briefings to it and do nothing else.</li>
           <li>The bedside OLED display, which reads calendar, weather, subway arrivals, and lights from the same server.</li>
-          <li>Google Calendar, where a weekly job writes upcoming album and book releases as all-day events.</li>
+          <li>Google Calendar, where a weekly job writes upcoming releases from the people I follow as all-day events.</li>
           <li>Apple Reminders, through a second compiled CLI that can set repeat rules, which AppleScript cannot.</li>
           <li>macOS notifications, through one shared notification path that every scheduled job calls.</li>
           <li>Email, sent from me to me by the monitoring job when a deployed service raises a new alert signal.</li>
-          <li>Draft emails that are never sent automatically. Twice a week a job for my congregation reads the Sunday sign-up sheet, flags open roles two weeks out, and drafts a reminder for me to review and send.</li>
         </ul>
       </div>
     </section>
@@ -142,14 +141,14 @@
           <i class="c t b to-t warm" style="--at: 3/5;"></i>
           <i class="c l r to-r step" style="--at: 2/6;"></i>
           <div class="flow-head" style="--at: 1/7/2/8;">Surfaces</div>
-          <div class="flow-node fill" style="--at: 2/7;"><span>phone dashboard&nbsp;· OLED</span><span>calendar&nbsp;· Reminders</span><span>notifications&nbsp;· email</span><span>drafts, never sent</span></div>
+          <div class="flow-node fill" style="--at: 2/7;"><span>phone dashboard&nbsp;· OLED</span><span>calendar&nbsp;· Reminders</span><span>notifications&nbsp;· email</span></div>
           <i class="c t b to-t warm" style="--at: 3/7;"></i>
           <i class="c l r warm" style="--at: 4/6;"></i>
           <i class="c l t warm" style="--at: 4/7;"></i>
           <div class="flow-note" style="--at: 5/1/6/8;">Every write path dry-runs by default or does not send at all</div>
         </div>
       </div>
-      <p class="body">Sources → shared read-only plumbing → ten scheduled jobs on the Mac and one service on the server → seven surfaces. A monitoring layer probes the server, the tokens, and the jobs themselves, and pages back through the same notification path.</p>
+      <p class="body">Sources → shared read-only plumbing → ten scheduled jobs on the Mac and one service on the server → six surfaces. A monitoring layer probes the server, the tokens, and the jobs themselves, and pages back through the same notification path.</p>
     </section>
 
     <section>
@@ -175,7 +174,7 @@
         <p class="ilabel"><span class="dot" aria-hidden="true"></span>Limiting what can change</p>
         <ul>
           <li>Sources that limit how often they can be called are fetched once a day.</li>
-          <li>I test each project in proportion to the damage it could do. Anything that can send mail or touch money has tests proving it defaults to a dry run and refuses unsafe requests. The briefing pipeline has 380 tests.</li>
+          <li>I test each project in proportion to the damage it could do. Anything that can send mail or touch money has tests proving it defaults to a dry run and refuses unsafe requests. The briefing pipeline has 433 tests.</li>
         </ul>
       </div>
     </section>
@@ -191,7 +190,7 @@
     </section>
 
     <p style="margin-top:52px;font-size:17px;"><a href="/#projects"><span class="arr arr-back" aria-hidden="true">←</span> All projects</a></p>
-    <p class="page-updated mono"><time datetime="2026-09-24">Updated Sep 24, 2026</time></p>
+    <p class="page-updated mono"><time datetime="2026-09-28">Updated Sep 28, 2026</time></p>
   </div>
 </body>
 </html>
