@@ -101,6 +101,19 @@ sticky nav's "Work" link is caught partway through its `.18s` color transition, 
 few hundred pixels in the top 30 rows near x 880-925 differ between any two captures.
 Confirm noise by recapturing the same side; any other diff, on any page, is real.
 
+## Link-preview card
+
+`assets/og-card.png` (1200x630, the `og:image` on every page) is rendered from
+`scripts/og-card/og-card.html`, which uses the self-hosted Apfel Grotezk files.
+`scripts/` is excluded from the Pages artifact. To regenerate, serve the repo
+root on port 8002 and run:
+
+```bash
+CH=$(ls ~/Library/Caches/ms-playwright/chromium_headless_shell-*/chrome-headless-shell-mac-arm64/chrome-headless-shell | tail -1); "$CH" --headless --no-first-run --hide-scrollbars --disable-gpu --force-device-scale-factor=1 --virtual-time-budget=3000 --user-data-dir="$(mktemp -d)" --window-size=1200,630 --screenshot=assets/og-card.png http://127.0.0.1:8002/scripts/og-card/og-card.html
+```
+
+LinkedIn caches previews for about a week; its Post Inspector refreshes one.
+
 ## Updated dates
 
 Every project card and case page carries an "Updated" date. It is the date the

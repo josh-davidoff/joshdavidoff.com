@@ -57,6 +57,7 @@ jobs:
             --exclude 'ds-bundle/' \
             --exclude '.ds-sync/' \
             --exclude '.design-sync/' \
+            --exclude 'scripts/' \
             ./ _site/
 
       # Fail loudly rather than publishing a site missing a load-bearing file.
