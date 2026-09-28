@@ -155,7 +155,7 @@
 
     <section>
       <h2 class="label mono"><span class="star" aria-hidden="true"></span>Safeguards</h2>
-      <p class="body">The register also tracks which AI model versions my deployed tools depend on, since a retired model breaks a scheduled job with no one watching. It doesn't guess which models are current. It marks each one as checked against my reference list, seen working on a given date, or unverified. A weekly sweep also runs the workspace's twenty-one test suites and flags any project that has outgrown its tests.</p>
+      <p class="body">The register also tracks which AI model versions my deployed tools depend on, since a retired model breaks a scheduled job with no one watching. It doesn't guess which models are current. It marks each one as checked against my reference list, seen working on a given date, or unverified. A weekly sweep also runs the workspace's twenty-one test suites and flags any project that has outgrown its tests. A hook refuses any commit an agent makes unless the message records whether a reviewer agent checked the change or why the review was skipped.</p>
     </section>
 
     <section>
