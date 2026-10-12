@@ -158,15 +158,8 @@
       <p class="body">The register also tracks which AI model versions my deployed tools depend on, since a retired model breaks a scheduled job with no one watching. It doesn't guess which models are current. It marks each one as checked against my reference list, seen working on a given date, or unverified. A weekly sweep also runs the workspace's twenty-one test suites and flags any project that has outgrown its tests. A hook refuses any commit an agent makes unless the message records whether a reviewer agent checked the change or why the review was skipped.</p>
     </section>
 
-    <section>
-      <h2 class="label mono"><span class="star" aria-hidden="true"></span>How I built it with AI</h2>
-      <p class="body">The history came from 162 files in a rolling cache. Three quirks inflated the count until I handled each one. A resumed session starts a new file under its old ID, helper agents write their own transcripts, and a session can switch folders partway through. The 162 files turned out to be 140 sessions. The archive now holds 265 sessions going back to February 2026.</p>
-      <p class="body">Before the generator could write any homepage cards, it had to reproduce the eleven existing cards exactly. I also built two separate checks to keep private files from being published. One had a syntax error that made it match nothing while looking correct, and the other still caught the private files.</p>
-      <p class="body">When I had reviewer agents audit every active project, six of their claims were wrong or half wrong, including four that called two pieces of code identical. I check every agent finding before acting on it.</p>
-    </section>
-
     <p style="margin-top:52px;font-size:17px;"><a href="/#projects"><span class="arr arr-back" aria-hidden="true">←</span> All projects</a></p>
-    <p class="page-updated mono"><time datetime="2026-09-28">Updated Sep 28, 2026</time></p>
+    <p class="page-updated mono"><time datetime="2026-10-12">Updated Oct 12, 2026</time></p>
   </div>
 </body>
 </html>
