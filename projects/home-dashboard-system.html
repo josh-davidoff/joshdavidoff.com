@@ -35,7 +35,7 @@
   }
   .inset .ilabel {
     color: var(--mustard); font-weight: 600; margin: 0 0 12px;
-    display: flex; align-items: center; gap: 11px;
+    display: flex; align-items: first baseline; gap: 11px;
     padding-bottom: 8px; border-bottom: 2px solid var(--rule);
   }
   .inset .ilabel .dot { color: var(--mustard); display: inline-block; font-family: Georgia, serif; font-size: 0; line-height: 1; }
@@ -100,8 +100,8 @@
       <p class="body">The display pulls live scores for the Mets, Nets, Jets, and Liberty (plus the baseball playoffs), weather, subway arrivals, and my calendar, and it can switch the LIFX lights between scenes. It dims at night, protects the screen from burn-in, and falls back to the last good data when a source goes down. Bluetooth buttons and a page on my phone control it.</p>
       <figure style="margin:30px 0 0;">
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;">
-          <img src="/assets/bedside/bedside-weather.jpg" width="1200" height="1200" alt="The bedside display on its lamp base, showing the weather: 72 degrees, sunny, with the day's high and low, air quality, and wind." style="width:100%;height:auto;display:block;border-radius:10px;border:2px solid var(--rule);" />
-          <img src="/assets/bedside/bedside-game.jpg" width="1200" height="1200" alt="The bedside display showing tonight's game: Brooklyn against Miami at 7:30 PM Eastern, with both teams' records." style="width:100%;height:auto;display:block;border-radius:10px;border:2px solid var(--rule);" />
+          <img loading="lazy" src="/assets/bedside/bedside-weather.jpg" width="720" height="720" alt="The bedside display on its lamp base, showing the weather: 72 degrees, sunny, with the day's high and low, air quality, and wind." style="width:100%;height:auto;display:block;border-radius:10px;border:2px solid var(--rule);" />
+          <img loading="lazy" src="/assets/bedside/bedside-game.jpg" width="720" height="720" alt="The bedside display showing tonight's game: Brooklyn against Miami at 7:30 PM Eastern, with both teams' records." style="width:100%;height:auto;display:block;border-radius:10px;border:2px solid var(--rule);" />
         </div>
         <figcaption class="mono" style="color:var(--muted);font-size:14px;margin-top:10px;">The display on my nightstand: the weather, and tonight's game.</figcaption>
       </figure>

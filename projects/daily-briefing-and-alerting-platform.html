@@ -35,7 +35,7 @@
   }
   .inset .ilabel {
     color: var(--mustard); font-weight: 600; margin: 0 0 12px;
-    display: flex; align-items: center; gap: 11px;
+    display: flex; align-items: first baseline; gap: 11px;
     padding-bottom: 8px; border-bottom: 2px solid var(--rule);
   }
   .inset .ilabel .dot { color: var(--mustard); display: inline-block; font-family: Georgia, serif; font-size: 0; line-height: 1; }
@@ -100,7 +100,7 @@
       <h2 class="label mono"><span class="star" aria-hidden="true"></span>What it does</h2>
       <p class="body">Every two hours during the day, a job on my Mac builds a briefing with the weather, my calendar, my cash balance, open reminders, and a sorted summary of new mail. It publishes the briefing to a password-protected page that lives on my phone's home screen. The same server feeds the <a href="/projects/home-dashboard-system">bedside display</a>, so the calendar and weather also show up on the nightstand.</p>
       <figure style="margin:30px 0;">
-        <img src="/assets/briefing-dashboard/dashboard-sample.png" width="1400" height="1244" alt="The briefing dashboard: counts of tasks due, overdue, and from the inbox, then cards for my tasks, today's calendar, mail that needs action with feedback buttons, and the weather." style="width:100%;height:auto;display:block;border-radius:10px;border:2px solid var(--rule);" />
+        <a class="zoom" href="/assets/briefing-dashboard/dashboard-sample.png"><img loading="lazy" src="/assets/briefing-dashboard/dashboard-sample.png" width="1400" height="1244" alt="The briefing dashboard: counts of tasks due, overdue, and from the inbox, then cards for my tasks, today's calendar, mail that needs action with feedback buttons, and the weather." style="width:100%;height:auto;display:block;border-radius:10px;border:2px solid var(--rule);" /></a>
         <figcaption class="mono" style="color:var(--muted);font-size:14px;margin-top:10px;">The briefing dashboard, shown with sample data.</figcaption>
       </figure>
       <div class="inset">

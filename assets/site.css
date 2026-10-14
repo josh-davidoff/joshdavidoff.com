@@ -59,6 +59,7 @@ section { margin-top: 36px; }
 .deck { margin-top: 52px; margin-bottom: 52px; }
 .deck-inner { max-width: 960px; margin: 0 auto; padding: 0 32px; }
 .deck .label { max-width: 680px; margin-left: auto; margin-right: auto; }
+a.zoom, a.zoom:hover { display: block; box-shadow: none; background-image: none; padding: 0; cursor: zoom-in; }
 .slide-viewer { margin: 0 auto; }
 .slide-viewer img { width: 100%; aspect-ratio: 16/9; object-fit: contain; border-radius: 10px; border: 2px solid var(--rule); display: block; background: oklch(0.22 0.05 153); }
 .slide-controls { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
@@ -201,4 +202,6 @@ body::after {
 .site-nav-links { display: flex; gap: 22px; align-items: center; }
 .site-nav-links a { color: var(--faint); font-family: "Newsreader", Georgia, serif; font-size: 16px; }
 .site-nav-links .linkedin-icon { border: 1px solid var(--rule); border-radius: 4px; display: inline-grid; place-items: center; font-family: "Apfel Grotezk", system-ui, sans-serif; font-size: 11px; font-weight: 600; height: 22px; letter-spacing: 0; line-height: 1; width: 22px; }
+.site-nav-links a { position: relative; }
+.site-nav-links a::after { content: ""; position: absolute; inset: -11px -8px; }
 .site-nav-links .linkedin-icon:hover { border-color: var(--mustard); }

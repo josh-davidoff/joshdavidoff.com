@@ -129,7 +129,7 @@
     <div class="deck-inner">
       <h2 class="label mono"><span class="star" aria-hidden="true">✳</span>Deck</h2>
       <div class="slide-viewer">
-        <img id="slide-img" src="assets/bsh-deck/slide-01.jpg" alt="Slide 1" />
+        <a class="zoom" id="slide-link" href="assets/bsh-deck/slide-01.jpg"><img id="slide-img" src="assets/bsh-deck/slide-01.jpg" alt="Slide 1" /></a>
         <div class="slide-controls">
           <button class="slide-btn" id="prev-btn" onclick="changeSlide(-1)">Previous</button>
           <span class="slide-counter" id="slide-counter" aria-live="polite" aria-atomic="true">1 / 10</span>
@@ -186,6 +186,7 @@
     function changeSlide(d){
       current=Math.max(0,Math.min(slides.length-1,current+d));
       document.getElementById('slide-img').src=slides[current];
+      document.getElementById('slide-link').href=slides[current];
       document.getElementById('slide-img').alt='Slide '+(current+1);
       document.getElementById('slide-counter').textContent=(current+1)+' / '+slides.length;
       document.getElementById('prev-btn').disabled=current===0;
