@@ -215,7 +215,7 @@
   .site-nav-links a:hover { color: var(--mustard); box-shadow: none; }
   @media (max-width: 480px) {
     .site-nav-inner { padding: 0 20px; }
-    .site-nav-name { display: none; }
+    .site-nav-name, .site-nav-name.visible { display: none; }
     .site-nav-links { gap: 10px; width: 100%; justify-content: space-between; }
     .site-nav-links a { font-size: 14px; }
   }
@@ -232,6 +232,7 @@
   /* ── Core competencies grid ──────────────────────────── */
   .comp-grid { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
   .comp-item { flex: 1 1 230px; min-width: min(100%, 230px); max-width: calc(50% - 6px); }
+  @media (max-width: 680px) { .comp-item { flex-basis: 100%; max-width: none; } }
   .comp-item summary {
     list-style: none; border: 1px solid var(--rule); border-radius: 999px; color: var(--cream);
     cursor: pointer; font-family: "Apfel Grotezk", system-ui, sans-serif; font-size: 17px; font-weight: 700;
