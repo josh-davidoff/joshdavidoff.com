@@ -107,6 +107,12 @@
   .extras .entry p { font-size: 15px; line-height: 1.4; }
   .beyond-card { background: color-mix(in oklch, var(--bg-deep) 76%, transparent); border: 1px solid var(--rule); border-radius: 12px; padding: 18px 18px 20px; }
   .beyond-card > h3 { font-family: "Apfel Grotezk", system-ui, sans-serif; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mustard); margin: 0 0 14px; }
+  .beyond-card.music { position: relative; }
+  .beyond-card .covers { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+  .beyond-card .covers img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 2px; }
+  .beyond-card .music-line { font-size: 15px; line-height: 1.4; color: var(--faint); margin: 0; }
+  .beyond-card .card-link::after { content: ""; position: absolute; inset: 0; border-radius: 12px; }
+  .beyond-card.music:has(.card-link:focus-visible) { outline: 2px solid var(--mustard); outline-offset: 2px; }
   .beyond-card .currently { display: block; }
   .beyond-card .currently .row { margin-bottom: 14px; }
   .beyond-card .currently .row:last-child { margin-bottom: 0; }
@@ -292,6 +298,7 @@
       <a class="site-nav-name" href="#"><span class="nav-dot" aria-hidden="true"></span>Josh Davidoff</a>
       <div class="site-nav-links">
         <a href="#projects">Work</a>
+        <a href="/music">Music</a>
         <a href="mailto:joshdavidoff@gmail.com">Email</a>
         <a class="linkedin-icon" href="https://www.linkedin.com/in/joshdavidoff/" aria-label="LinkedIn">in</a>
       </div>
@@ -487,21 +494,16 @@
     <section id="beyond-work" data-reveal>
       <h2 class="label mono"><span class="star" aria-hidden="true">✳</span>Beyond the work</h2>
       <div class="extras">
-      <div class="beyond-card">
+      <div class="beyond-card music">
         <h3>Music</h3>
-        <div class="entry">
-          <h3><a href="https://autofictions.bandcamp.com/">autofictions</a></h3>
+        <div class="covers" aria-hidden="true">
+          <img src="/assets/music/autofictions-citizen-softboy.jpg" alt="" width="480" height="480" loading="lazy" />
+          <img src="/assets/music/theboywonderhimself-cue-the-hysteria.jpg" alt="" width="480" height="480" loading="lazy" />
+          <img src="/assets/music/anedition.jpg" alt="" width="480" height="480" loading="lazy" />
+          <img src="/assets/music/score-papergirl.jpg" alt="" width="480" height="480" loading="lazy" />
         </div>
-        <div class="entry">
-          <h3><a href="https://www.instagram.com/brooklynchoirproject/">Brooklyn Choir Project</a></h3>
-          <p>Producer, 2024–2025</p>
-        </div>
-        <div class="entry">
-          <h3><a href="https://youtu.be/W5Zj8Amikl4">film scoring reel</a></h3>
-        </div>
-        <div class="entry">
-          <h3><a href="https://theboywonderhimself.bandcamp.com/">theboywonderhimself</a></h3>
-        </div>
+        <p class="music-line">Songs, scores for theater and film, and clarinet.</p>
+        <p class="proj-link"><a class="card-link" href="/music">All my music <span class="arr" aria-hidden="true">→</span></a></p>
       </div>
 
       <div class="beyond-card">

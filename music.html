@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Music — Josh Davidoff</title>
+<meta name="description" content="Songs as autofictions and theboywonderhimself, a film scoring reel, and the ensembles I've played and produced with." />
+<meta property="og:title" content="Music" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://joshdavidoff.com/music" />
+  <meta property="og:image" content="https://joshdavidoff.com/assets/og-card.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://joshdavidoff.com/assets/og-card.png" />
+<link rel="canonical" href="https://joshdavidoff.com/music" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%232f5640'/%3E%3Ccircle cx='50' cy='50' r='21' fill='%23e3b23c'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/site.css" />
+<style>
+  a { color: var(--mustard); text-decoration: none; padding-bottom: 2px;
+    background-image: linear-gradient(var(--mustard), var(--mustard)), linear-gradient(var(--rule), var(--rule));
+    background-repeat: no-repeat; background-position: 0 100%, 0 100%;
+    background-size: 0% 2px, 100% 2px;
+    transition: background-size .28s cubic-bezier(.2,.6,.2,1), color .18s ease; }
+  a:hover { color: var(--cream); background-size: 100% 2px, 100% 2px; }
+  .back { background-image: none; padding-bottom: 0; }
+  .site-nav-name { color: var(--cream); display: inline-flex; align-items: center; gap: 8px; font-family: "Apfel Grotezk", system-ui, sans-serif; font-size: 15px; font-weight: 700; letter-spacing: -0.01em; }
+  .site-nav-name:hover { color: var(--mustard); }
+  .site-nav-links a:hover, .site-nav-links a[aria-current="page"] { color: var(--mustard); }
+  .site-nav-name, .site-nav-links a { background-image: none; padding-bottom: 0; }
+  .mono { font-variant-numeric: tabular-nums; }
+
+  .subtitle {
+    font-family: "Apfel Grotezk", system-ui, sans-serif;
+    font-size: clamp(18px, 2.8vw, 22px); font-weight: 600; color: var(--mustard);
+    margin: 0 0 40px; letter-spacing: -0.01em; line-height: 1.3;
+  }
+  section { margin-top: 56px; }
+
+  /* Player: the one live surface. Flat, deep, ruled. */
+  .player {
+
+    background: var(--bg-deep); border: 2px solid var(--rule); border-radius: 10px;
+    padding: 8px 10px 6px; margin-bottom: 24px; scroll-margin-top: 66px;
+  }
+  .player iframe { display: block; width: 100%; height: 120px; border: 0; }
+  .player-meta { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin: 6px 0 0; color: var(--faint); font-size: 12px; }
+  .player-meta a { font-size: 12px; }
+
+  /* Shelf: covers are sleeves. Square, near-sharp corners, no frame. */
+  .artist { margin-top: 40px; }
+  .artist-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; border-bottom: 2px solid var(--rule); padding-bottom: 8px; margin-bottom: 16px; }
+  .artist-head h3 { font-family: "Apfel Grotezk", system-ui, sans-serif; font-size: 22px; font-weight: 700; color: var(--cream); margin: 0; letter-spacing: -0.01em; }
+  .artist-head .mono { color: var(--faint); font-size: 11.5px; }
+  .artist-note { color: var(--muted); font-size: 17px; margin: 0 0 20px; }
+  .shelf { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px 16px; }
+  .shelf a.sleeve { display: block; background-image: none; padding: 0; position: relative; }
+  .shelf img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 2px; transition: transform .18s ease-out; }
+  .shelf a.sleeve:hover img, .shelf a.sleeve:focus-visible img { transform: translateY(-3px); }
+  .shelf a.sleeve[aria-current="true"]::after {
+    content: "Playing"; position: absolute; left: 6px; bottom: 6px;
+    font-family: "Apfel Grotezk", system-ui, sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    background: var(--mustard); color: var(--bg-deep); padding: 3px 6px; border-radius: 2px;
+  }
+  .shelf .t { margin: 10px 0 0; font-size: 15px; line-height: 1.3; color: var(--cream); }
+  .shelf .with { color: var(--faint); }
+  .shelf .cred { margin: 4px 0 0; color: var(--muted); font-size: 14px; line-height: 1.35; }
+  .reel + .caption { margin-bottom: 8px; }
+  .shelf .y { margin: 3px 0 0; color: var(--faint); font-size: 11.5px; }
+  @media (max-width: 560px) { .shelf { grid-template-columns: repeat(2, 1fr); } }
+
+  /* Reel: a screen. 16:9, rounded, the only image with a frame. */
+  .reel { position: relative; aspect-ratio: 16 / 9; border-radius: 10px; overflow: hidden; border: 2px solid var(--rule); background: #000; margin-top: 20px; }
+  .reel button { all: unset; cursor: pointer; position: absolute; inset: 0; display: block; }
+  .reel img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .reel .play { position: absolute; left: 16px; bottom: 16px; width: 56px; height: 56px; border-radius: 50%; background: var(--mustard); display: grid; place-items: center; transition: transform .18s ease-out; }
+  .reel button:hover .play, .reel button:focus-visible .play { transform: scale(1.06); }
+  .reel button:focus-visible { outline: 3px solid var(--mustard); outline-offset: -3px; }
+  .reel iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .caption { color: var(--muted); font-size: 15px; margin-top: 10px; }
+
+  /* Ensembles: a credits list. Ruled rows, no boxes. */
+  .credits { list-style: none; margin: 20px 0 0; padding: 0; border-top: 2px solid var(--rule); }
+  .credits li { display: grid; grid-template-columns: 1fr auto; gap: 2px 16px; padding: 14px 0; border-bottom: 2px solid var(--rule); }
+  .credits .name { font-size: 19px; color: var(--cream); }
+  .credits .when { color: var(--faint); font-size: 11.5px; align-self: baseline; }
+  .credits .role { grid-column: 1 / -1; color: var(--muted); font-size: 16px; margin: 0; }
+
+
+  @media (prefers-reduced-motion: reduce) { .shelf img, .reel .play { transition: none; } }
+  @media (max-width: 480px) {
+    .site-nav-inner { padding: 0 20px; }
+    .site-nav-name { display: none; }
+    .site-nav-links { gap: 10px; width: 100%; justify-content: space-between; }
+    .site-nav-links a { font-size: 14px; }
+  }
+</style>
+<script data-goatcounter="https://joshdavidoff.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+  <nav class="site-nav" aria-label="Site navigation">
+    <div class="site-nav-inner">
+      <a class="site-nav-name" href="/"><span class="nav-dot" aria-hidden="true"></span>Josh Davidoff</a>
+      <div class="site-nav-links">
+        <a href="/#projects">Work</a>
+        <a href="/music" aria-current="page">Music</a>
+        <a href="mailto:joshdavidoff@gmail.com">Email</a>
+        <a class="linkedin-icon" href="https://www.linkedin.com/in/joshdavidoff/" aria-label="LinkedIn">in</a>
+      </div>
+    </div>
+  </nav>
+  <div class="wrap" data-screen-label="Music">
+    <a class="back mono" href="/">← joshdavidoff.com</a>
+
+    <header>
+      <p class="kicker mono"><span class="dot" aria-hidden="true"></span>Music</p>
+      <h1 class="title">Music</h1>
+    </header>
+
+    <section aria-label="Records">
+      <div class="artist">
+        <div class="artist-head"><h3><a href="https://autofictions.bandcamp.com/">autofictions</a></h3><span class="mono">Songwriter</span></div>
+        <div class="player" id="player-af">
+          <iframe title="Bandcamp player: citizen" loading="lazy"
+            src="https://bandcamp.com/EmbeddedPlayer/album=3851104119/size=large/bgcol=333333/linkcol=e3b23c/tracklist=false/artwork=small/transparent=true/t=1/"></iframe>
+        </div>
+        <ul class="shelf">
+          <li><a class="sleeve" data-player="player-af" href="https://autofictions.bandcamp.com/album/citizen-softboy" data-embed="album=3851104119" data-label="citizen softboy · 2024" aria-label="citizen softboy · 2024"><img src="/assets/music/autofictions-citizen-softboy.jpg" alt="" width="480" height="480" loading="lazy" /></a><p class="t">citizen softboy</p><p class="y mono">2024 · 5 tracks</p></li>
+          <li><a class="sleeve" data-player="player-af" href="https://autofictions.bandcamp.com/track/only-fools" data-embed="track=3988045049" data-label="only fools · 2025" aria-label="only fools · 2025"><img src="/assets/music/autofictions-only-fools.jpg" alt="" width="480" height="480" loading="lazy" /></a><p class="t">only fools <span class="with">with scott redmond</span></p><p class="y mono">2025 · single</p></li>
+        </ul>
+      </div>
+
+      <div class="artist">
+        <div class="artist-head"><h3><a href="https://theboywonderhimself.bandcamp.com/">theboywonderhimself</a></h3><span class="mono">Lead guitar</span></div>
+        <p class="artist-note">A defunct Brooklyn pop-punk band that started at Wesleyan.</p>
+        <div class="player" id="player-tbwh">
+          <iframe title="Bandcamp player: Hell of a Time" loading="lazy"
+            src="https://bandcamp.com/EmbeddedPlayer/album=147898558/size=large/bgcol=333333/linkcol=e3b23c/tracklist=false/artwork=small/transparent=true/t=2/"></iframe>
+        </div>
+        <ul class="shelf">
+          <li><a class="sleeve" data-player="player-tbwh" href="https://theboywonderhimself.bandcamp.com/album/what-we-are-what-were-faking" data-embed="album=2130395384" data-label="What We Are &amp; What We're Faking · 2025" aria-label="What We Are &amp; What We're Faking · 2025"><img src="/assets/music/theboywonderhimself-what-we-are-what-were-faking.jpg" alt="" width="480" height="480" loading="lazy" /></a><p class="t">What We Are &amp; What We're Faking</p><p class="y mono">2025 · 8 tracks</p></li>
+          <li><a class="sleeve" data-player="player-tbwh" href="https://theboywonderhimself.bandcamp.com/album/cue-the-hysteria" data-embed="album=147898558" data-label="Cue the Hysteria! · 2020" aria-label="Cue the Hysteria! · 2020"><img src="/assets/music/theboywonderhimself-cue-the-hysteria.jpg" alt="" width="480" height="480" loading="lazy" /></a><p class="t">Cue the Hysteria!</p><p class="y mono">2020 · 5 tracks</p></li>
+        </ul>
+      </div>
+
+      <div class="artist">
+        <div class="artist-head"><h3>On clarinet</h3><span class="mono">Free improvisation and jazz</span></div>
+        <div class="player" id="player-clar" hidden>
+          <iframe title="Bandcamp player" loading="lazy"></iframe>
+        </div>
+        <ul class="shelf">
+          <li><a class="sleeve" data-player="player-clar" href="https://panyrosasdiscos.bandcamp.com/album/anedition" data-embed="album=2172679356" data-label="Anedition · 2020" aria-label="Anedition · 2020"><img src="/assets/music/anedition.jpg" alt="" width="480" height="480" loading="lazy" /></a><p class="t">Anedition</p><p class="y mono">2020 · Pan y Rosas Discos</p><p class="cred">Clarinet and electronics, with Ben Zucker, Judith Berkson, and Ishmael Ali</p></li>
+          <li><a class="sleeve" data-player="player-clar" href="https://mattforkermusic.bandcamp.com/album/in-pursuit-of-morning" data-embed="album=3596712937" data-label="In Pursuit of Morning · 2020" aria-label="In Pursuit of Morning · 2020"><img src="/assets/music/matt-forker-in-pursuit-of-morning.jpg" alt="" width="480" height="480" loading="lazy" /></a><p class="t">In Pursuit of Morning</p><p class="y mono">2020 · Resonant Motion</p><p class="cred">Matt Forker Octet, with Tyshawn Sorey</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <section aria-labelledby="scores">
+      <h2 class="label mono" id="scores"><span class="star" aria-hidden="true"></span>Scores for theater and film</h2>
+      <div class="reel" id="reel">
+        <button type="button" aria-label="Play film scoring reel">
+          <img src="/assets/music/film-reel.jpg" alt="" width="1280" height="720" loading="lazy" />
+          <span class="play" aria-hidden="true"><svg width="20" height="22" viewBox="0 0 26 28"><path d="M3 2 L24 14 L3 26 Z" fill="oklch(0.31 0.08 154)"/></svg></span>
+        </button>
+      </div>
+      <p class="caption">Film scoring reel. <a href="https://youtu.be/W5Zj8Amikl4">Watch on YouTube</a></p>
+
+      <div class="artist">
+        <div class="player" id="player-scores" hidden>
+          <iframe title="Bandcamp player" loading="lazy"></iframe>
+        </div>
+        <ul class="shelf">
+          <li><a class="sleeve" data-player="player-scores" href="https://autofictions.bandcamp.com/track/mycorrhizal-meditation" data-embed="track=254511624" data-label="mycorrhizal meditation · 2024" aria-label="mycorrhizal meditation · 2024"><img src="/assets/music/score-mycorrhizal-meditation.jpg" alt="" width="480" height="480" loading="lazy" /></a><p class="t">mycorrhizal meditation</p><p class="y mono">2024 · Theater</p><p class="cred">Immersive piece with Yannick Trapman-O'Brien for Tu Bishvat at the Brooklyn Botanic Garden</p></li>
+          <li><a class="sleeve" data-player="player-scores" href="https://autofictions.bandcamp.com/album/papergirl" data-embed="album=2531856267" data-label="papergirl · 2022" aria-label="papergirl · 2022"><img src="/assets/music/score-papergirl.jpg" alt="" width="480" height="480" loading="lazy" /></a><p class="t">papergirl</p><p class="y mono">2022 · Short film</p><p class="cred">Trans horror short by Jack Warren. Screened at GAZE, Final Girls Berlin, and the San Francisco Transgender Film Festival.</p></li>
+          <li><a class="sleeve" data-player="player-scores" href="https://autofictions.bandcamp.com/album/return-to-sender" data-embed="album=2193641794" data-label="Return to Sender · 2022" aria-label="Return to Sender · 2022"><img src="/assets/music/score-return-to-sender.jpg" alt="" width="480" height="480" loading="lazy" /></a><p class="t">Return to Sender</p><p class="y mono">2022 · Short film</p><p class="cred">Dir. Russell Goldman, prod. Jamie Lee Curtis. The basis for the feature <em>Sender</em>, in theaters in 2027.</p></li>
+          <li><a class="sleeve" data-player="player-scores" href="https://autofictions.bandcamp.com/album/artemis" data-embed="album=3347850844" data-label="Artemis · 2021" aria-label="Artemis · 2021"><img src="/assets/music/score-artemis.jpg" alt="" width="480" height="480" loading="lazy" /></a><p class="t">Artemis</p><p class="y mono">2021 · Short film</p><p class="cred">Dir. Jack Warren</p></li>
+          <li><a class="sleeve" data-player="player-scores" href="https://autofictions.bandcamp.com/track/suite-from-no-comment" data-embed="track=844734017" data-label="suite from No Comment · 2020" aria-label="suite from No Comment · 2020"><img src="/assets/music/score-suite-from-no-comment.jpg" alt="" width="480" height="480" loading="lazy" /></a><p class="t">suite from No Comment</p><p class="y mono">2020 · Short film</p><p class="cred">Dir. Russell Goldman</p></li>
+          <li><a class="sleeve" data-player="player-scores" href="https://autofictions.bandcamp.com/album/summer-of-connor" data-embed="album=1718461457" data-label="Summer of Connor · 2019" aria-label="Summer of Connor · 2019"><img src="/assets/music/score-summer-of-connor.jpg" alt="" width="480" height="480" loading="lazy" /></a><p class="t">Summer of Connor</p><p class="y mono">2019 · Short film</p><p class="cred">Dir. Russell Goldman</p></li>
+          <li><a class="sleeve" data-player="player-scores" href="https://autofictions.bandcamp.com/album/buried-treasure" data-embed="album=2638056697" data-label="Buried Treasure · 2018" aria-label="Buried Treasure · 2018"><img src="/assets/music/score-buried-treasure.jpg" alt="" width="480" height="480" loading="lazy" /></a><p class="t">Buried Treasure</p><p class="y mono">2018 · Short film</p><p class="cred">Dir. Alex Fabry</p></li>
+          <li><a class="sleeve" data-player="player-scores" href="https://autofictions.bandcamp.com/album/songs-of-the-good-person-live" data-embed="album=817557959" data-label="songs of The Good Person (live) · 2018" aria-label="songs of The Good Person (live) · 2018"><img src="/assets/music/score-songs-of-the-good-person-live.jpg" alt="" width="480" height="480" loading="lazy" /></a><p class="t">songs of The Good Person (live)</p><p class="y mono">2018 · Theater</p><p class="cred">Songs for a Brecht adaptation, dir. Rose Beth Johnson-Brown</p></li>
+          <li><a class="sleeve" data-player="player-scores" href="https://autofictions.bandcamp.com/album/dont-leave" data-embed="album=3401011988" data-label="Don't Leave · 2017" aria-label="Don't Leave · 2017"><img src="/assets/music/score-dont-leave.jpg" alt="" width="480" height="480" loading="lazy" /></a><p class="t">Don't Leave</p><p class="y mono">2017 · Theater</p><p class="cred">Immersive score for an original play, dir. Russell Goldman</p></li>
+          <li><a class="sleeve" data-player="player-scores" href="https://autofictions.bandcamp.com/album/frank-enstein-the-gouldbergs" data-embed="album=706804829" data-label="Frank(enstein &amp; the Gouldbergs) · 2017" aria-label="Frank(enstein &amp; the Gouldbergs) · 2017"><img src="/assets/music/score-frank-enstein-the-gouldbergs.jpg" alt="" width="480" height="480" loading="lazy" /></a><p class="t">Frank(enstein &amp; the Gouldbergs)</p><p class="y mono">2017 · Theater</p><p class="cred">Immersive score for a devised adaptation, dir. Rose Beth Johnson-Brown and Ruby Lanet</p></li>
+          <li><a class="sleeve" data-player="player-scores" href="https://autofictions.bandcamp.com/album/slaughterhouse-five" data-embed="album=290625338" data-label="Slaughterhouse-Five · 2016" aria-label="Slaughterhouse-Five · 2016"><img src="/assets/music/score-slaughterhouse-five.jpg" alt="" width="480" height="480" loading="lazy" /></a><p class="t">Slaughterhouse-Five</p><p class="y mono">2016 · Theater</p><p class="cred">Immersive score for a stage adaptation, dir. Miranda Haymon</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <section aria-labelledby="ensembles">
+      <h2 class="label mono" id="ensembles"><span class="star" aria-hidden="true"></span>Ensembles and performances</h2>
+      <ul class="credits">
+        <li><span class="name"><a href="https://brooklynchoirproject.com/">Brooklyn Choir Project</a></span><span class="when mono">2024–2025</span><p class="role">Producer. A choir that sings new arrangements of songs by New York indie songwriters.</p></li>
+        <li><span class="name">theboywonderhimself</span><span class="when mono">2019–2020</span><p class="role">Lead guitar at Bushwick Public House, The Well, and Pine Box Rock Shop.</p></li>
+        <li><span class="name">Anedition</span><span class="when mono">2019</span><p class="role">Clarinet, with Ben Zucker, Judith Berkson, and Ishmael Ali at Scholes Street Studio.</p></li>
+        <li><span class="name">Matt Forker Group</span><span class="when mono">2018–2019</span><p class="role">Clarinet at Shapeshifter Lab and elsewhere.</p></li>
+        <li><span class="name">Autoschediasms Ensemble</span><span class="when mono">2018</span><p class="role">Clarinet, directed by Tyshawn Sorey at Wesleyan.</p></li>
+        <li><span class="name">Veeblefetzer</span><span class="when mono">2014–2018</span><p class="role">Clarinet in a klezmer dance band.</p></li>
+        <li><span class="name">Wesleyan University Orchestra</span><span class="when mono">2015</span><p class="role">Soloist in Debussy's <em>Première rhapsodie</em>.</p></li>
+      </ul>
+    </section>
+
+    <p style="margin-top:52px;font-size:17px;"><a href="/"><span class="arr arr-back" aria-hidden="true">←</span> joshdavidoff.com</a></p>
+    <p class="page-updated mono"><time datetime="2026-10-14">Updated Oct 14, 2026</time></p>
+  </div>
+
+<script>
+(() => {
+  const opts = 'size=large/bgcol=333333/linkcol=e3b23c/tracklist=false/artwork=small/transparent=true/';
+  const smooth = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const sleeves = [...document.querySelectorAll('.sleeve[data-embed]')];
+  sleeves.forEach(s => {
+    s.setAttribute('aria-label', 'Play ' + s.dataset.label + ' in the page player');
+    s.addEventListener('click', e => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+      e.preventDefault();
+      const player = document.getElementById(s.dataset.player);
+      const frame = player.querySelector('iframe');
+      frame.src = 'https://bandcamp.com/EmbeddedPlayer/' + s.dataset.embed + '/' + opts;
+      frame.title = 'Bandcamp player: ' + s.dataset.label;
+      player.hidden = false;
+      sleeves.filter(o => o.dataset.player === s.dataset.player).forEach(o => {
+        if (o === s) o.setAttribute('aria-current', 'true'); else o.removeAttribute('aria-current');
+      });
+      player.scrollIntoView({ block: 'nearest', behavior: smooth ? 'smooth' : 'auto' });
+    });
+  });
+
+  const reel = document.getElementById('reel');
+  reel.querySelector('button').addEventListener('click', () => {
+    const f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/W5Zj8Amikl4?autoplay=1&rel=0';
+    f.title = 'Josh Davidoff film scoring reel';
+    f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+    f.allowFullscreen = true;
+    reel.replaceChildren(f);
+  });
+})();
+</script>
+</body>
+</html>
