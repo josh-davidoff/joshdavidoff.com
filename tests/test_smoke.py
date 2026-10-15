@@ -1,8 +1,9 @@
 """Tier 2 smoke tests for the joshdavidoff.com static site.
 
-Per /Users/josh/codex/AGENTS.md ("Testing"): a live public site earns a smoke
+Per the workspace AGENTS.md ("Testing"): a live public site earns a smoke
 test that it boots and serves plus security regressions, and nothing more.
-Run with: /Users/josh/codex/.venv/bin/python -m pytest -q tests
+Run from the repo root with: ../.venv/bin/python -m pytest -q tests
+(the workspace's root .venv; see AGENTS.md for the worktree form).
 """
 from __future__ import annotations
 

@@ -73,9 +73,11 @@ curl -s -o /dev/null -w "%{http_code}" https://joshdavidoff.com/
 
 ## Tests
 
-`/Users/josh/codex/.venv/bin/python -m pytest -q tests` — Tier 2 smoke test
+`../.venv/bin/python -m pytest -q tests` from the repo root (the workspace's root
+`.venv`; from a worktree under `.claude/worktrees/<name>/` use
+`../../../../.venv/bin/python`) — Tier 2 smoke test
 (boots/serves plus security regressions per the workspace `AGENTS.md`
-"Testing" section). Current result: all pass (19 on 2026-09-18; the
+"Testing" section). Current result: all pass (23 on 2026-10-14; the
 `<title>` check is parametrized per page, so the count grows with the site).
 That check skips `google*.html`, the Search Console verification token (plain
 text, no markup), which is not a page but must stay tracked.

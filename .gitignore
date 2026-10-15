@@ -32,3 +32,5 @@ ds-bundle/
 # lines and commit.
 building/
 stack/
+
+__pycache__/

@@ -8,7 +8,7 @@ import { CaseLinks } from "@joshdavidoff/site-ds";
 // The CSS itself is self-contained (not gated behind a parent selector),
 // so a bare render should be styled correctly if the reconstruction is
 // right. Numbers/titles/hrefs below are the real other case studies from
-// /Users/josh/codex/jd site/projects/.
+// projects/.
 
 /** Three other case studies, as a "more cases" block might appear at the foot of a project page. */
 export const Default = () => (
