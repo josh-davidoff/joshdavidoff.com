@@ -77,7 +77,7 @@ curl -s -o /dev/null -w "%{http_code}" https://joshdavidoff.com/
 `.venv`; from a worktree under `.claude/worktrees/<name>/` use
 `../../../../.venv/bin/python`) — Tier 2 smoke test
 (boots/serves plus security regressions per the workspace `AGENTS.md`
-"Testing" section). Current result: all pass (23 on 2026-10-14; the
+"Testing" section). Current result: all pass (26 on 2026-10-17; the
 `<title>` check is parametrized per page, so the count grows with the site).
 That check skips `google*.html`, the Search Console verification token (plain
 text, no markup), which is not a page but must stay tracked.
@@ -115,6 +115,40 @@ CH=$(ls ~/Library/Caches/ms-playwright/chromium_headless_shell-*/chrome-headless
 ```
 
 LinkedIn caches previews for about a week; its Post Inspector refreshes one.
+
+## This year (reading and listening)
+
+The homepage's "Currently" card shows how many books and records Josh has got
+through this year, linking to `/this-year` for the full lists. Neither page holds
+the numbers in git: `scripts/media/build.py` fills every
+`<!-- media:NAME -->...<!-- /media:NAME -->` region in `index.html` and
+`this-year.html` at deploy time, on the staged `_site` copy, and writes
+`data/this-year.json` beside them. The Pages workflow runs it on every push and
+once a day on a schedule (10:23 UTC), so the daily run is itself a deploy.
+
+- Books come from Hardcover. A book counts when it is marked read and a read
+  of it finished this year.
+- Records come from last.fm scrobbles. An album counts once at least half of
+  last.fm's tracklist for it was played this year. An album with no tracklist
+  counts at five distinct tracks. Anything under four tracks is a single and
+  never counts. Plays reach last.fm a few weeks late through the Apple Music
+  export import in the private `media tracking` project, so the count trails
+  real listening.
+- The workflow reads two repo secrets, `LASTFM_API_KEY` and `HARDCOVER_TOKEN`.
+  The Hardcover token needs the `read:library` scope. The script names Josh's
+  public user id, since that scope reads every public library. Hardcover can
+  reset tokens without notice, and they expire. A dead token shows up as a
+  warning on the workflow run while the site keeps the last good list.
+- A failing source falls back to the live `data/this-year.json`, so an outage
+  leaves the previous numbers up. The step is `continue-on-error`, so it never
+  blocks a deploy.
+- GitHub pauses scheduled workflows after 60 days with no repository activity.
+  If the counts stop moving, re-enable the workflow on the Actions tab.
+- `tests/test_smoke.py` fails if a hand edit drops one of the regions.
+
+To preview locally, copy the site to a scratch directory, run
+`python3 scripts/media/build.py <copy>` with both variables set, and serve the
+copy.
 
 ## Updated dates
 

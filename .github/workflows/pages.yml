@@ -3,6 +3,9 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  # Daily redeploy so the homepage's reading/listening counts and /this-year stay current.
+  schedule:
+    - cron: '23 10 * * *'
   workflow_dispatch:
 
 permissions:
@@ -60,12 +63,22 @@ jobs:
             --exclude 'scripts/' \
             ./ _site/
 
+      # Fill the reading/listening counts on the homepage and the lists on /this-year
+      # from Hardcover and last.fm. A source that fails keeps the live site's numbers,
+      # and an outage never blocks a deploy (the run shows a warning instead).
+      - name: Fill this year's books and records
+        continue-on-error: true
+        env:
+          LASTFM_API_KEY: ${{ secrets.LASTFM_API_KEY }}
+          HARDCOVER_TOKEN: ${{ secrets.HARDCOVER_TOKEN }}
+        run: python3 scripts/media/build.py _site
+
       # Fail loudly rather than publishing a site missing a load-bearing file.
       # The Search Console verification file gates Google publishing for the
       # Gmail CLI's OAuth consent screen, and privacy.html is its privacy policy.
       - name: Verify load-bearing files survived staging
         run: |
-          for f in index.html privacy.html googlea100f475dc6193a2.html robots.txt bsh.html; do
+          for f in index.html privacy.html googlea100f475dc6193a2.html robots.txt bsh.html this-year.html; do
             [ -f "_site/$f" ] || { echo "MISSING from artifact: $f"; exit 1; }
           done
           for d in assets projects; do

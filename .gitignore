@@ -34,3 +34,6 @@ building/
 stack/
 
 __pycache__/
+
+# Built by scripts/media/build.py; the Pages workflow writes the live copy.
+/data/

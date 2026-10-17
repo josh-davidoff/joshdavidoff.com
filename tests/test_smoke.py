@@ -151,6 +151,21 @@ def test_pages_workflow_deploys() -> None:
     assert "actions/deploy-pages" in workflow_path.read_text(encoding="utf-8")
 
 
+# scripts/media/build.py fills these regions at deploy time; a region deleted by a
+# hand edit would leave a stale count up with nothing to say so.
+MEDIA_REGIONS = {
+    "index.html": ["books-count", "records-count"],
+    "this-year.html": ["year", "books-count", "books-list", "records-count", "records-list", "updated"],
+}
+
+
+@pytest.mark.parametrize("page", sorted(MEDIA_REGIONS))
+def test_media_regions_present(page: str) -> None:
+    text = (REPO_ROOT / page).read_text(encoding="utf-8")
+    for name in MEDIA_REGIONS[page]:
+        assert re.search(rf"<!-- media:{name} -->.*?<!-- /media:{name} -->", text, re.S), f"{page}: media:{name} region missing"
+
+
 # "Updated" dates: the register renders each card's dossier date into
 # data-updated (and a visible label only when SHOW_CARD_DATES is on), and the
 # linked case page carries the same date by hand, so the two can drift.

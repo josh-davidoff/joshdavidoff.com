@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>This year — Josh Davidoff</title>
+<meta name="description" content="The books I've finished and the records I've listened to this year." />
+<meta property="og:title" content="This year" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://joshdavidoff.com/this-year" />
+  <meta property="og:image" content="https://joshdavidoff.com/assets/og-card.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://joshdavidoff.com/assets/og-card.png" />
+<link rel="canonical" href="https://joshdavidoff.com/this-year" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%232f5640'/%3E%3Ccircle cx='50' cy='50' r='21' fill='%23e3b23c'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/site.css" />
+<style>
+  a { color: var(--mustard); text-decoration: none; padding-bottom: 2px;
+    background-image: linear-gradient(var(--mustard), var(--mustard)), linear-gradient(var(--rule), var(--rule));
+    background-repeat: no-repeat; background-position: 0 100%, 0 100%;
+    background-size: 0% 2px, 100% 2px;
+    transition: background-size .28s cubic-bezier(.2,.6,.2,1), color .18s ease; }
+  a:hover { color: var(--cream); background-size: 100% 2px, 100% 2px; }
+  .back { background-image: none; padding-bottom: 0; }
+  .site-nav-name { color: var(--cream); display: inline-flex; align-items: center; gap: 8px; font-family: "Apfel Grotezk", system-ui, sans-serif; font-size: 15px; font-weight: 700; letter-spacing: -0.01em; }
+  .site-nav-name:hover { color: var(--mustard); }
+  .site-nav-links a:hover, .site-nav-links a[aria-current="page"] { color: var(--mustard); }
+  .site-nav-name, .site-nav-links a { background-image: none; padding-bottom: 0; }
+  .mono { font-variant-numeric: tabular-nums; }
+
+  .subtitle {
+    font-family: "Apfel Grotezk", system-ui, sans-serif;
+    font-size: clamp(18px, 2.8vw, 22px); font-weight: 600; color: var(--mustard);
+    margin: 0 0 40px; letter-spacing: -0.01em; line-height: 1.3;
+  }
+  section { margin-top: 56px; }
+
+  /* Two credits lists: ruled rows, no boxes, same as the ensembles on /music. */
+  .sec-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-top: 48px; }
+  .sec-head h2 { font-family: "Apfel Grotezk", system-ui, sans-serif; font-size: 30px; font-weight: 700; color: var(--cream); letter-spacing: -0.015em; line-height: 1.1; }
+  .sec-head .mono { color: var(--faint); font-size: 11.5px; }
+  .note { color: var(--muted); font-size: 16px; margin: 8px 0 0; }
+  .credits { list-style: none; margin: 20px 0 0; padding: 0; border-top: 2px solid var(--rule); }
+  .credits li { display: grid; grid-template-columns: 1fr auto; gap: 2px 16px; padding: 14px 0; border-bottom: 2px solid var(--rule); }
+  .credits .name { font-size: 19px; color: var(--cream); }
+  .credits .name a { color: var(--cream); }
+  .credits .name a:hover { color: var(--mustard); }
+  .credits .when { color: var(--faint); font-size: 11.5px; align-self: baseline; white-space: nowrap; }
+  .credits .role { grid-column: 1 / -1; color: var(--muted); font-size: 16px; margin: 0; }
+  .source { color: var(--faint); font-size: 15px; margin-top: 40px; }
+
+  @media (max-width: 480px) {
+    .site-nav-inner { padding: 0 20px; }
+    .site-nav-name { display: none; }
+    .site-nav-links { gap: 10px; width: 100%; justify-content: space-between; }
+    .site-nav-links a { font-size: 14px; }
+  }
+</style>
+<script data-goatcounter="https://joshdavidoff.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+  <nav class="site-nav" aria-label="Site navigation">
+    <div class="site-nav-inner">
+      <a class="site-nav-name" href="/"><span class="nav-dot" aria-hidden="true"></span>Josh Davidoff</a>
+      <div class="site-nav-links">
+        <a href="/#projects">Work</a>
+        <a href="/music">Music</a>
+        <a href="mailto:joshdavidoff@gmail.com">Email</a>
+        <a class="linkedin-icon" href="https://www.linkedin.com/in/joshdavidoff/" aria-label="LinkedIn">in</a>
+      </div>
+    </div>
+  </nav>
+  <div class="wrap" data-screen-label="This year">
+    <a class="back mono" href="/">← joshdavidoff.com</a>
+
+    <header>
+      <p class="kicker mono"><span class="dot" aria-hidden="true"></span><!-- media:year -->This year<!-- /media:year --></p>
+      <h1 class="title">Reading and listening</h1>
+    </header>
+
+    <section id="books" aria-labelledby="books-h">
+      <div class="sec-head"><h2 id="books-h"><!-- media:books-count -->Books<!-- /media:books-count --></h2><span class="mono">Finished</span></div>
+      <ul class="credits"><!-- media:books-list -->
+        <li class="empty"><p class="role">The list is updating.</p></li>
+      <!-- /media:books-list --></ul>
+    </section>
+
+    <section id="records" aria-labelledby="records-h">
+      <div class="sec-head"><h2 id="records-h"><!-- media:records-count -->Records<!-- /media:records-count --></h2></div>
+      <p class="note">A record counts once I've played at least half its tracks.</p>
+      <ul class="credits"><!-- media:records-list -->
+        <li class="empty"><p class="role">The list is updating.</p></li>
+      <!-- /media:records-list --></ul>
+    </section>
+
+    <p class="source">Books from <a href="https://hardcover.app">Hardcover</a>, records from <a href="https://www.last.fm/user/joshd19">last.fm</a>.</p>
+
+    <p style="margin-top:52px;font-size:17px;"><a href="/"><span class="arr arr-back" aria-hidden="true">←</span> joshdavidoff.com</a></p>
+    <p class="page-updated mono"><!-- media:updated --><time datetime="2026-10-17">Updated Oct 17, 2026</time><!-- /media:updated --></p>
+  </div>
+</body>
+</html>
