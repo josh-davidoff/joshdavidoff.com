@@ -154,8 +154,7 @@ def test_pages_workflow_deploys() -> None:
 # scripts/media/build.py fills these regions at deploy time; a region deleted by a
 # hand edit would leave a stale count up with nothing to say so.
 MEDIA_REGIONS = {
-    "index.html": ["books-count", "records-count"],
-    "this-year.html": ["year", "books-count", "books-list", "records-count", "records-list", "updated"],
+    "index.html": ["year", "books-viz", "books-count", "books-list", "records-viz", "records-count", "records-list"],
 }
 
 

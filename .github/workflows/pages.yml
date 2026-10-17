@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
-  # Daily redeploy so the homepage's reading/listening counts and /this-year stay current.
+  # Daily redeploy so the homepage's reading and listening figures stay current.
   schedule:
     - cron: '23 10 * * *'
   workflow_dispatch:
@@ -63,8 +63,8 @@ jobs:
             --exclude 'scripts/' \
             ./ _site/
 
-      # Fill the reading/listening counts on the homepage and the lists on /this-year
-      # from Hardcover and last.fm. A source that fails keeps the live site's numbers,
+      # Fill the homepage's Reading and Listening rows (book goal gauge, record cover
+      # mosaic, title lists) from Hardcover and last.fm. A source that fails keeps the live site's numbers,
       # and an outage never blocks a deploy (the run shows a warning instead).
       - name: Fill this year's books and records
         continue-on-error: true
@@ -78,7 +78,7 @@ jobs:
       # Gmail CLI's OAuth consent screen, and privacy.html is its privacy policy.
       - name: Verify load-bearing files survived staging
         run: |
-          for f in index.html privacy.html googlea100f475dc6193a2.html robots.txt bsh.html this-year.html; do
+          for f in index.html privacy.html googlea100f475dc6193a2.html robots.txt bsh.html; do
             [ -f "_site/$f" ] || { echo "MISSING from artifact: $f"; exit 1; }
           done
           for d in assets projects; do

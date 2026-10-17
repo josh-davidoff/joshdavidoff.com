@@ -118,22 +118,24 @@ LinkedIn caches previews for about a week; its Post Inspector refreshes one.
 
 ## This year (reading and listening)
 
-The homepage's "Currently" card shows how many books and records Josh has got
-through this year, linking to `/this-year` for the full lists. Neither page holds
-the numbers in git: `scripts/media/build.py` fills every
-`<!-- media:NAME -->...<!-- /media:NAME -->` region in `index.html` and
-`this-year.html` at deploy time, on the staged `_site` copy, and writes
-`data/this-year.json` beside them. The Pages workflow runs it on every push and
-once a day on a schedule (10:23 UTC), so the daily run is itself a deploy.
+The homepage's "Beyond the work" section ends with two cards, "2026 Reading"
+and "2026 Listening" (the year is filled in at build time). Reading shows this
+year's books as a gauge toward a goal of 50 (`BOOK_GOAL` in the script), with a
+tick where an even pace would be today. Listening shows a record count over a
+mosaic of the 21 most-played covers. Each card has a dropdown listing every
+title. The numbers are not in git. `scripts/media/build.py` fills every
+`<!-- media:NAME -->...<!-- /media:NAME -->` region in `index.html` at deploy
+time, on the staged `_site` copy, and writes `data/this-year.json` beside it.
+The Pages workflow runs it on every push and once a day on a schedule (10:23
+UTC), so the daily run is itself a deploy. Cover images load from last.fm's
+image CDN.
 
 - Books come from Hardcover. A book counts when it is marked read and a read
   of it finished this year.
-- Records come from last.fm scrobbles. An album counts once at least half of
-  last.fm's tracklist for it was played this year. An album with no tracklist
-  counts at five distinct tracks. Anything under four tracks is a single and
-  never counts. Plays reach last.fm a few weeks late through the Apple Music
-  export import in the private `media tracking` project, so the count trails
-  real listening.
+- Records come from last.fm scrobbles. An album counts once three or more
+  different songs from it were played this year. Plays reach last.fm a few
+  weeks late through the Apple Music export import in the private
+  `media tracking` project, so the count trails real listening.
 - The workflow reads two repo secrets, `LASTFM_API_KEY` and `HARDCOVER_TOKEN`.
   The Hardcover token needs the `read:library` scope. The script names Josh's
   public user id, since that scope reads every public library. Hardcover can

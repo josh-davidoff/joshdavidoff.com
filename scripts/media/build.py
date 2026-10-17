@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
-"""Fill the homepage reading/listening counts and /this-year with this year's books and records.
+"""Fill the homepage's Reading and Listening cards with this year's books and records.
 
 Books come from Hardcover (books marked read, with a read finished this year). Records come
-from last.fm: an album counts once at least half of its tracks have been played this year,
-judged against last.fm's tracklist; an album with no tracklist there counts at five distinct
-tracks, and anything under four tracks (a single) never counts.
+from last.fm: an album counts once three or more different songs from it have been played
+this year.
+
+Books show as a gauge toward BOOK_GOAL with a pace marker, records as a mosaic of covers, and
+each has a dropdown list of titles.
 
 Usage: build.py SITE_DIR. Rewrites every <!-- media:NAME -->...<!-- /media:NAME --> region in
-SITE_DIR/index.html and SITE_DIR/this-year.html, and writes SITE_DIR/data/this-year.json.
+SITE_DIR/index.html and writes SITE_DIR/data/this-year.json.
 The Pages workflow runs it on the staged copy of the site, so the repo itself is untouched.
 
 Environment: LASTFM_API_KEY, HARDCOVER_TOKEN (required); LASTFM_USER (default joshd19).
@@ -18,6 +20,7 @@ in. Any failed source makes the script exit 1, which the workflow shows as a war
 """
 from __future__ import annotations
 
+import calendar
 import datetime as dt
 import html
 import json
@@ -39,10 +42,11 @@ HARDCOVER = "https://api.hardcover.app/v1/graphql"
 LIVE_DATA = "https://joshdavidoff.com/data/this-year.json"
 USER_AGENT = "joshdavidoff.com this-year build"
 TZ = ZoneInfo("America/New_York")
-MIN_ALBUM_TRACKS = 4   # below this it is a single, not a record
-NO_TRACKLIST_MIN = 5   # distinct tracks needed when last.fm has no tracklist
-PAGES = ("index.html", "this-year.html")
-MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+MIN_SONGS = 3  # different songs played before an album counts as a record
+PAGES = ("index.html",)
+BOOK_GOAL = 50
+MOSAIC_TILES = 21  # three rows of seven covers, most played first
+LASTFM_NO_ART = "2a96cbd8b46e442fc41c2b86b821562f"  # last.fm's grey star placeholder
 
 
 def _request(url: str, data: bytes | None = None, headers: dict | None = None, retries: int = 4) -> dict:
@@ -134,18 +138,18 @@ def scrobbles(user: str, key: str, since: dt.datetime, until: dt.datetime) -> li
         page += 1
 
 
-def tracklist(artist: str, album: str, key: str) -> tuple[list[str], str]:
-    """(track keys, album page url) from last.fm, or ([], '') when it has no record of the album."""
+def album_info(artist: str, album: str, key: str) -> tuple[str, str]:
+    """(album page url, cover url) from last.fm; empty when it has no record of the album."""
     try:
         d = _lastfm({"method": "album.getinfo", "artist": artist, "album": album, "api_key": key})["album"]
     except RuntimeError as e:
         if "not found" in str(e).lower():
-            return [], ""
+            return "", ""
         raise
-    tracks = (d.get("tracks") or {}).get("track") or []
-    if isinstance(tracks, dict):
-        tracks = [tracks]
-    return sorted({track_key(t["name"]) for t in tracks}), d.get("url", "")
+    art = next((i["#text"] for i in d.get("image") or [] if i.get("size") == "medium"), "")
+    if LASTFM_NO_ART in art:
+        art = ""
+    return d.get("url", ""), art
 
 
 def album_title(name: str) -> str:
@@ -165,17 +169,11 @@ def records(user: str, key: str, year: int) -> list[dict]:
         g["names"][(s["artist"], s["album"])] += 1
     out = []
     for g in groups.values():
-        heard = set(g["keys"])
-        if len(heard) < 2:  # half of even the shortest record is two tracks
+        if len(set(g["keys"])) < MIN_SONGS:
             continue
         artist, album = g["names"].most_common(1)[0][0]
-        listed, url = tracklist(artist, album, key)
-        if listed:
-            if len(listed) < MIN_ALBUM_TRACKS or len(heard & set(listed)) < math.ceil(len(listed) / 2):
-                continue
-        elif len(heard) < NO_TRACKLIST_MIN:
-            continue
-        out.append({"artist": artist, "album": album_title(album), "plays": len(g["keys"]), "url": url})
+        url, art = album_info(artist, album, key)
+        out.append({"artist": artist, "album": album_title(album), "plays": len(g["keys"]), "url": url, "image": art})
     out.sort(key=lambda r: (-r["plays"], r["artist"].lower(), r["album"].lower()))
     return out
 
@@ -233,28 +231,53 @@ def _a(url: str, text: str) -> str:
     return f'<a href="{html.escape(url)}">{text}</a>' if url else text
 
 
+def gauge(count: int, goal: int, today: dt.date) -> str:
+    """A half-circle gauge filled count/goal, with a tick where an even pace would be today."""
+    cx, cy, r = 80, 78, 64
+    year_frac = (today.timetuple().tm_yday - 0.5) / (366 if calendar.isleap(today.year) else 365)
+    angle = math.pi * (1 - min(year_frac, 1))
+    (x1, y1), (x2, y2) = ((cx + rr * math.cos(angle), cy - rr * math.sin(angle)) for rr in (r - 11, r + 11))
+    pct = min(count / goal, 1) * 100
+    arc = f"M {cx - r} {cy} A {r} {r} 0 0 1 {cx + r} {cy}"
+    fill_arc = f'<path class="g-fill" d="{arc}" pathLength="100" stroke-dasharray="{pct:.1f} 100"/>' if count else ""
+    return (f'<svg class="gauge" viewBox="0 0 160 92" role="img" aria-label="{count} of {goal} books">'
+            f'<path class="g-track" d="{arc}"/>{fill_arc}<path class="g-pace" d="M {x1:.1f} {y1:.1f} L {x2:.1f} {y2:.1f}"/>'
+            f'<text class="g-num" x="{cx}" y="{cy - 8}">{count}</text>'
+            f'<text class="g-of" x="{cx}" y="{cy + 12}">of {goal}</text></svg>')
+
+
+def pace_line(count: int, goal: int, today: dt.date) -> str:
+    days = 366 if calendar.isleap(today.year) else 365
+    doy = today.timetuple().tm_yday
+    if doy < 21 or not count:  # a projection from a few weeks is noise
+        return f"Goal: {goal} this year"
+    return f"On pace for {round(count * days / doy)}"
+
+
 def render(data: dict) -> dict[str, str]:
     """Regions for whichever sources are present in data."""
-    year, built = data["year"], dt.date.fromisoformat(data["built"])
-    empty = '        <li class="empty"><p class="role">None yet this year.</p></li>'
-    out = {"year": str(year),
-           "updated": f'<time datetime="{built.isoformat()}">Updated {MONTHS[built.month - 1]} {built.day}, {built.year}</time>'}
+    built = dt.date.fromisoformat(data.get("books_built") or data["built"])
+    empty = '<li class="empty">None yet this year.</li>'
+    out = {"year": str(data["year"])}
     if "books" in data:
         bk = data["books"]
-        rows = "\n".join(
-            f'        <li><span class="name">{_a(b["url"], "<em>" + html.escape(b["title"]) + "</em>")}</span>'
-            f'<span class="when mono">{MONTHS[int(b["finished"][5:7]) - 1]}</span>'
-            f'<p class="role">{html.escape(", ".join(b["authors"]))}</p></li>' for b in bk)
-        out["books-count"] = f"{len(bk)} book{'' if len(bk) == 1 else 's'} in {year}"
-        out["books-list"] = "\n" + (rows or empty) + "\n      "
+        out["books-viz"] = gauge(len(bk), BOOK_GOAL, built) + f'<p class="viz-note">{pace_line(len(bk), BOOK_GOAL, built)}</p>'
+        out["books-count"] = f"All {len(bk)} book{'' if len(bk) == 1 else 's'}"
+        out["books-list"] = "".join(
+            f'<li><span class="t">{_a(b["url"], html.escape(b["title"]))}</span>'
+            f'<span class="by">{html.escape(", ".join(b["authors"]))}</span></li>' for b in bk) or empty
     if "records" in data:
         rec = data["records"]
-        rows = "\n".join(
-            f'        <li><span class="name">{_a(r["url"], html.escape(r["album"]))}</span>'
-            f'<span class="when mono">{r["plays"]} plays</span>'
-            f'<p class="role">{html.escape(r["artist"])}</p></li>' for r in rec)
-        out["records-count"] = f"{len(rec)} record{'' if len(rec) == 1 else 's'} in {year}"
-        out["records-list"] = "\n" + (rows or empty) + "\n      "
+        covers = [r for r in rec if r.get("image")][:MOSAIC_TILES]
+        tiles = "".join(f'<img src="{html.escape(r["image"])}" alt="" title="{html.escape(r["album"])} · {html.escape(r["artist"])}"'
+                        f' width="64" height="64" loading="lazy" decoding="async">' for r in covers)
+        mosaic = (f'<div class="mosaic" role="img" aria-label="Covers of my {len(covers)} most-played records">{tiles}</div>'
+                  if covers else "")
+        out["records-viz"] = f'<p class="viz-num"><span class="n">{len(rec)}</span> record{"" if len(rec) == 1 else "s"}</p>' + mosaic
+        out["records-count"] = f"All {len(rec)} record{'' if len(rec) == 1 else 's'}"
+        out["records-list"] = "".join(
+            f'<li><span class="t">{_a(r["url"], html.escape(r["album"]))}</span>'
+            f'<span class="by">{html.escape(r["artist"])}</span></li>' for r in rec) or empty
     return out
 
 
@@ -289,13 +312,9 @@ def main(site: Path) -> int:
                 failed.append(name)
     if failed:
         print(f"no data for {', '.join(failed)}; leaving those regions as committed", file=sys.stderr)
-    keep_date = None
-    if failed or stale:  # don't stamp today on figures that weren't refreshed today
-        keep_date = live.get("built") if live and live.get("year") == year else ""
-        data["built"] = keep_date or data["built"]
+    # Pace is measured on the day the books were fetched, so stale books keep their old date.
+    data["books_built"] = ((live.get("books_built") or live.get("built")) if "books" in stale else "") or data["built"]
     regions = render(data)
-    if keep_date == "":
-        del regions["updated"]
     for page in PAGES:
         path = site / page
         path.write_text(fill(path.read_text(encoding="utf-8"), regions), encoding="utf-8")

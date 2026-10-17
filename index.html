@@ -95,9 +95,6 @@
   .entry .yr { color: var(--tomato); font-weight: 600; font-family: "Apfel Grotezk", system-ui, sans-serif; font-size: 14px; }
   .meta-rule { border: none; border-top: 1px solid var(--rule); margin: 4px 0 6px; max-width: 100%; }
 
-  .currently { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px 24px; }
-  .currently .row { font-size: 17px; color: var(--faint); }
-  .currently .row .k { display: block; color: var(--mustard); margin-bottom: 5px; }
 
   .extras { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 56px; align-items: stretch; }
   .extras section { margin-top: 0; }
@@ -112,14 +109,45 @@
   .beyond-card .music-line { font-size: 15px; line-height: 1.4; color: var(--faint); margin: 0; }
   .beyond-card .card-link::after { content: ""; position: absolute; inset: 0; border-radius: 12px; }
   .beyond-card.music:has(.card-link:focus-visible) { outline: 2px solid var(--mustard); outline-offset: 2px; }
-  .beyond-card .currently { display: block; }
-  .beyond-card .currently .row { margin-bottom: 14px; }
-  .beyond-card .currently .row:last-child { margin-bottom: 0; }
+  /* Two by two: Music and Volunteer, then the 2026 Reading and Listening cards. */
+  .extras.two { grid-template-columns: repeat(2, 1fr); }
+  .extras.two .covers { grid-template-columns: repeat(4, 1fr); }
+  .beyond-card.volunteer { display: grid; grid-template-columns: 1fr 1fr; column-gap: 20px; align-content: start; }
+  .beyond-card.volunteer > h3 { grid-column: 1 / -1; }
 
-  @media (max-width: 900px) { .extras { grid-template-columns: 1fr; gap: 34px; } }
-  @media (max-width: 720px) {
-    .currently { grid-template-columns: 1fr; gap: 14px; }
-  }
+  /* Reading and Listening: a goal gauge, a cover mosaic, and a dropdown of titles under each.
+     Filled at deploy time by scripts/media/build.py. */
+  .stat .gauge { display: block; width: 100%; max-width: 190px; height: auto; margin: 2px 0 0; overflow: visible; }
+  .gauge .g-track, .gauge .g-fill { fill: none; stroke-width: 11; stroke-linecap: round; }
+  .gauge .g-track { stroke: var(--rule); }
+  .gauge .g-fill { stroke: var(--mustard); }
+  .gauge .g-pace { stroke: var(--cream); stroke-width: 2.5; stroke-linecap: round; }
+  .gauge text { text-anchor: middle; font-family: "Apfel Grotezk", system-ui, sans-serif; }
+  .gauge .g-num { font-size: 34px; font-weight: 700; fill: var(--cream); letter-spacing: -0.02em; }
+  .gauge .g-of { font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase; fill: var(--faint); }
+  .stat .viz-note { font-size: 14px; color: var(--faint); margin: 0; }
+  .stat .viz-num { font-size: 14px; color: var(--faint); margin: 2px 0 10px; }
+  .stat .viz-num .n { font-family: "Apfel Grotezk", system-ui, sans-serif; font-size: 34px; font-weight: 700; color: var(--cream); letter-spacing: -0.02em; line-height: 1; margin-right: 3px; }
+  .mosaic { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; max-width: 300px; }
+  .mosaic img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 1px; background: var(--rule); }
+  .titles { position: relative; margin-top: 6px; }
+  .titles summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: 14px; color: var(--mustard); }
+  .titles summary::-webkit-details-marker { display: none; }
+  .titles summary::after { content: ""; width: 6px; height: 6px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform .16s ease-out; }
+  .titles[open] summary::after { transform: translateY(2px) rotate(-135deg); }
+  .titles summary:hover { color: var(--cream); }
+  .titles summary:focus-visible { outline: 2px solid var(--mustard); outline-offset: 2px; border-radius: 2px; }
+  .titles ul { position: absolute; z-index: 5; top: 100%; left: 0; width: min(320px, 100%); list-style: none; margin: 0; padding: 2px 14px; max-height: 260px; overflow-y: auto; background: var(--bg-deep); border: 1px solid var(--rule); border-radius: 8px; box-shadow: 0 10px 28px oklch(0.15 0.04 154 / .45); scrollbar-width: thin; scrollbar-color: var(--rule) transparent; }
+  .titles li { display: flex; flex-direction: column; gap: 1px; padding: 7px 0; border-bottom: 1px solid var(--rule); font-size: 14px; line-height: 1.3; }
+  .titles li:last-child { border-bottom: 0; }
+  .titles .t, .titles .t a { color: var(--cream); }
+  .titles .t a { background-image: none; padding-bottom: 0; }
+  .titles .t a:hover { color: var(--mustard); }
+  .titles .by, .titles .empty { color: var(--faint); font-size: 13px; }
+  @media (prefers-reduced-motion: reduce) { .titles summary::after { transition: none; } }
+
+  @media (max-width: 900px) { .extras, .extras.two { grid-template-columns: 1fr; gap: 34px; } }
+  @media (max-width: 420px) { .beyond-card.volunteer { grid-template-columns: 1fr; } }
 
   footer { margin-top: 66px; padding-top: 28px; border-top: 2px solid var(--rule); }
 
@@ -256,7 +284,7 @@
   section[id] { scroll-margin-top: 66px; }
 
   /* lining/tabular figures where numerals matter */
-  .mono, .yr, .proj-num, .currently .row { font-variant-numeric: tabular-nums; }
+  .mono, .yr, .proj-num { font-variant-numeric: tabular-nums; }
   .lede, .name { font-feature-settings: "kern" 1, "liga" 1, "calt" 1; }
 
   /* ── Animated link underline (draws in from the left) ──── */
@@ -492,7 +520,7 @@
 
     <section id="beyond-work" data-reveal>
       <h2 class="label mono"><span class="star" aria-hidden="true">✳</span>Beyond the work</h2>
-      <div class="extras">
+      <div class="extras two">
       <div class="beyond-card music">
         <h3>Music</h3>
         <div class="covers" aria-hidden="true">
@@ -505,7 +533,7 @@
         <p class="proj-link"><a class="card-link" href="/music">All my music <span class="arr" aria-hidden="true">→</span></a></p>
       </div>
 
-      <div class="beyond-card">
+      <div class="beyond-card volunteer">
         <h3>Volunteer</h3>
         <div class="entry">
           <h3>Lay Worship Leader</h3>
@@ -525,13 +553,16 @@
         </div>
       </div>
 
-      <div class="beyond-card">
-        <h3>Currently</h3>
-        <div class="currently">
-          <div class="row"><span class="k mono">Reading</span><a href="/this-year#books"><!-- media:books-count -->Books this year<!-- /media:books-count -->&nbsp;<span class="arr" aria-hidden="true">→</span></a></div>
-          <div class="row"><span class="k mono">Listening</span><a href="/this-year#records"><!-- media:records-count -->Records this year<!-- /media:records-count -->&nbsp;<span class="arr" aria-hidden="true">→</span></a></div>
-          <div class="row"><span class="k mono">Playing</span><span>Rec softball · pickleball · Sufjan Stevens covers</span></div>
-        </div>
+      <div class="beyond-card stat">
+        <h3><!-- media:year -->This year's<!-- /media:year --> Reading</h3>
+        <!-- media:books-viz --><!-- /media:books-viz -->
+        <details class="titles"><summary><!-- media:books-count -->This year's books<!-- /media:books-count --></summary><ul><!-- media:books-list --><li class="empty">The list is updating.</li><!-- /media:books-list --></ul></details>
+      </div>
+
+      <div class="beyond-card stat">
+        <h3><!-- media:year -->This year's<!-- /media:year --> Listening</h3>
+        <!-- media:records-viz --><!-- /media:records-viz -->
+        <details class="titles"><summary><!-- media:records-count -->This year's records<!-- /media:records-count --></summary><ul><!-- media:records-list --><li class="empty">The list is updating.</li><!-- /media:records-list --></ul></details>
       </div>
       </div>
     </section>
@@ -544,6 +575,22 @@
   </div>
 <script>
   var SHOW_BEYOND_WORK = true;
+
+  (function(){
+    var lists = [].slice.call(document.querySelectorAll('details.titles'));
+    lists.forEach(function(d){
+      d.addEventListener('toggle', function(){
+        if (d.open) lists.forEach(function(o){ if (o !== d) o.open = false; });
+      });
+    });
+    document.addEventListener('click', function(e){
+      lists.forEach(function(d){ if (d.open && !d.contains(e.target)) d.open = false; });
+    });
+    document.addEventListener('keydown', function(e){
+      if (e.key !== 'Escape') return;
+      lists.forEach(function(d){ if (d.open) { d.open = false; d.querySelector('summary').focus(); } });
+    });
+  })();
 
   (function(){
     var beyond = document.getElementById('beyond-work');
