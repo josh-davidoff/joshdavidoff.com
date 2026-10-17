@@ -114,6 +114,9 @@
   .extras.two .covers { grid-template-columns: repeat(4, 1fr); }
   .beyond-card.volunteer { display: grid; grid-template-columns: 1fr 1fr; column-gap: 20px; align-content: start; }
   .beyond-card.volunteer > h3 { grid-column: 1 / -1; }
+  .beyond-card.volunteer .group { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; column-gap: 20px; margin-bottom: 6px; }
+  .beyond-card.volunteer .org { grid-column: 1 / -1; margin: 0 0 10px; padding-bottom: 6px; border-bottom: 1px solid var(--rule); font-size: 14px; color: var(--muted); }
+  #consumption { scroll-margin-top: 80px; }
 
   /* Reading and Listening: a goal gauge, a cover mosaic, and a dropdown of titles under each.
      Filled at deploy time by scripts/media/build.py. */
@@ -125,7 +128,6 @@
   .gauge text { text-anchor: middle; font-family: "Apfel Grotezk", system-ui, sans-serif; }
   .gauge .g-num { font-size: 34px; font-weight: 700; fill: var(--cream); letter-spacing: -0.02em; }
   .gauge .g-of { font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase; fill: var(--faint); }
-  .stat .viz-note { font-size: 14px; color: var(--faint); margin: 0; }
   .stat .viz-num { font-size: 14px; color: var(--faint); margin: 2px 0 10px; }
   .stat .viz-num .n { font-family: "Apfel Grotezk", system-ui, sans-serif; font-size: 34px; font-weight: 700; color: var(--cream); letter-spacing: -0.02em; line-height: 1; margin-right: 3px; }
   .mosaic { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; max-width: 300px; }
@@ -147,7 +149,7 @@
   @media (prefers-reduced-motion: reduce) { .titles summary::after { transition: none; } }
 
   @media (max-width: 900px) { .extras, .extras.two { grid-template-columns: 1fr; gap: 34px; } }
-  @media (max-width: 420px) { .beyond-card.volunteer { grid-template-columns: 1fr; } }
+  @media (max-width: 420px) { .beyond-card.volunteer, .beyond-card.volunteer .group { grid-template-columns: 1fr; } }
 
   footer { margin-top: 66px; padding-top: 28px; border-top: 2px solid var(--rule); }
 
@@ -325,7 +327,8 @@
       <a class="site-nav-name" href="#"><span class="nav-dot" aria-hidden="true"></span>Josh Davidoff</a>
       <div class="site-nav-links">
         <a href="#projects">Work</a>
-        <a href="/music">Music</a>
+        <a href="/music">My music</a>
+        <a href="#consumption">Consumption</a>
         <a href="mailto:joshdavidoff@gmail.com">Email</a>
         <a class="linkedin-icon" href="https://www.linkedin.com/in/joshdavidoff/" aria-label="LinkedIn">in</a>
       </div>
@@ -522,7 +525,7 @@
       <h2 class="label mono"><span class="star" aria-hidden="true">✳</span>Beyond the work</h2>
       <div class="extras two">
       <div class="beyond-card music">
-        <h3>Music</h3>
+        <h3>My music</h3>
         <div class="covers" aria-hidden="true">
           <img src="/assets/music/autofictions-citizen-softboy.jpg" alt="" width="480" height="480" loading="lazy" />
           <img src="/assets/music/theboywonderhimself-cue-the-hysteria.jpg" alt="" width="480" height="480" loading="lazy" />
@@ -535,13 +538,19 @@
 
       <div class="beyond-card volunteer">
         <h3>Volunteer</h3>
-        <div class="entry">
-          <h3>Lay Worship Leader</h3>
-          <p class="meta">First Unitarian Brooklyn</p>
+        <div class="group">
+          <p class="org">First Unitarian Brooklyn</p>
+          <div class="entry">
+            <h3>Lay Worship Leader</h3>
+          </div>
+          <div class="entry">
+            <h3>Chair, Immigrant Solidarity Committee</h3>
+            <p class="meta">2024–2026</p>
+          </div>
         </div>
         <div class="entry">
-          <h3>Chair, Immigrant Solidarity Committee</h3>
-          <p class="meta">First Unitarian Brooklyn, 2024–2026</p>
+          <h3>Immigrant Advocate</h3>
+          <p class="meta">The Ark Pro Se Asylum Clinic, 2024–2025</p>
         </div>
         <div class="entry">
           <h3>Producer</h3>
@@ -553,7 +562,7 @@
         </div>
       </div>
 
-      <div class="beyond-card stat">
+      <div class="beyond-card stat" id="consumption">
         <h3><!-- media:year -->This year's<!-- /media:year --> Reading</h3>
         <!-- media:books-viz --><!-- /media:books-viz -->
         <details class="titles"><summary><!-- media:books-count -->This year's books<!-- /media:books-count --></summary><ul><!-- media:books-list --><li class="empty">The list is updating.</li><!-- /media:books-list --></ul></details>

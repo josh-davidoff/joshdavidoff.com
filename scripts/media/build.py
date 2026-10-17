@@ -246,14 +246,6 @@ def gauge(count: int, goal: int, today: dt.date) -> str:
             f'<text class="g-of" x="{cx}" y="{cy + 12}">of {goal}</text></svg>')
 
 
-def pace_line(count: int, goal: int, today: dt.date) -> str:
-    days = 366 if calendar.isleap(today.year) else 365
-    doy = today.timetuple().tm_yday
-    if doy < 21 or not count:  # a projection from a few weeks is noise
-        return f"Goal: {goal} this year"
-    return f"On pace for {round(count * days / doy)}"
-
-
 def render(data: dict) -> dict[str, str]:
     """Regions for whichever sources are present in data."""
     built = dt.date.fromisoformat(data.get("books_built") or data["built"])
@@ -261,7 +253,7 @@ def render(data: dict) -> dict[str, str]:
     out = {"year": str(data["year"])}
     if "books" in data:
         bk = data["books"]
-        out["books-viz"] = gauge(len(bk), BOOK_GOAL, built) + f'<p class="viz-note">{pace_line(len(bk), BOOK_GOAL, built)}</p>'
+        out["books-viz"] = gauge(len(bk), BOOK_GOAL, built)
         out["books-count"] = f"All {len(bk)} book{'' if len(bk) == 1 else 's'}"
         out["books-list"] = "".join(
             f'<li><span class="t">{_a(b["url"], html.escape(b["title"]))}</span>'
