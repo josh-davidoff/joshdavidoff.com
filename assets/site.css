@@ -205,3 +205,30 @@ body::after {
 .site-nav-links a { position: relative; }
 .site-nav-links a::after { content: ""; position: absolute; inset: -11px -8px; }
 .site-nav-links .linkedin-icon:hover { border-color: var(--mustard); }
+
+/* "Not work" slides the nav row left to a second row: back, My music, My taste. Both rows share
+   one grid cell, so the bar keeps its size. assets/nav.js does the sliding; without it, "Not
+   work" is a plain link to the Beyond the work section. */
+/* The padding keeps link hit areas and focus rings inside the clip that hides the sliding rows. */
+.site-nav-links { display: grid; overflow: hidden; padding: 12px 8px; margin: -12px -8px; }
+/* Visibility flips at once when a row arrives and after the slide when it leaves. */
+.nav-panel { grid-area: 1 / 1; display: flex; gap: 22px; align-items: center; justify-content: flex-end; transition: transform .24s ease-out, opacity .24s ease-out, visibility 0s linear 0s; }
+.nav-sub { transform: translateX(45%); opacity: 0; visibility: hidden; transition-delay: 0s, 0s, .24s; }
+.site-nav-links.sub-open .nav-main { transform: translateX(-45%); opacity: 0; visibility: hidden; transition-delay: 0s, 0s, .24s; }
+.site-nav-links.sub-open .nav-sub { transform: none; opacity: 1; visibility: visible; transition-delay: 0s; }
+.nav-open, .nav-back { display: inline-flex; align-items: center; gap: 7px; }
+.site-nav-links .nav-open::after { content: ""; position: static; inset: auto; width: 5px; height: 5px; border-top: 1.5px solid currentColor; border-right: 1.5px solid currentColor; transform: rotate(45deg); }
+.site-nav-links .nav-open.current { color: var(--mustard); }
+.nav-open::before { content: ""; position: absolute; inset: -11px -8px; }  /* the chevron took ::after, the hit area moves here */
+.nav-back { position: relative; padding: 0; border: 0; background: none; cursor: pointer; color: var(--mustard); font-family: "Newsreader", Georgia, serif; font-size: 16px; }
+.nav-back::before { content: ""; width: 5px; height: 5px; border-bottom: 1.5px solid currentColor; border-left: 1.5px solid currentColor; transform: rotate(45deg); }
+.nav-back::after { content: ""; position: absolute; inset: -11px -8px; }
+.nav-back:hover { color: var(--cream); }
+.site-nav-links .nav-sub a[aria-current="page"] { color: var(--mustard); }
+.nav-back:focus-visible, .site-nav-links a:focus-visible { outline: 2px solid var(--mustard); outline-offset: 3px; border-radius: 2px; }
+@media (prefers-reduced-motion: reduce) { .nav-panel { transition: none; } }
+@media (max-width: 480px) {
+  .site-nav-links { grid-template-columns: 100%; padding: 12px 0; margin: -12px 0; }
+  .nav-panel { gap: 10px; justify-content: space-between; }
+  .nav-back { font-size: 14px; }
+}

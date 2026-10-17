@@ -19,6 +19,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/assets/site.css" />
+<script src="/assets/nav.js" defer></script>
 <style>
   a { color: var(--mustard); text-decoration: none; padding-bottom: 2px;
     background-image: linear-gradient(var(--mustard), var(--mustard)), linear-gradient(var(--rule), var(--rule));
@@ -106,11 +107,17 @@
     <div class="site-nav-inner">
       <a class="site-nav-name" href="/"><span class="nav-dot" aria-hidden="true"></span>Josh Davidoff</a>
       <div class="site-nav-links">
-        <a href="/#projects">Work</a>
-        <a href="/music" aria-current="page">My music</a>
-        <a href="/#consumption">Consumption</a>
-        <a href="mailto:joshdavidoff@gmail.com">Email</a>
-        <a class="linkedin-icon" href="https://www.linkedin.com/in/joshdavidoff/" aria-label="LinkedIn">in</a>
+        <div class="nav-panel nav-main">
+          <a href="/#projects">Work</a>
+          <a class="nav-open current" href="/#beyond-work" aria-expanded="false" aria-controls="nav-notwork">Not work</a>
+          <a href="mailto:joshdavidoff@gmail.com">Email</a>
+          <a class="linkedin-icon" href="https://www.linkedin.com/in/joshdavidoff/" aria-label="LinkedIn">in</a>
+        </div>
+        <div class="nav-panel nav-sub" id="nav-notwork" inert>
+          <button class="nav-back" type="button" aria-label="Back to the main menu">Not work</button>
+          <a href="/music" aria-current="page">My music</a>
+          <a href="/#taste">My taste</a>
+        </div>
       </div>
     </div>
   </nav>
