@@ -201,6 +201,39 @@
   .talk-meta { display: grid; gap: 7px; margin: 0 0 14px; }
   .talk-meta .event { border-left: 2px solid var(--rule); color: var(--faint); font-size: 14px; line-height: 1.35; padding-left: 10px; }
   .talk-meta .event-title { color: var(--muted); display: block; font-family: "Apfel Grotezk", system-ui, sans-serif; font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; }
+
+  /* ── Contact sheet: each project is a picture over a caption ── */
+  .project-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 26px 18px; grid-auto-flow: row dense; }
+  .proj-card.tile { grid-column: span 3; position: relative; border: 0; border-radius: 0; padding: 0; }
+  .proj-card.tile-third { grid-column: span 2; }
+  .tile-frame { aspect-ratio: 4 / 3; overflow: hidden; border-radius: 4px; background: var(--bg-deep); outline: 1px solid var(--rule); margin-bottom: 12px; }
+  .tile-frame img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: left top; transition: transform .26s ease-out; }
+  .tile:hover .tile-frame img { transform: scale(1.025); }
+  .tile-type { overflow: visible; display: flex; align-items: flex-end; box-sizing: border-box; padding: 18px 20px; outline: 0; color: var(--bg-deep); }
+  .proj-card.tile .tile-type p { margin: 0; color: inherit; font-family: "Apfel Grotezk", system-ui, sans-serif; font-weight: 700; font-size: 21px; line-height: 1.16; letter-spacing: -0.015em; text-wrap: pretty; }
+  .proj-card.tile-third .tile-type { padding: 14px; }
+  .proj-card.tile-third .tile-type p { font-size: 16px; }
+  /* Option D's record-sleeve colors, one per type tile so neighbors never match. */
+  .tile-mustard { background: var(--mustard); }
+  .tile-tomato { background: var(--tomato); }
+  .tile-cream { background: var(--cream); }
+  .tile-sky { background: oklch(0.72 0.08 230); }
+  .tile-sage { background: oklch(0.8 0.09 140); }
+  .tile-ink { background: var(--bg-deep); color: var(--mustard); outline: 1px solid var(--rule); }
+  .proj-card.tile h3 { font-size: 18px; margin: 0 0 3px; }
+  .tile h3 a { color: var(--cream); box-shadow: none; background: none; padding: 0; transition: color .18s ease-out; }
+  .tile h3 a::after { content: ""; position: absolute; inset: 0; }
+  .tile:hover h3 a { color: var(--mustard); }
+  .tile:has(h3 a:focus-visible) { outline: 2px solid var(--mustard); outline-offset: 6px; border-radius: 4px; }
+  .tile h3 a:focus-visible { outline: 0; }
+  .proj-card.tile .tile-tag { margin: 0; font-family: "Apfel Grotezk", system-ui, sans-serif; font-size: 13px; color: var(--faint); }
+  @media (max-width: 680px) {
+    .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .proj-card.tile { grid-column: 1 / -1; }
+    .proj-card.tile-third { grid-column: span 1; }
+    .proj-card.tile-third .tile-type { padding: 10px; }
+    .proj-card.tile-third .tile-type p { font-size: 14px; }
+  }
   .talk-list { display: grid; gap: 16px; }
   .talk-card { border-left: 4px solid var(--mustard); background: color-mix(in oklch, var(--bg-deep) 62%, transparent); border-radius: 0 12px 12px 0; padding: 20px 22px; }
   .talk-card h3 { margin-bottom: 8px; }
@@ -256,7 +289,7 @@
   }
 
   @media (max-width: 680px) {
-    .project-grid, .experiment-grid, .extras { grid-template-columns: 1fr; }
+    .experiment-grid, .extras { grid-template-columns: 1fr; }
     .segmented button { flex: 1 1 100%; text-align: left; }
     .sort button { flex: 1 1 auto; text-align: center; }
   }
@@ -396,126 +429,88 @@
 
       <div class="project-grid">
         <!-- register:cards:start -->
-        <article class="proj-card" data-type="system" data-updated="2026-09-22">
-          <span class="category">System integration</span>
-          <h3>Payment sync and reporting</h3>
-          <p>Payment records flow from Fluxx into the team's Monday trackers and Power BI dashboards, and Fluxx stays the only place a payment gets edited.</p>
-          <p class="proj-sys"><span class="chip">Fluxx</span><span class="chip">Monday.com</span><span class="chip">Bill.com</span><span class="chip">Power BI</span></p>
-          <p class="proj-link"><a href="/projects/payment-sync-financial-visibility">View case <span class="arr" aria-hidden="true">→</span></a></p>
+        <article class="proj-card tile" data-type="system" data-updated="2026-09-22">
+          <div class="tile-frame tile-type tile-mustard"><p>Payments flow from Fluxx to Monday and Power BI, and Fluxx stays the only place to edit one.</p></div>
+          <h3><a href="/projects/payment-sync-financial-visibility">Payment sync and reporting</a></h3>
+          <p class="tile-tag">Fluxx · Monday.com</p>
         </article>
 
-        <article class="proj-card" data-type="system" data-updated="2026-09-22">
-          <span class="category">System integration</span>
-          <h3>Fluxx to Monday operational layer</h3>
-          <p>Grant tasks from Fluxx show up on Monday boards the team plans from, and Fluxx stays the system of record.</p>
-          <p class="proj-sys"><span class="chip">Fluxx</span><span class="chip">Monday.com</span><span class="chip">Power Automate</span></p>
-          <p class="proj-link"><a href="/projects/fluxx-monday-operational-layer">View case <span class="arr" aria-hidden="true">→</span></a></p>
+        <article class="proj-card tile" data-type="system" data-updated="2026-09-22">
+          <div class="tile-frame tile-type tile-tomato"><p>Grant tasks from Fluxx land on the Monday boards the team plans from.</p></div>
+          <h3><a href="/projects/fluxx-monday-operational-layer">Fluxx to Monday operational layer</a></h3>
+          <p class="tile-tag">Fluxx · Monday.com</p>
         </article>
 
-        <article class="proj-card" data-type="system" data-updated="2026-09-22">
-          <span class="category">System integration</span>
-          <h3>Meeting prep infrastructure</h3>
-          <p>A Monday workflow that automates the repeatable parts of board meeting prep and leaves the readiness calls to staff.</p>
-          <p class="proj-sys"><span class="chip">Monday.com</span><span class="chip">SharePoint</span><span class="chip">Power Automate</span></p>
-          <p class="proj-link"><a href="/projects/board-prep-meeting-workflow">View case <span class="arr" aria-hidden="true">→</span></a></p>
+        <article class="proj-card tile" data-type="system" data-updated="2026-09-22">
+          <div class="tile-frame tile-type tile-sky"><p>A project management workflow handles the repeatable parts of board prep. Staff make the readiness calls.</p></div>
+          <h3><a href="/projects/board-prep-meeting-workflow">Meeting prep infrastructure</a></h3>
+          <p class="tile-tag">Project management · SharePoint</p>
         </article>
 
-        <article class="proj-card" data-type="ai" data-updated="2026-10-12">
-          <span class="category">AI uplift</span>
-          <h3>AI workflow governance suite</h3>
-          <p>Scheduled tasks record every AI coding session and brief me each morning. Nothing they propose takes effect until I approve it.</p>
-          <p class="proj-sys"><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python</span><span class="chip">Scheduled tasks</span></p>
-          <p class="proj-link"><a href="/projects/ai-workflow-governance-suite">View case <span class="arr" aria-hidden="true">→</span></a></p>
+        <article class="proj-card tile" data-type="ai" data-updated="2026-10-12">
+          <div class="tile-frame tile-type tile-cream"><p>My AI agents propose. Nothing ships until I approve it.</p></div>
+          <h3><a href="/projects/ai-workflow-governance-suite">AI workflow governance suite</a></h3>
+          <p class="tile-tag">Claude Code · Codex</p>
         </article>
 
-        <article class="proj-card" data-type="system" data-updated="2026-10-14">
-          <span class="category">System integration</span>
-          <h3>Daily briefing and alerting platform</h3>
-          <p>Scheduled jobs pull from a dozen sources into one briefing on my phone and a bedside display, and alert me when anything breaks.</p>
-          <p class="proj-sys"><span class="chip">Python</span><span class="chip">Google APIs</span><span class="chip">EventKit</span><span class="chip">launchd</span></p>
-          <p class="proj-link"><a href="/projects/daily-briefing-and-alerting-platform">View case <span class="arr" aria-hidden="true">→</span></a></p>
+        <article class="proj-card tile" data-type="system" data-updated="2026-10-14">
+          <div class="tile-frame"><img src="/assets/tiles/briefing.jpg" alt="" loading="lazy" decoding="async" /></div>
+          <h3><a href="/projects/daily-briefing-and-alerting-platform">Daily briefing and alerting platform</a></h3>
+          <p class="tile-tag">Python · Google APIs</p>
         </article>
 
-        <article class="proj-card" data-type="ai" data-updated="2026-09-22">
-          <span class="category">AI uplift</span>
-          <h3>Journalism research dashboard</h3>
-          <p>A research pipeline and dashboard that turned a list of names into a browsable database of 1,165 independent journalists, with a source behind every classification.</p>
-          <p class="proj-sys"><span class="chip">Claude Code / Codex</span><span class="chip">Python</span><span class="chip">HTML/CSS/JavaScript</span></p>
-          <p class="proj-link"><a href="/projects/journalism-atlas-dashboard">View case <span class="arr" aria-hidden="true">→</span></a></p>
+        <article class="proj-card tile" data-type="ai" data-updated="2026-09-22">
+          <div class="tile-frame"><img src="/assets/tiles/journalism-atlas.jpg" alt="" loading="lazy" decoding="async" /></div>
+          <h3><a href="/projects/journalism-atlas-dashboard">Journalism research dashboard</a></h3>
+          <p class="tile-tag">Claude Code / Codex · Python</p>
         </article>
 
-        <article class="proj-card speaking-card" data-type="speaking ai" data-updated="2026-09-22">
-          <div class="category-row">
-            <span class="category">Public speaking</span>
-            <span class="category">AI uplift</span>
-          </div>
-          <h3>The Bot Stops Here</h3>
-          <div class="talk-meta">
-            <div class="event"><span class="event-title">Foundations for Research and Innovation in Data and AI</span>Rockefeller Foundation · NYC · Jun&nbsp;2, 2026</div>
-          </div>
-          <p>Cognitive checkpoints are deliberate stops in an AI workflow where a person has to read and confirm before the agent continues. The talk makes the case for them, and the companion repo applies them to nonprofit financial due diligence.</p>
-          <p class="proj-sys"><span class="chip">Claude Code / Codex</span><span class="chip">Skill plugins</span><span class="chip">Python</span></p>
-          <p class="proj-link"><a href="/bsh">View talk and repo <span class="arr" aria-hidden="true">→</span></a></p>
+        <article class="proj-card tile speaking-card" data-type="speaking ai" data-updated="2026-09-22">
+          <div class="tile-frame"><img src="/assets/tiles/bot-stops-here.jpg" alt="" loading="lazy" decoding="async" /></div>
+          <h3><a href="/bsh">The Bot Stops Here</a></h3>
+          <p class="tile-tag">Claude Code / Codex · Skill plugins</p>
         </article>
 
-        <article class="proj-card speaking-card" data-type="speaking system" data-updated="2026-09-22">
-          <div class="category-row">
-            <span class="category">Public speaking</span>
-            <span class="category">System integration</span>
-          </div>
+        <article class="proj-card tile speaking-card" data-type="speaking system" data-updated="2026-09-22">
+          <div class="tile-frame tile-type tile-sage"><p>A primer for small grantmaking teams on connecting their systems with no-code tools.</p></div>
           <h3>Small Team, Big Impact</h3>
-          <div class="talk-meta">
-            <div class="event"><span class="event-title">Technology Association of Grantmakers</span>Atlanta · Nov&nbsp;10, 2025</div>
-          </div>
-          <p>A primer for small grantmaking teams on connecting their systems with no-code automation tools.</p>
-          <p class="proj-sys"><span class="chip">Fluxx</span><span class="chip">Power Automate</span></p>
+          <p class="tile-tag">Fluxx · Power Automate</p>
         </article>
 
-        <article class="proj-card" data-type="experiment" data-updated="2026-09-12">
-          <span class="category">Experiment</span>
-          <h3>Sky Window</h3>
-          <p>A live, ambient map of the aircraft crossing a customizable strip of sky above any location.</p>
-          <p class="proj-sys"><span class="chip">OpenSky</span><span class="chip">OpenStreetMap</span><span class="chip">Python</span></p>
-          <p class="proj-link"><a href="/sky">Open Sky Window <span class="arr" aria-hidden="true">→</span></a></p>
+        <article class="proj-card tile tile-third" data-type="experiment" data-updated="2026-09-12">
+          <div class="tile-frame"><img src="/assets/tiles/sky-window.jpg" alt="" loading="lazy" decoding="async" /></div>
+          <h3><a href="/sky">Sky Window</a></h3>
+          <p class="tile-tag">OpenSky · OpenStreetMap</p>
         </article>
 
-        <article class="proj-card" data-type="experiment" data-updated="2026-10-14">
-          <span class="category">Experiment</span>
-          <h3>Bedside dashboard</h3>
-          <p>A small screen by the bed that shows what I'd otherwise check on my phone, starting with live scores for the New York teams I follow.</p>
-          <p class="proj-sys"><span class="chip">ESP32</span><span class="chip">APIs</span><span class="chip">BLE</span></p>
-          <p class="proj-link"><a href="/projects/home-dashboard-system">View case <span class="arr" aria-hidden="true">→</span></a></p>
+        <article class="proj-card tile tile-third" data-type="experiment" data-updated="2026-10-14">
+          <div class="tile-frame"><img src="/assets/tiles/bedside.jpg" alt="" loading="lazy" decoding="async" /></div>
+          <h3><a href="/projects/home-dashboard-system">Bedside dashboard</a></h3>
+          <p class="tile-tag">ESP32 · APIs</p>
         </article>
 
-        <article class="proj-card" data-type="experiment" data-updated="2026-09-22">
-          <span class="category">Experiment</span>
+        <article class="proj-card tile tile-third" data-type="experiment" data-updated="2026-09-22">
+          <div class="tile-frame"><img src="/assets/tiles/vinyl.jpg" alt="" loading="lazy" decoding="async" /></div>
           <h3>Vinyl cataloging tool</h3>
-          <p>A cataloging tool that reads a record label from a phone photo and grades its condition. It looks up the pressing on Discogs for pricing and release data and adds a row to a Google Sheet.</p>
-          <p class="proj-sys"><span class="chip">AI vision model</span><span class="chip">Discogs</span><span class="chip">Google Sheets</span></p>
+          <p class="tile-tag">AI vision model · Discogs</p>
         </article>
 
-        <article class="proj-card" data-type="experiment" data-updated="2026-09-22">
-          <span class="category">Experiment</span>
-          <h3>Snail: Slow Dating by Mail</h3>
-          <p>A small dating service that sets up one match at a time and makes each introduction by handwritten letter.</p>
-          <p class="proj-sys"><span class="chip">Airtable</span><span class="chip">Flyers</span><span class="chip">USPS</span></p>
-          <p class="proj-link"><a href="https://snaildating.com">snaildating.com <span class="arr" aria-hidden="true">→</span></a></p>
+        <article class="proj-card tile tile-third" data-type="experiment" data-updated="2026-09-22">
+          <div class="tile-frame"><img src="/assets/tiles/snail.jpg" alt="" loading="lazy" decoding="async" /></div>
+          <h3><a href="https://snaildating.com">Snail: Slow Dating by Mail</a></h3>
+          <p class="tile-tag">Airtable · Flyers</p>
         </article>
 
-        <article class="proj-card" data-type="experiment" data-updated="2026-10-14">
-          <span class="category">Experiment</span>
-          <h3>Fitness log</h3>
-          <p>A phone app that logs my workout sessions and sets the weight and reps for each machine's next session.</p>
-          <p class="proj-sys"><span class="chip">Python</span><span class="chip">Flask</span><span class="chip">SQLite</span><span class="chip">Claude API</span></p>
-          <p class="proj-link"><a href="/projects/fitness-log">View case <span class="arr" aria-hidden="true">→</span></a></p>
+        <article class="proj-card tile tile-third" data-type="experiment" data-updated="2026-10-14">
+          <div class="tile-frame"><img src="/assets/tiles/fitness-log.jpg" alt="" loading="lazy" decoding="async" /></div>
+          <h3><a href="/projects/fitness-log">Fitness log</a></h3>
+          <p class="tile-tag">Python · Flask</p>
         </article>
 
-        <article class="proj-card" data-type="experiment" data-updated="2026-10-14">
-          <span class="category">Experiment</span>
-          <h3>Release tracker</h3>
-          <p>A weekly job that puts upcoming albums, books, films, and TV seasons from the artists, authors, and directors I follow on one calendar. I rate each release from my morning dashboard, and those choices shape what it tracks next.</p>
-          <p class="proj-sys"><span class="chip">Python</span><span class="chip">Google Calendar</span><span class="chip">Public APIs</span><span class="chip">Apple Music</span></p>
-          <p class="proj-link"><a href="/projects/release-tracker">View case <span class="arr" aria-hidden="true">→</span></a></p>
+        <article class="proj-card tile tile-third" data-type="experiment" data-updated="2026-10-14">
+          <div class="tile-frame"><img src="/assets/tiles/release-tracker.jpg" alt="" loading="lazy" decoding="async" /></div>
+          <h3><a href="/projects/release-tracker">Release tracker</a></h3>
+          <p class="tile-tag">Python · Google Calendar</p>
         </article>
         <!-- register:cards:end -->
       </div>

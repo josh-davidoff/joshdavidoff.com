@@ -152,6 +152,38 @@ To preview locally, copy the site to a scratch directory, run
 `python3 scripts/media/build.py <copy>` with both variables set, and serve the
 copy.
 
+## Project tiles
+
+The homepage lists projects as a contact sheet. Each card is a picture over a
+short caption that holds the title and a tag, by default the project's first
+two systems. The whole card links to the case page through the title link.
+Summaries stay in the dossiers and on the case pages. Five fields in the
+project's dossier in the private register set the picture, and
+`register/bin/render.py` renders them:
+
+- `tile_image`: a screenshot under `assets/tiles/`, resized to 900 px wide (600
+  for third-width tiles) as JPEG. Images are cropped to 4:3 from the top left.
+- `tile_color`: used when there is no image. The tile is a block of one of the
+  record-sleeve colors (`mustard`, `tomato`, `cream`, `sky`, `sage` or `ink`)
+  with a short description set in large type. Neighboring type tiles should
+  not share a color. An unknown color stops the render.
+- `tile_text`: that short description, about 15 words. It falls back to the
+  summary, which is usually too long to fit.
+- `tile_tag`: replaces the caption's two systems when they would say the
+  wrong thing.
+- `tile_size: third` makes a narrower tile. The experiments use it, so they
+  sit three to a row.
+
+Five projects still use type tiles. A screenshot would replace each one.
+
+- Payment sync and reporting. A Power BI or Monday tracker view.
+- Fluxx to Monday operational layer. A Monday board.
+- Meeting prep infrastructure. The project management workflow.
+- AI workflow governance suite. A morning brief.
+- Small Team, Big Impact. A slide from the talk.
+
+Strip personal and grantee details before anything goes in `assets/tiles/`.
+
 ## Updated dates
 
 Every project card and case page carries an "Updated" date. It is the date the

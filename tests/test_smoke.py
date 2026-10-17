@@ -172,7 +172,7 @@ MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", 
 CARD_RE = re.compile(r'<article class="proj-card[^"]*"([^>]*)>(.*?)</article>', re.S)
 CARD_DATA_RE = re.compile(r'data-updated="([^"]+)"')
 CARD_TIME_RE = re.compile(r'<time class="proj-updated" datetime="([^"]+)">([^<]*)</time>')
-CARD_LINK_RE = re.compile(r'<p class="proj-link"><a href="([^"]+)">')
+CARD_LINK_RE = re.compile(r'<h3><a href="([^"]+)">')
 PAGE_TIME_RE = re.compile(r'<p class="page-updated mono"><time datetime="([^"]+)">([^<]*)</time></p>')
 
 
@@ -192,6 +192,7 @@ def _cards() -> list[tuple[str | None, str, list[tuple[str, str]]]]:
         assert data, f"card has no data-updated: {body[:80]!r}"
         link = CARD_LINK_RE.search(body)
         out.append((link.group(1) if link else None, data.group(1), CARD_TIME_RE.findall(body)))
+    assert any(href for href, _, _ in out), "no card links found; has the card markup changed?"
     return out
 
 
