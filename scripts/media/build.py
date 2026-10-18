@@ -240,10 +240,10 @@ def gauge(count: int, goal: int, today: dt.date) -> str:
     pct = min(count / goal, 1) * 100
     arc = f"M {cx - r} {cy} A {r} {r} 0 0 1 {cx + r} {cy}"
     fill_arc = f'<path class="g-fill" d="{arc}" pathLength="100" stroke-dasharray="{pct:.1f} 100"/>' if count else ""
-    return (f'<svg class="gauge" viewBox="0 0 160 92" role="img" aria-label="{count} of {goal} books">'
+    return (f'<svg class="gauge" viewBox="0 0 160 92" role="img" aria-label="{count} books toward a goal of {goal}">'
             f'<path class="g-track" d="{arc}"/>{fill_arc}<path class="g-pace" d="M {x1:.1f} {y1:.1f} L {x2:.1f} {y2:.1f}"/>'
             f'<text class="g-num" x="{cx}" y="{cy - 8}">{count}</text>'
-            f'<text class="g-of" x="{cx}" y="{cy + 12}">of {goal}</text></svg>')
+            f'<text class="g-of" x="{cx}" y="{cy + 12}">of {goal}-book goal</text></svg>')
 
 
 def render(data: dict) -> dict[str, str]:
@@ -254,7 +254,7 @@ def render(data: dict) -> dict[str, str]:
     if "books" in data:
         bk = data["books"]
         out["books-viz"] = gauge(len(bk), BOOK_GOAL, built)
-        out["books-count"] = f"All {len(bk)} book{'' if len(bk) == 1 else 's'}"
+        out["books-count"] = "See the list"
         out["books-list"] = "".join(
             f'<li><span class="t">{_a(b["url"], html.escape(b["title"]))}</span>'
             f'<span class="by">{html.escape(", ".join(b["authors"]))}</span></li>' for b in bk) or empty
@@ -266,7 +266,7 @@ def render(data: dict) -> dict[str, str]:
         mosaic = (f'<div class="mosaic" role="img" aria-label="Covers of my {len(covers)} most-played records">{tiles}</div>'
                   if covers else "")
         out["records-viz"] = f'<p class="viz-num"><span class="n">{len(rec)}</span> record{"" if len(rec) == 1 else "s"}</p>' + mosaic
-        out["records-count"] = f"All {len(rec)} record{'' if len(rec) == 1 else 's'}"
+        out["records-count"] = "See the list"
         out["records-list"] = "".join(
             f'<li><span class="t">{_a(r["url"], html.escape(r["album"]))}</span>'
             f'<span class="by">{html.escape(r["artist"])}</span></li>' for r in rec) or empty
