@@ -114,12 +114,11 @@
   .extras.two { grid-template-columns: repeat(2, 1fr); }
   .extras.two .covers { grid-template-columns: repeat(3, 1fr); gap: 6px; }
   /* Volunteer: First U roles in one column, everything else in the other. */
-  /* Volunteer: First U roles in one column, everything else in the other. Subgrid keeps the
-     two labels' rules level when the longer one wraps. */
-  .beyond-card.volunteer { display: grid; grid-template-columns: 1fr 1fr; column-gap: 24px; align-content: start; }
-  .beyond-card.volunteer > h3 { grid-column: 1 / -1; }
-  .beyond-card.volunteer .group { grid-row: span 2; display: grid; grid-template-rows: subgrid; }
-  .beyond-card.volunteer .org { align-self: end; margin: 0 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--rule); font-size: 14px; color: var(--muted); }
+  /* Volunteer: the First U roles sit in a lighter band that runs to the card's edges; the
+     rest stay on the card's own shade. */
+  .beyond-card.volunteer .roles { display: grid; grid-template-columns: 1fr 1fr; column-gap: 20px; }
+  .beyond-card.volunteer .first-u { margin: 0 -18px 18px; padding: 14px 18px; background: color-mix(in oklch, var(--cream) 8%, transparent); }
+  .beyond-card.volunteer .org { margin: 0 0 10px; font-size: 14px; line-height: 1.35; color: var(--muted); }
   #taste { scroll-margin-top: 80px; }
 
   /* Reading and Listening: a goal gauge, a cover mosaic, and a dropdown of titles under each.
@@ -153,7 +152,7 @@
   @media (prefers-reduced-motion: reduce) { .titles summary::after { transition: none; } }
 
   @media (max-width: 900px) { .extras, .extras.two { grid-template-columns: 1fr; gap: 34px; } }
-  @media (max-width: 420px) { .beyond-card.volunteer { grid-template-columns: 1fr; } .beyond-card.volunteer .group + .group { margin-top: 22px; } }
+  @media (max-width: 420px) { .beyond-card.volunteer .roles { grid-template-columns: 1fr; } }
 
   footer { margin-top: 66px; padding-top: 28px; border-top: 2px solid var(--rule); }
 
@@ -534,8 +533,8 @@
 
       <div class="beyond-card volunteer">
         <h3>Volunteer</h3>
-        <div class="group">
-          <p class="org">First Unitarian Brooklyn</p>
+        <div class="group first-u">
+          <p class="org">First Unitarian Congregational Society in Brooklyn</p>
           <div class="roles">
             <div class="entry">
               <h3>Summer Worship Coordinator</h3>
@@ -552,7 +551,6 @@
           </div>
         </div>
         <div class="group">
-          <p class="org">Elsewhere</p>
           <div class="roles">
             <div class="entry">
               <h3>Immigrant Advocate</h3>
