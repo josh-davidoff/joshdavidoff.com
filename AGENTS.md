@@ -154,25 +154,27 @@ copy.
 
 ## Project tiles
 
-The homepage lists projects as a contact sheet. Each card is a picture over a
-short caption that holds the title and a tag, by default the project's first
-two systems. The whole card links to the case page through the title link.
-Summaries stay in the dossiers and on the case pages. Five fields in the
-project's dossier in the private register set the picture, and
+The homepage lists projects as a contact sheet. Each card is a picture with
+the project title under it, and the whole card links to the case page through
+the title link. Summaries stay in the dossiers and on the case pages. The
+dossier's `card_order` sets the sequence, and tile sizes set the rhythm: a wide
+tile, then pairs, then rows of three. Keep each run of half tiles even and each
+run of third tiles a multiple of three, or the grid leaves gaps. On phones
+every tile is full width, in the same order. Four fields in
+the project's dossier in the private register set the picture, and
 `register/bin/render.py` renders them:
 
-- `tile_image`: a screenshot under `assets/tiles/`, resized to 900 px wide (600
-  for third-width tiles) as JPEG. Images are cropped to 4:3 from the top left.
+- `tile_image`: a screenshot under `assets/tiles/`, as JPEG, cropped to 4:3
+  (16:8 for wide tiles) from the top left. Use 1200 px wide for wide tiles,
+  900 for halves, 600 for thirds.
 - `tile_color`: used when there is no image. The tile is a block of one of the
   record-sleeve colors (`mustard`, `tomato`, `cream`, `sky`, `sage` or `ink`)
-  with a short description set in large type. Neighboring type tiles should
-  not share a color. An unknown color stops the render.
-- `tile_text`: that short description, about 15 words. It falls back to the
-  summary, which is usually too long to fit.
-- `tile_tag`: replaces the caption's two systems when they would say the
-  wrong thing.
-- `tile_size: third` makes a narrower tile. The experiments use it, so they
-  sit three to a row.
+  with a cover line in large type. Neighboring type tiles should not share a
+  color. An unknown color stops the render.
+- `tile_text`: the cover line, about six to eight words. Name a tool only when
+  it is the point. It falls back to the summary, which is too long to fit.
+- `tile_size`: `wide` for a full-row tile, `third` for a narrow one, or leave it
+  out for a half. Any other value stops the render.
 
 Five projects still use type tiles. A screenshot would replace each one.
 

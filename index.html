@@ -207,16 +207,18 @@
   .talk-meta .event-title { color: var(--muted); display: block; font-family: "Apfel Grotezk", system-ui, sans-serif; font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; }
 
   /* ── Contact sheet: each project is a picture over a caption ── */
-  .project-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 26px 18px; grid-auto-flow: row dense; }
+  .project-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 26px 18px; }
   .proj-card.tile { grid-column: span 3; position: relative; border: 0; border-radius: 0; padding: 0; }
   .proj-card.tile-third { grid-column: span 2; }
-  .tile-frame { aspect-ratio: 4 / 3; overflow: hidden; border-radius: 4px; background: var(--bg-deep); outline: 1px solid var(--rule); margin-bottom: 12px; }
+  .proj-card.tile-wide { grid-column: 1 / -1; }
+  .tile-frame { aspect-ratio: 4 / 3; overflow: hidden; border-radius: 4px; background: var(--bg-deep); outline: 1px solid var(--rule); margin-bottom: 10px; }
+  .tile-wide .tile-frame { aspect-ratio: 16 / 8; }
   .tile-frame img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: left top; transition: transform .26s ease-out; }
   .tile:hover .tile-frame img { transform: scale(1.025); }
   .tile-type { overflow: visible; display: flex; align-items: flex-end; box-sizing: border-box; padding: 18px 20px; outline: 0; color: var(--bg-deep); }
-  .proj-card.tile .tile-type p { margin: 0; color: inherit; font-family: "Apfel Grotezk", system-ui, sans-serif; font-weight: 700; font-size: 21px; line-height: 1.16; letter-spacing: -0.015em; text-wrap: pretty; }
+  .proj-card.tile .tile-type p { margin: 0; color: inherit; font-family: "Apfel Grotezk", system-ui, sans-serif; font-weight: 800; font-size: 28px; line-height: 1.08; letter-spacing: -0.02em; text-wrap: pretty; }
   .proj-card.tile-third .tile-type { padding: 14px; }
-  .proj-card.tile-third .tile-type p { font-size: 16px; }
+  .proj-card.tile-third .tile-type p { font-size: 20px; line-height: 1.1; }
   /* Option D's record-sleeve colors, one per type tile so neighbors never match. */
   .tile-mustard { background: var(--mustard); }
   .tile-tomato { background: var(--tomato); }
@@ -224,19 +226,17 @@
   .tile-sky { background: oklch(0.72 0.08 230); }
   .tile-sage { background: oklch(0.8 0.09 140); }
   .tile-ink { background: var(--bg-deep); color: var(--mustard); outline: 1px solid var(--rule); }
-  .proj-card.tile h3 { font-size: 18px; margin: 0 0 3px; }
+  .proj-card.tile h3 { font-size: 17px; margin: 0; }
   .tile h3 a { color: var(--cream); box-shadow: none; background: none; padding: 0; transition: color .18s ease-out; }
   .tile h3 a::after { content: ""; position: absolute; inset: 0; }
   .tile:hover h3 a { color: var(--mustard); }
   .tile:has(h3 a:focus-visible) { outline: 2px solid var(--mustard); outline-offset: 6px; border-radius: 4px; }
   .tile h3 a:focus-visible { outline: 0; }
-  .proj-card.tile .tile-tag { margin: 0; font-family: "Apfel Grotezk", system-ui, sans-serif; font-size: 13px; color: var(--faint); }
   @media (max-width: 680px) {
-    .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .proj-card.tile { grid-column: 1 / -1; }
-    .proj-card.tile-third { grid-column: span 1; }
-    .proj-card.tile-third .tile-type { padding: 10px; }
-    .proj-card.tile-third .tile-type p { font-size: 14px; }
+    .project-grid { grid-template-columns: minmax(0, 1fr); }
+    .proj-card.tile, .proj-card.tile-third { grid-column: 1 / -1; }
+    .proj-card.tile .tile-type p, .proj-card.tile-third .tile-type p { font-size: 24px; }
+    .proj-card.tile-third .tile-type { padding: 18px 20px; }
   }
   .talk-list { display: grid; gap: 16px; }
   .talk-card { border-left: 4px solid var(--mustard); background: color-mix(in oklch, var(--bg-deep) 62%, transparent); border-radius: 0 12px 12px 0; padding: 20px 22px; }
@@ -439,88 +439,74 @@
 
       <div class="project-grid">
         <!-- register:cards:start -->
-        <article class="proj-card tile" data-type="system" data-updated="2026-09-22">
-          <div class="tile-frame tile-type tile-mustard"><p>Payments flow from Fluxx to Monday and Power BI, and Fluxx stays the only place to edit one.</p></div>
-          <h3><a href="/projects/payment-sync-financial-visibility">Payment sync and reporting</a></h3>
-          <p class="tile-tag">Fluxx · Monday.com</p>
-        </article>
-
-        <article class="proj-card tile" data-type="system" data-updated="2026-09-22">
-          <div class="tile-frame tile-type tile-tomato"><p>Grant tasks from Fluxx land on the Monday boards the team plans from.</p></div>
-          <h3><a href="/projects/fluxx-monday-operational-layer">Fluxx to Monday operational layer</a></h3>
-          <p class="tile-tag">Fluxx · Monday.com</p>
-        </article>
-
-        <article class="proj-card tile" data-type="system" data-updated="2026-09-22">
-          <div class="tile-frame tile-type tile-sky"><p>A project management workflow handles the repeatable parts of board prep. Staff make the readiness calls.</p></div>
-          <h3><a href="/projects/board-prep-meeting-workflow">Meeting prep infrastructure</a></h3>
-          <p class="tile-tag">Project management · SharePoint</p>
-        </article>
-
-        <article class="proj-card tile" data-type="ai" data-updated="2026-10-12">
-          <div class="tile-frame tile-type tile-cream"><p>My AI agents propose. Nothing ships until I approve it.</p></div>
-          <h3><a href="/projects/ai-workflow-governance-suite">AI workflow governance suite</a></h3>
-          <p class="tile-tag">Claude Code · Codex</p>
+        <article class="proj-card tile tile-wide" data-type="ai" data-updated="2026-09-22">
+          <div class="tile-frame"><img src="/assets/tiles/journalism-atlas.jpg" alt="" loading="lazy" decoding="async" /></div>
+          <h3><a href="/projects/journalism-atlas-dashboard">Journalism research dashboard</a></h3>
         </article>
 
         <article class="proj-card tile" data-type="system" data-updated="2026-10-14">
           <div class="tile-frame"><img src="/assets/tiles/briefing.jpg" alt="" loading="lazy" decoding="async" /></div>
           <h3><a href="/projects/daily-briefing-and-alerting-platform">Daily briefing and alerting platform</a></h3>
-          <p class="tile-tag">Python · Google APIs</p>
         </article>
 
-        <article class="proj-card tile" data-type="ai" data-updated="2026-09-22">
-          <div class="tile-frame"><img src="/assets/tiles/journalism-atlas.jpg" alt="" loading="lazy" decoding="async" /></div>
-          <h3><a href="/projects/journalism-atlas-dashboard">Journalism research dashboard</a></h3>
-          <p class="tile-tag">Claude Code / Codex · Python</p>
+        <article class="proj-card tile" data-type="system" data-updated="2026-09-22">
+          <div class="tile-frame tile-type tile-mustard"><p>Grant payments, from Fluxx to Monday to Power BI.</p></div>
+          <h3><a href="/projects/payment-sync-financial-visibility">Payment sync and reporting</a></h3>
+        </article>
+
+        <article class="proj-card tile" data-type="ai" data-updated="2026-10-12">
+          <div class="tile-frame tile-type tile-sky"><p>AI agents that ask before they act.</p></div>
+          <h3><a href="/projects/ai-workflow-governance-suite">AI workflow governance suite</a></h3>
         </article>
 
         <article class="proj-card tile speaking-card" data-type="speaking ai" data-updated="2026-09-22">
           <div class="tile-frame"><img src="/assets/tiles/bot-stops-here.jpg" alt="" loading="lazy" decoding="async" /></div>
           <h3><a href="/bsh">The Bot Stops Here</a></h3>
-          <p class="tile-tag">Claude Code / Codex · Skill plugins</p>
         </article>
 
-        <article class="proj-card tile speaking-card" data-type="speaking system" data-updated="2026-09-22">
-          <div class="tile-frame tile-type tile-sage"><p>A primer for small grantmaking teams on connecting their systems with no-code tools.</p></div>
+        <article class="proj-card tile tile-third" data-type="system" data-updated="2026-09-22">
+          <div class="tile-frame tile-type tile-tomato"><p>Fluxx grant tasks, on the team's Monday boards.</p></div>
+          <h3><a href="/projects/fluxx-monday-operational-layer">Fluxx to Monday operational layer</a></h3>
+        </article>
+
+        <article class="proj-card tile tile-third" data-type="system" data-updated="2026-09-22">
+          <div class="tile-frame tile-type tile-cream"><p>Board prep on autopilot, up to the judgment calls.</p></div>
+          <h3><a href="/projects/board-prep-meeting-workflow">Meeting prep infrastructure</a></h3>
+        </article>
+
+        <article class="proj-card tile tile-third speaking-card" data-type="speaking system" data-updated="2026-09-22">
+          <div class="tile-frame tile-type tile-sage"><p>No-code automation for small grant teams.</p></div>
           <h3>Small Team, Big Impact</h3>
-          <p class="tile-tag">Fluxx · Power Automate</p>
         </article>
 
-        <article class="proj-card tile tile-third" data-type="experiment" data-updated="2026-09-12">
+        <article class="proj-card tile tile-wide" data-type="experiment" data-updated="2026-09-12">
           <div class="tile-frame"><img src="/assets/tiles/sky-window.jpg" alt="" loading="lazy" decoding="async" /></div>
           <h3><a href="/sky">Sky Window</a></h3>
-          <p class="tile-tag">OpenSky · OpenStreetMap</p>
+        </article>
+
+        <article class="proj-card tile" data-type="experiment" data-updated="2026-09-22">
+          <div class="tile-frame"><img src="/assets/tiles/snail.jpg" alt="" loading="lazy" decoding="async" /></div>
+          <h3><a href="https://snaildating.com">Snail: Slow Dating by Mail</a></h3>
+        </article>
+
+        <article class="proj-card tile" data-type="experiment" data-updated="2026-10-14">
+          <div class="tile-frame"><img src="/assets/tiles/release-tracker.jpg" alt="" loading="lazy" decoding="async" /></div>
+          <h3><a href="/projects/release-tracker">Release tracker</a></h3>
         </article>
 
         <article class="proj-card tile tile-third" data-type="experiment" data-updated="2026-10-14">
           <div class="tile-frame"><img src="/assets/tiles/bedside.jpg" alt="" loading="lazy" decoding="async" /></div>
           <h3><a href="/projects/home-dashboard-system">Bedside dashboard</a></h3>
-          <p class="tile-tag">ESP32 · APIs</p>
         </article>
 
         <article class="proj-card tile tile-third" data-type="experiment" data-updated="2026-09-22">
           <div class="tile-frame"><img src="/assets/tiles/vinyl.jpg" alt="" loading="lazy" decoding="async" /></div>
           <h3>Vinyl cataloging tool</h3>
-          <p class="tile-tag">AI vision model · Discogs</p>
-        </article>
-
-        <article class="proj-card tile tile-third" data-type="experiment" data-updated="2026-09-22">
-          <div class="tile-frame"><img src="/assets/tiles/snail.jpg" alt="" loading="lazy" decoding="async" /></div>
-          <h3><a href="https://snaildating.com">Snail: Slow Dating by Mail</a></h3>
-          <p class="tile-tag">Airtable · Flyers</p>
         </article>
 
         <article class="proj-card tile tile-third" data-type="experiment" data-updated="2026-10-14">
           <div class="tile-frame"><img src="/assets/tiles/fitness-log.jpg" alt="" loading="lazy" decoding="async" /></div>
           <h3><a href="/projects/fitness-log">Fitness log</a></h3>
-          <p class="tile-tag">Python · Flask</p>
-        </article>
-
-        <article class="proj-card tile tile-third" data-type="experiment" data-updated="2026-10-14">
-          <div class="tile-frame"><img src="/assets/tiles/release-tracker.jpg" alt="" loading="lazy" decoding="async" /></div>
-          <h3><a href="/projects/release-tracker">Release tracker</a></h3>
-          <p class="tile-tag">Python · Google Calendar</p>
         </article>
         <!-- register:cards:end -->
       </div>
